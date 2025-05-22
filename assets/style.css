@@ -45,3 +45,8 @@ h1{
 .form-signin .form-floating:focus-within {
     z-index: 2;
 }
+
+.form-cadastro {
+    max-width: 500px;
+    padding: 1rem;
+}
