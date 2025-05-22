@@ -4,8 +4,12 @@
     height: 50px;
 }
 
-h2 span {
+h1 span {
     display: inline-block;
+}
+
+h1{
+    font-size: 22px;
 }
 
 .bi {

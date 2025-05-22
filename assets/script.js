@@ -19,13 +19,13 @@ window.onload = function () {
     anime({
         targets: 'span',
         translateY: [
-          { value: '-2.75rem', easing: 'easeOutExpo', duration: 600 },
-          { value: '0rem', easing: 'easeOutBounce', duration: 800, delay: 100 }
+            { value: '-0.75rem', easing: 'easeOutExpo', duration: 600 },
+            { value: '0rem', easing: 'easeOutBounce', duration: 800, delay: 100 }
         ],
         rotate: ['-1turn', '0turn'],
         delay: (_, i) => i * 50,
         easing: 'easeInOutCirc',
         loopDelay: 1000,
         loop: true
-      });
+    });
 };
