@@ -1,18 +1,17 @@
-.bi {
-    vertical-align: -0.125em;
-    fill: currentColor;
-}
-
 #myDiv {
     background: aqua;
     width: 50px;
     height: 50px;
 }
 
+h2 span {
+    display: inline-block;
+}
+
 .bi {
     vertical-align: -0.125em;
-     fill: currentColor;
- }
+    fill: currentColor;
+}
 
 .form-signin {
     max-width: 330px;
@@ -41,4 +40,4 @@
 
 .form-signin .form-floating:focus-within {
     z-index: 2;
-  }
+}
