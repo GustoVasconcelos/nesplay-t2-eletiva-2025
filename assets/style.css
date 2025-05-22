@@ -1,4 +1,10 @@
 .bi {
     vertical-align: -0.125em;
-     fill: currentColor;
- }
+    fill: currentColor;
+}
+
+#myDiv {
+    background: aqua;
+    width: 50px;
+    height: 50px;
+}
