@@ -9,7 +9,11 @@ h1 span {
 }
 
 h1{
-    font-size: 22px;
+    font-size: 2.5em;
+}
+
+#texto-logotipo{
+    width: 230px;
 }
 
 .bi {

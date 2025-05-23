@@ -5,21 +5,11 @@ if (typeof anime !== "undefined") {
 }
 
 window.onload = function () {
-    // Animação do #myDiv
-    anime({
-        targets: '#myDiv',
-        translateX: 250,
-        loop: true,
-        easing: 'easeInOutQuad',
-        duration: 2000,
-        direction: 'alternate'
-    });
-
     // Animação dos <span>
     anime({
         targets: 'span',
         translateY: [
-            { value: '-0.75rem', easing: 'easeOutExpo', duration: 600 },
+            { value: '-1.27rem', easing: 'easeOutExpo', duration: 600 },
             { value: '0rem', easing: 'easeOutBounce', duration: 800, delay: 100 }
         ],
         rotate: ['-1turn', '0turn'],
@@ -28,4 +18,5 @@ window.onload = function () {
         loopDelay: 1000,
         loop: true
     });
+    //Fim--Animação dos <span>--Fim
 };
