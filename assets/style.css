@@ -13,7 +13,7 @@ h1{
 }
 
 #texto-logotipo{
-    width: 230px;
+    width: 240px;
 }
 
 .bi {
@@ -54,3 +54,13 @@ h1{
     max-width: 500px;
     padding: 1rem;
 }
+
+input[type="date"]:before {
+    content: attr(placeholder) !important;
+    color: #aaa;
+    margin-right: 0.5em;
+  }
+  input[type="date"]:focus:before,
+  input[type="date"]:valid:before {
+    content: "";
+  }
