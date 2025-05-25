@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../assets/style.css">
     <link rel="icon" type="image/png" href="../../assets/img/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon/favicon.svg" />
-    <title>NESPlay - Admin</title>
+    <title>NESPlay - Admin - Gerenciar Categorias</title>
 </head>
 <body>
     <header
@@ -36,14 +36,37 @@
         <ul class="nav nav-underline col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="../../index.html" class="nav-link px-2 link-body-emphasis">Home</a></li>
             <li><a href="#" class="nav-link px-2 link-body-emphasis">Gerenciar Usuários</a></li>
-            <li><a href="ger-categorias.html" class="nav-link px-2 link-body-emphasis">Gerenciar Categorias</a></li>
+            <li><a href="#" class="nav-link px-2 link-body-emphasis">Gerenciar Categorias</a></li>
             <li><a href="#" class="nav-link px-2 link-body-emphasis">Gerenciar Comentários</a></li>
             <li><a href="#" class="nav-link px-2 link-body-emphasis">Gerenciar ROMs</a></li>
             <li><a href="#" class="nav-link px-2 link-body-emphasis">Sobre</a></li>
         </ul>
     </nav>
     <main class="container px-4 py-5">
-        <h2>Seja bem vindo!</h2>
+        <h2 class="h3 mb-4 fw-normal text-center">Gerenciar Categorias</h2>
+        <form class="form-outline w-50">
+            <legend>Cadastrar Categoria</legend>
+            <fieldset class="border rounded row py-3">
+                <div class="row-12 d-flex px-3">
+                    <input type="text" class="form-control me-3" id="nomeCategoria" placeholder="Categoria">
+                    <button class="btn btn-secondary" type="submit">Cadastrar</button>
+                </div>
+            </fieldset>
+        </form>
+        <form class="form-outline w-50 py-3">
+            <legend>Apagar Categoria</legend>
+            <fieldset class="border rounded row py-3">
+                <div class="row-12 d-flex px-3">
+                    <select class="form-select me-3" id="inputGroupSelect01">
+                        <option selected>Escolher...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                    </select>
+                    <button class="btn btn-secondary" type="submit">Deletar</button>
+                </div>
+            </fieldset>
+        </form>
+    </main>
     </main>
     <footer class="py-3 my-3 container">
         <ul class="nav nav-underline justify-content-center border-bottom pb-3 mb-3">
