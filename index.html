@@ -1,99 +1,91 @@
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
-    <link rel="icon" type="image/png" href="assets/img/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg" />
     <title>NESPlay</title>
 </head>
+
 <body>
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom container">
-        <div class="col-md-2 mb-2 mb-md-0 d-flex">
-            <a href="/" class="nav-link d-inline-flex link-body-emphasis text-decoration-none">
-                <img class="logotipo" src="assets/img/logo.svg" alt="">
-                <h1 id="texto-logotipo" class="mb-md-0 px-2">
-                    <span>N</span>
-                    <span>E</span>
-                    <span>S</span>
-                    <span>P</span>
-                    <span>l</span>
-                    <span>a</span>
-                    <span>y</span>
-                </h1>
-            </a>
-        </div>
-        <div class="col-md-2 text-end">
-            <a class="btn btn-outline-secondary me-2" href="view/login.html" role="button">Login</a>
-            <a class="btn btn-secondary" href="#" role="button">Cadastrar</a>
-        </div>
-    </header>
-    <nav class="container px-2 border-bottom">
-        <ul class="nav nav-underline col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-body-emphasis">Home</a></li>
-            <!-- <li><a href="#" class="nav-link px-2 link-body-emphasis">Cadastrar Usuários</a></li> -->
-            <!-- <li><a href="#" class="nav-link px-2 link-body-emphasis">Cadastrar Categorias</a></li> -->
-            <!-- <li><a href="#" class="nav-link px-2 link-body-emphasis">Upload de Roms</a></li> -->
-            <!-- <li><a href="#" class="nav-link px-2 link-body-emphasis">Comentários</a></li> -->
-            <!-- <li><a href="#" class="nav-link px-2 link-body-emphasis">Admin</a></li> -->
-            <li><a href="#" class="nav-link px-2 link-body-emphasis">Sobre</a></li>
-        </ul>
-    </nav>
-    <main class="container px-4 py-5" id="hanging-icons">
-        <!-- <h2 class="pb-2 border-bottom">NES Emulator</h2> -->
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-            <div class="col d-flex align-items-start">
-                <div
-                    class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                    <img src="assets/img/tv_nes.svg" alt="">
+    <div class="background">
+        <header class="w-100 py-3 border-bottom">
+            <div class="container d-flex flex-wrap align-items-center justify-content-between">
+                <div class="col-md-2 mb-2 mb-md-0 d-flex">
+                    <a href="/" class="nav-link d-inline-flex link-body-emphasis text-decoration-none">
+                        <img class="logotipo" src="assets/img/logo.svg" alt="">
+                        <h1 id="texto-logotipo" class="mb-md-0 px-2">
+                            <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
+                        </h1>
+                    </a>
                 </div>
-                <div>
-                    <h3 class="fs-2 text-body-emphasis">Crie sua conta</h3>
-                    <p>De maneira simples e objetiva, você cria sua conta e já começa a jogar.</p>
-                    <!-- <a href="#" class="btn btn-primary">Primary button</a> -->
+                <div class="col-md-2 text-end">
+                    <a class="btn btn-outline-secondary me-2" href="view/login.html" role="button">Login</a>
+                    <a class="btn btn-secondary" href="#" role="button">Cadastrar</a>
                 </div>
             </div>
-            <div class="col d-flex align-items-start">
-                <div
-                    class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                    <img src="assets/img/cartucho_nes.svg" alt="">
+        </header>
+
+        <nav class="w-100 border-bottom">
+            <div class="container px-2">
+                <ul class="nav nav-underline col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="#" class="nav-link px-2 link-body-emphasis">Home</a></li>
+                    <li><a href="#" class="nav-link px-2 link-body-emphasis">Sobre</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="container px-4 py-5" id="hanging-icons">
+            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                <div id="card" class="col d-flex align-items-start">
+                    <div
+                        class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                        <img src="assets/img/tv_nes.svg" alt="">
+                    </div>
+                    <div>
+                        <h3 class="fs-2 text-body-emphasis">Crie sua conta</h3>
+                        <p>De maneira simples e objetiva, você cria sua conta e já começa a jogar.</p>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="fs-2 text-body-emphasis">Faça upload das suas roms</h3>
-                    <p>Disponibilizamos um espaço no servidor para você fazer o upload de suas roms favoritas.</p>
-                    <!-- <a href="#" class="btn btn-primary">Primary button</a> -->
+                <div id="card" class="col d-flex align-items-start">
+                    <div
+                        class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                        <img src="assets/img/cartucho_nes.svg" alt="">
+                    </div>
+                    <div>
+                        <h3 class="fs-2 text-body-emphasis">Faça upload das suas roms</h3>
+                        <p>Disponibilizamos um espaço no servidor para você fazer o upload de suas roms favoritas.</p>
+                    </div>
+                </div>
+                <div id="card" class="col d-flex align-items-start">
+                    <div
+                        class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                        <img src="assets/img/console_nes.svg" alt="">
+                    </div>
+                    <div>
+                        <h3 class="fs-2 text-body-emphasis">Jogue direto do navegador</h3>
+                        <p>Sem downloads ou configurações complexas. Basta apenas escolher o jogo e se divertir.</p>
+                    </div>
                 </div>
             </div>
-            <div class="col d-flex align-items-start">
-                <div class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                    <img src="assets/img/console_nes.svg" alt="">
-                </div>
-                <div>
-                    <h3 class="fs-2 text-body-emphasis">Jogue direto do navegador</h3>
-                    <p>Sem downloads ou configurações complexas. Basta apenas escolher o jogo e se divertir.</p>
-                    <!-- <a href="#" class="btn btn-primary">Primary button</a> -->
-                </div>
+        </main>
+        <footer class="w-100 py-3 my-3">
+            <div class="container">
+                <ul class="nav nav-underline justify-content-center border-bottom pb-3 mb-3">
+                    <li class="nav-item"><a href="#" class="nav-link px-2 link-body-emphasis">Dúvidas?</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 link-body-emphasis">Privacidade</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 link-body-emphasis">Termos</a></li>
+                </ul>
+                <p class="text-center text-body-secondary">© 2025 NESPlay</p>
             </div>
-        </div>
-    </main>
-    <footer class="py-3 my-3 container">
-        <ul class="nav nav-underline justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="#" class="nav-link px-2 link-body-emphasis">Dúvidas?</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 link-body-emphasis">Privacidade</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 link-body-emphasis">Termos</a></li>
-        </ul>
-        <p class="text-center text-body-secondary">© 2025 NESPlay</p>
-    </footer>
-    <!-- linkagem do anime.js -->
-    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-    <!-- fim linkagem do anime.js -->
-    <script src="./assets/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-        crossorigin="anonymous"></script>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+        <script src="./assets/script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
 </body>
 
 </html>
