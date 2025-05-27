@@ -10,7 +10,7 @@ window.onload = function () {
         targets: 'span',
         translateY: [
             { value: '-1.27rem', easing: 'easeOutExpo', duration: 600 },
-            { value: '0rem', easing: 'easeOutBounce', duration: 800, delay: 100 }
+            { value: '0rem', easing: 'easeOutBounce', duration: 800, delay: 200 }
         ],
         rotate: ['-1turn', '0turn'],
         delay: (_, i) => i * 50,

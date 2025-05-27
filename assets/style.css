@@ -1,69 +1,186 @@
-main#hanging-icons {
-    flex: 1;
-}
-
 .background {
     position: relative;
     overflow: hidden;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: stretch;
-    background-image: url('./img/fundo.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: url('./img/fundo.jpg') center/cover no-repeat;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.gradiente {
+    position: relative;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 20px 20px 22px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgb(255, 255, 255);
+    z-index: 1;
+}
+
+.gradiente::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(270deg, #ff0000, #5e5e5e, #000, #ff0000, #ff0000, #ff0000);
+    background-size: 300% 100%;
+    opacity: 0.1;
+    z-index: -1;
+    animation: gradientShift 7s linear infinite;
+}
+
+header.gradiente,
+nav.gradiente,
+footer.gradiente {
+    border-radius: 0 !important;
+}
+
+footer.gradiente {
+    margin-top: auto;
+    position: sticky;
+    bottom: 0;
 }
 
 .block {
-    z-index: 0;
-    pointer-events: none;
     position: absolute;
     top: 0;
     left: 0;
     width: 60px;
     height: 60px;
-    opacity: 5%;
+    opacity: 0.05;
     box-shadow: 10px 10px 50px rgba(0, 0, 0, 0.2);
     transform-origin: top left;
+    z-index: 0;
+    pointer-events: none;
 }
 
-header,
-nav,
-footer {
-    z-index: 1;
-    width: 100%;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, .1), -4px -4px 10px rgba(0, 0, 0, .1);
-    background-color: rgba(0, 0, 0, .1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-#card {
-    z-index: 1;
-    border-radius: 10px;
-    padding: 5px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, .1), -4px -4px 10px rgba(0, 0, 0, .1);
-    background-color: rgba(0, 0, 0, .1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-h1 span {
-    display: inline-block;
-}
-
-h1 {
-    font-size: 2.5em;
+.logotipo {
+    max-width: 48px;
+    height: auto;
 }
 
 #texto-logotipo {
-    width: 240px;
+    color: white;
+    margin: 0;
+    font-size: 1.75rem;
+    max-width: 240px;
+    width: 100%;
+    letter-spacing: 0.2em;
 }
 
-.bi {
-    vertical-align: -0.125em;
-    fill: currentColor;
+#texto-logotipo span {
+    display: inline-block;
+}
+
+.icon-square img {
+    max-width: 32px;
+}
+
+.fs-2 {
+    font-size: 1.5rem;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.nav-link {
+    position: relative;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(90deg,
+            white,
+            red,
+            gray,
+            black,
+            gray,
+            red,
+            white);
+    background-size: 200% 100%;
+    background-position: 0% 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    animation: gradientFlow 3s linear infinite;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            white,
+            red,
+            gray,
+            black,
+            gray,
+            red,
+            white);
+    background-size: 200% 100%;
+    background-position: 0% 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-link:hover::after {
+    opacity: 1;
+    animation: gradientFlow 3s linear infinite;
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: -100% 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .gradiente {
+        padding: 0.75rem;
+    }
+
+    #texto-logotipo {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    main#hanging-icons {
+        padding-left: 8rem;
+        padding-right: 8rem;
+    }
 }
