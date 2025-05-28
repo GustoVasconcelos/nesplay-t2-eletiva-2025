@@ -1,11 +1,58 @@
-if (typeof anime !== "undefined") {
-    console.log("anime.js carregado com sucesso!");
-} else {
-    console.error("anime.js não foi carregado corretamente.");
-}
+/*
+    ———————————————————————————————————————————————————————————————
+    |Projeto NESPlay                                              |
+    |Animações: Anime.js v3.2.1                                   |
+    |Usando Anime.js para:                                        |
+    |   – animação de spans no logotipo                           |
+    |   – movimento aleatório dos blocos de fundo                 |
+    ———————————————————————————————————————————————————————————————
+*/
 
 window.onload = function () {
-    //Animação do logotipo
+    //Animação dos blocos do background
+    const background = document.querySelector(".background");
+    const COLORS = ["grey", "red", "black"];
+    const BLOCK_SIZE = 60;
+    const MAX_SCALE = 5;
+    const TOTAL_BLOCKS = 100;
+
+    function getMaxCoords() {
+        return {
+            maxX: background.clientWidth - BLOCK_SIZE * MAX_SCALE,
+            maxY: background.clientHeight - BLOCK_SIZE * MAX_SCALE
+        };
+    }
+
+    function randomPosition(max) {
+        return anime.random(0, max) + "px";
+    }
+
+    function animateBlock(block) {
+        const { maxX, maxY } = getMaxCoords();
+        anime({
+            targets: block,
+            left: randomPosition(maxX),
+            top: randomPosition(maxY),
+            scale: anime.random(1, MAX_SCALE),
+            duration: anime.random(3000, 6000),
+            easing: 'linear',
+            complete: () => animateBlock(block)
+        });
+    }
+
+    for (let i = 0; i < TOTAL_BLOCKS; i++) {
+        const block = document.createElement("div");
+        block.classList.add("block");
+        block.style.backgroundColor = COLORS[anime.random(0, COLORS.length - 1)];
+        const { maxX, maxY } = getMaxCoords();
+        block.style.left = randomPosition(maxX);
+        block.style.top = randomPosition(maxY);
+        background.appendChild(block);
+        animateBlock(block);
+    }
+    //FIM--Animação dos blocos do background--FIM
+
+    // Animação do logotipo
     anime({
         targets: 'span',
         translateY: [
@@ -19,39 +66,4 @@ window.onload = function () {
         loop: true
     });
     //FIM--Animação do logotipo--FIM
-
-    //Animação dos blocos do background
-    const background = document.querySelector(".background");
-    const COLORS = ["grey", "red", "black"];
-    const BLOCK_SIZE = 60;
-    const MAX_SCALE = 5;
-    for (let i = 0; i < 100; i++) {
-        const block = document.createElement("div");
-        block.classList.add("block");
-        const color = COLORS[anime.random(0, COLORS.length - 1)];
-        block.style.backgroundColor = color;
-        background.appendChild(block);
-    }
-    const randomLeft = () => {
-        const maxX = background.clientWidth - BLOCK_SIZE * MAX_SCALE;
-        return anime.random(0, maxX) + "px";
-    };
-    const randomTop = () => {
-        const maxY = background.clientHeight - BLOCK_SIZE * MAX_SCALE;
-        return anime.random(0, maxY) + "px";
-    };
-    const animateBlocks = () => {
-        anime({
-            targets: ".block",
-            left: randomLeft,
-            top: randomTop,
-            scale: () => anime.random(1, MAX_SCALE),
-            easing: "linear",
-            duration: 3000,
-            delay: anime.stagger(10),
-            complete: animateBlocks
-        });
-    };
-    animateBlocks();
-    //FIM--Animação dos blocos do background--FIM
 };

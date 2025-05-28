@@ -1,3 +1,60 @@
+/*
+    ———————————————————————————————————————————————————————————————
+    |Projeto NESPlay                                              |
+    |Animações de borda giratória: CSS Houdini `@property --angle`|
+    |Fluxo de gradiente no texto: `@keyframes gradientFlow`       |
+    |                                                             |
+    |Biblioteca de animações JS: Anime.js v3.2.1                  |
+    ———————————————————————————————————————————————————————————————
+*/
+
+/*
+   ———————————————————————————————————————————————
+   |Houdini @property e keyframes globais         |
+   ———————————————————————————————————————————————
+*/
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotateBorder {
+    to {
+        --angle: 360deg;
+    }
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: -100% 50%;
+    }
+}
+
 .background {
     position: relative;
     overflow: hidden;
@@ -10,45 +67,6 @@
 
 main {
     flex: 1 0 auto;
-}
-
-.gradiente {
-    position: relative;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
-    overflow: hidden;
-    box-shadow: 20px 20px 22px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: rgb(255, 255, 255);
-    z-index: 1;
-}
-
-.gradiente::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 300%;
-    height: 100%;
-    background: linear-gradient(270deg, #ff0000, #5e5e5e, #000, #ff0000, #ff0000, #ff0000);
-    background-size: 300% 100%;
-    opacity: 0.1;
-    z-index: -1;
-    animation: gradientShift 7s linear infinite;
-}
-
-header.gradiente,
-nav.gradiente,
-footer.gradiente {
-    border-radius: 0 !important;
-}
-
-footer.gradiente {
-    margin-top: auto;
-    position: sticky;
-    bottom: 0;
 }
 
 .block {
@@ -70,7 +88,7 @@ footer.gradiente {
 }
 
 #texto-logotipo {
-    color: white;
+    color: rgb(255, 255, 255);
     margin: 0;
     font-size: 1.75rem;
     max-width: 240px;
@@ -95,28 +113,74 @@ footer.gradiente {
     height: auto;
 }
 
+.gradiente {
+    position: relative;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 20px 20px 22px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgb(255, 255, 255);
+    z-index: 1;
+}
+
+.gradiente::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(270deg,
+            rgb(255, 0, 0),
+            rgb(94, 94, 94),
+            rgb(0, 0, 0),
+            rgb(255, 0, 0),
+            rgb(255, 0, 0),
+            rgb(255, 0, 0));
+    background-size: 300% 100%;
+    opacity: 0.1;
+    z-index: -1;
+    animation: gradientShift 7s linear infinite;
+}
+
+header.gradiente,
+nav.gradiente,
+footer.gradiente {
+    border-radius: 0 !important;
+}
+
+footer.gradiente {
+    margin-top: auto;
+    position: sticky;
+    bottom: 0;
+}
+
 .nav-link {
     position: relative;
     display: inline-block;
-    color: white;
+    color: rgb(255, 255, 255);
     text-decoration: none;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease-in-out;
 }
 
 .nav-link:hover {
     transform: translateY(-2px);
     background: linear-gradient(90deg,
-            white,
-            red,
-            gray,
-            black,
-            gray,
-            red,
-            white);
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0));
     background-size: 200% 100%;
     background-position: 0% 0;
+    backdrop-filter: blur(0.1px);
+    -webkit-backdrop-filter: blur(0.1px);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    border-radius: 2px 2px 0px 0px;
     background-clip: text;
     color: transparent;
     animation: gradientFlow 3s linear infinite;
@@ -130,17 +194,15 @@ footer.gradiente {
     width: 100%;
     height: 2px;
     background: linear-gradient(90deg,
-            white,
-            red,
-            gray,
-            black,
-            gray,
-            red,
-            white);
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0));
     background-size: 200% 100%;
     background-position: 0% 0;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .nav-link:hover::after {
@@ -148,33 +210,98 @@ footer.gradiente {
     animation: gradientFlow 3s linear infinite;
 }
 
-@keyframes gradientFlow {
-    0% {
-        background-position: 0% 0;
-    }
-
-    100% {
-        background-position: 200% 0;
-    }
+.btn-animated {
+    --angle: 0deg;
+    position: relative;
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    line-height: 1;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    text-decoration: none;
+    overflow: hidden;
+    border: none;
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease-in-out;
 }
 
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    100% {
-        background-position: -100% 50%;
-    }
+.btn-animated::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 3px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--angle),
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0)) padding-box;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    animation: rotateBorder 3s linear infinite;
+    pointer-events: none;
+    z-index: 1;
 }
 
-@media (max-width: 576px) {
+.btn-animated:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: none;
+    background-image: linear-gradient(90deg,
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0));
+    background-size: 200% 100%;
+    background-position: 0 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    animation:
+        rotateBorder 3s linear infinite,
+        gradientFlow 3s linear infinite;
+    z-index: 2;
+}
+
+@media (max-width: 435px) {
     .gradiente {
         padding: 0.75rem;
     }
 
     #texto-logotipo {
         font-size: 1.5rem;
+        padding-top: 0.3rem;
+        margin-top: 0.3rem;
+    }
+
+    header .container-fluid {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    header a.d-flex {
+        margin-right: 0;
+        justify-content: center;
+    }
+
+    header .d-flex {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .btn-outline-secondary.me-2 {
+        margin-right: 0;
     }
 }
 
