@@ -9,9 +9,9 @@
 */
 
 /*
-   ———————————————————————————————————————————————
+   ————————————————————————————————————————————————
    |Houdini @property e keyframes globais         |
-   ———————————————————————————————————————————————
+   ————————————————————————————————————————————————
 */
 @property --angle {
     syntax: "<angle>";
@@ -185,7 +185,8 @@ footer.gradiente {
     transition: transform 0.3s ease-in-out;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link:focus {
     transform: translateY(-2px);
     background: linear-gradient(90deg,
             rgb(255, 0, 0),
@@ -195,11 +196,8 @@ footer.gradiente {
             rgb(255, 0, 0));
     background-size: 200% 100%;
     background-position: 0% 0;
-    backdrop-filter: blur(0.1px);
-    -webkit-backdrop-filter: blur(0.1px);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    border-radius: 2px 2px 0px 0px;
     background-clip: text;
     color: transparent;
     animation: gradientFlow 3s linear infinite;
@@ -224,7 +222,8 @@ footer.gradiente {
     transition: opacity 0.3s ease-in-out;
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link:focus::after {
     opacity: 1;
     animation: gradientFlow 3s linear infinite;
 }
@@ -237,7 +236,7 @@ footer.gradiente {
     font-size: 1rem;
     line-height: 1;
     background: rgba(0, 0, 0, 0.3);
-    color: white;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     overflow: hidden;
     border: none;
@@ -258,8 +257,8 @@ footer.gradiente {
             rgb(154, 154, 154),
             rgb(255, 0, 0)) padding-box;
     -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
+        linear-gradient(rgb(255, 255, 255) 0 0) content-box,
+        linear-gradient(rgb(255, 255, 255) 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
     animation: rotateBorder 3s linear infinite;
@@ -293,7 +292,7 @@ footer.gradiente {
     width: 100%;
     padding: 0.5rem 0.75rem;
     background-color: transparent;
-    color: #fff;
+    color: rgb(255, 255, 255);
     border: 3px solid transparent;
     border-radius: 0;
     transition: background-color 0.3s ease-in-out,
