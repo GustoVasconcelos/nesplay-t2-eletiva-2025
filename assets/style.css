@@ -20,7 +20,11 @@
 }
 
 @keyframes rotateBorder {
-    to {
+    0% {
+        --angle: 0deg;
+    }
+
+    100% {
         --angle: 360deg;
     }
 }
@@ -53,6 +57,21 @@
     100% {
         background-position: -100% 50%;
     }
+}
+
+@keyframes reverseBorderTransition {
+    from {
+        border-color: transparent;
+    }
+
+    to {
+        border-color: rgba(255, 255, 255, 0.7);
+    }
+}
+
+:root {
+    --transition-duration: 0.4s;
+    --border-radius: 0.75rem;
 }
 
 .background {
@@ -117,7 +136,7 @@ main {
     position: relative;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     overflow: hidden;
     box-shadow: 20px 20px 22px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(8px);
@@ -267,6 +286,42 @@ footer.gradiente {
         rotateBorder 3s linear infinite,
         gradientFlow 3s linear infinite;
     z-index: 2;
+}
+
+.form-control {
+    position: relative;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background-color: transparent;
+    color: #fff;
+    border: 3px solid transparent;
+    border-radius: 0;
+    transition: background-color 0.3s ease-in-out,
+        color 0.3s ease-in-out,
+        border-image 0.3s ease-in-out;
+    outline: none;
+}
+
+.form-control:focus {
+    border-image: conic-gradient(from var(--angle),
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0)) 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: rotateBorder 3s linear infinite;
+    box-shadow: none;
+}
+
+.form-control:not(:focus) {
+    animation: reverseBorderTransition var(--transition-duration) forwards;
+}
+
+.form-floating>label {
+    transition:
+        transform var(--transition-duration) ease-in-out,
+        opacity var(--transition-duration) ease-in-out;
 }
 
 @media (max-width: 435px) {
