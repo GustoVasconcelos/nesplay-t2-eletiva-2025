@@ -145,6 +145,26 @@ main {
     z-index: 1;
 }
 
+.gradiente fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+}
+
+.gradiente legend {
+    color: rgb(255, 255, 255);
+}
+
+.gradiente .form-control,
+.gradiente .form-select {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: rgb(255, 255, 255);
+}
+
+.gradiente .form-select:focus {
+    box-shadow: none;
+}
+
 .gradiente::before {
     content: '';
     position: absolute;
@@ -285,6 +305,36 @@ footer.gradiente {
         rotateBorder 3s linear infinite,
         gradientFlow 3s linear infinite;
     z-index: 2;
+}
+
+.form-select {
+    --angle: 0deg;
+    position: relative;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    border: 3px solid transparent;
+    border-radius: 0.5rem;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: .65rem .8rem;
+    transition: border-image 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    outline: none;
+    z-index: 1;
+}
+
+.form-select:focus,
+.form-select:hover {
+    border-image: conic-gradient(from var(--angle),
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0)) 1;
+    animation: rotateBorder 3s linear infinite;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .form-control {
