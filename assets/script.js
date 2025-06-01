@@ -52,7 +52,7 @@ window.onload = function () {
     }
     //FIM--Animação dos blocos do background--FIM
 
-    // Animação do logotipo
+    //Animação do logotipo
     anime({
         targets: 'span',
         translateY: [
@@ -66,4 +66,16 @@ window.onload = function () {
         loop: true
     });
     //FIM--Animação do logotipo--FIM
+
+    //Função para mudar o texto do arquivo
+    const fileNameDiv = document.getElementById('romFileName');
+    const input = document.getElementById('romFile');
+
+    input.addEventListener('change', () => {
+        const name = input.files.length
+            ? input.files[0].name
+            : 'Nenhum arquivo escolhido';
+        fileNameDiv.textContent = name;
+    });
+    //FIM--Função para mudar o texto do arquivo--FIM
 };
