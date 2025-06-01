@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../../assets/style.css">
     <link rel="icon" type="image/png" href="../../assets/img/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon/favicon.svg" />
-    <title>NESPlay - Admin</title>
+    <title>NESPlay - Admin - Gerenciar Categorias</title>
 </head>
 
 <body>
@@ -36,7 +36,8 @@
                 <ul class="nav nav-underline justify-content-center">
                     <li class="nav-item"><a class="nav-link px-2" href="../../index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.html">Gerenciar Usuários</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.html">Gerenciar Categorias</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.html">Gerenciar Categorias</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.html">Gerenciar ROMs</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
@@ -44,12 +45,60 @@
             </div>
         </nav>
 
-        <main class="container px-3 px-md-5 py-5 d-flex flex-column" id="hanging-icons">
-            <!-- Card -->
-            <div class="gradiente p-4 h-100 d-flex align-items-center justify-content-center">
-                <div>
-                    <h3 class="fs-2">Administração</h3>
-                    <p>Seja bem-vindo</p>
+        <main class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-5">
+                    <div class="gradiente p-4 rounded-3 shadow-sm">
+                        <h2 class="h3 mb-4 fw-normal text-center">Gerenciar Usuários</h2>
+                        <!-- Formulário de Cadastrar Usuário -->
+                        <form class="mb-4">
+                            <fieldset>
+                                <legend class="fs-5 mb-3">Cadastrar Usuário</legend>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" id="nomeCategoria"
+                                        placeholder="Categoria">
+                                    <button class="btn-animated btn btn-secondary" style="padding-left: 3px;"
+                                        type="submit">
+                                        Cadastrar
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <!-- Formulário de Renomear Usuário -->
+                        <form>
+                            <fieldset>
+                                <legend class="fs-5 mb-3">Renomear Usuário</legend>
+                                <div class="d-flex">
+                                    <select class="form-select me-2" id="inputGroupSelect01">
+                                        <option selected>Escolher...</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                    </select>
+                                    <button class="btn-animated btn btn-secondary" style="padding-left: 8px;"
+                                        type="submit">
+                                        Renomear
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <!-- Formulário de Apagar Usuário -->
+                        <form>
+                            <fieldset>
+                                <legend class="fs-5 mb-3">Apagar Usuário</legend>
+                                <div class="d-flex">
+                                    <select class="form-select me-2" id="inputGroupSelect01">
+                                        <option selected>Escolher...</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                    </select>
+                                    <button class="btn-animated btn btn-secondary" style="padding-left: 8px;"
+                                        type="submit">
+                                        Deletar
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </main>
@@ -71,7 +120,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
-
 </body>
 
 </html>
