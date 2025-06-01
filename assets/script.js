@@ -14,7 +14,7 @@ window.onload = function () {
     const COLORS = ["grey", "red", "black"];
     const BLOCK_SIZE = 60;
     const MAX_SCALE = 5;
-    const TOTAL_BLOCKS = 100;
+    const TOTAL_BLOCKS = 25;
 
     function getMaxCoords() {
         return {
