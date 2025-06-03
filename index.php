@@ -16,7 +16,7 @@
 
         <header class="gradiente py-3">
             <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
-                <a href="index.html" class="d-flex align-items-center text-decoration-none">
+                <a href="index.php" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
                         <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>

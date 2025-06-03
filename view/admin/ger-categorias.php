@@ -1,5 +1,5 @@
 <?php
-    session_start();
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +51,7 @@
 
         <main class="container my-5">
             <?php
-            if(isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true){
+            if (isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true) {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
                 echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
@@ -81,21 +81,22 @@
                             </fieldset>
                         </form>
                         <!-- Formulário de Renomear Categoria -->
-                        <form>
+                        <form method="POST" action="../../proc/procRenomearCategoria.php">
                             <fieldset>
                                 <legend class="fs-5 mb-3">Renomear Categoria</legend>
-                                <div class="d-flex">
-                                    <select class="form-select me-2" id="inputGroupSelect01">
+                                <div class="d-flex flex-column">
+                                    <select class="form-select mb-2" id="selectCategoriaRenomear" name="categoriaSelecionada">
                                         <option selected>Escolher...</option>
+                                        <option value="1">Luta</option>
                                         <?php
-                                        //    $listaCategorias = listarCategorias();
-                                        //    while($categoria = mysqli_fetch_assoc($listaCategorias)){
-                                        //      echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
-                                        //    }
+                                        // $listaCategorias = listarCategorias();
+                                        // while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
+                                        //     echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
+                                        // }
                                         ?>
                                     </select>
-                                    <button class="btn-animated btn btn-secondary" style="padding-left: 8px;"
-                                        type="submit">
+                                    <input type="text" class="form-control d-none" id="novoNomeCategoria" name="novoNomeCategoria" placeholder="Novo nome da categoria">
+                                    <button class="btn-animated btn btn-secondary mt-2" type="submit">
                                         Renomear
                                     </button>
                                 </div>

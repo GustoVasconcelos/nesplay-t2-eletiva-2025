@@ -9,7 +9,7 @@
 */
 
 window.onload = function () {
-    //Animação dos blocos do background
+    // Animação dos blocos do background
     const background = document.querySelector(".background");
     const COLORS = ["grey", "red", "black"];
     const BLOCK_SIZE = 60;
@@ -50,9 +50,9 @@ window.onload = function () {
         background.appendChild(block);
         animateBlock(block);
     }
-    //FIM--Animação dos blocos do background--FIM
+    // FIM--Animação dos blocos do background--FIM
 
-    //Animação do logotipo
+    // Animação do logotipo
     anime({
         targets: 'span',
         translateY: [
@@ -65,17 +65,33 @@ window.onload = function () {
         loopDelay: 1000,
         loop: true
     });
-    //FIM--Animação do logotipo--FIM
+    // FIM--Animação do logotipo--FIM
 
-    //Função para mudar o texto do arquivo
+    // Função para mudar o texto do arquivo (se existir input e div)
     const fileNameDiv = document.getElementById('romFileName');
     const input = document.getElementById('romFile');
 
-    input.addEventListener('change', () => {
-        const name = input.files.length
-            ? input.files[0].name
-            : 'Nenhum arquivo escolhido';
-        fileNameDiv.textContent = name;
-    });
-    //FIM--Função para mudar o texto do arquivo--FIM
+    if (input && fileNameDiv) {
+        input.addEventListener('change', () => {
+            const name = input.files.length
+                ? input.files[0].name
+                : 'Nenhum arquivo escolhido';
+            fileNameDiv.textContent = name;
+        });
+    }
+    // FIM--Função para mudar o texto do arquivo--FIM
+
+    // Listener para mostrar/ocultar input de novo nome ao selecionar categoria
+    const select = document.getElementById('selectCategoriaRenomear');
+    const inputNovoNome = document.getElementById('novoNomeCategoria');
+
+    if (select && inputNovoNome) {
+        select.addEventListener('change', function () {
+            if (select.value && select.value !== "Escolher...") {
+                inputNovoNome.classList.remove('d-none');
+            } else {
+                inputNovoNome.classList.add('d-none');
+            }
+        });
+    }
 };
