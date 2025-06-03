@@ -36,4 +36,18 @@ function listarCategorias(){
     return $listaCategorias;
 }
 
+function renomarCategoria($id, $novoNomeCategoria){
+
+    $conexao = conectarBD();
+    $consulta = "UPDATE categorias SET nome = '$novoNomeCategoria' WHERE idCategoria = '$id'";
+    mysqli_query($conexao, $consulta);
+}
+
+function apagarCategoria($id){
+
+    $conexao = conectarBD();
+    $consulta = "DELETE from categorias WHERE idCategoria = '$id'";
+    mysqli_query($conexao, $consulta);
+}
+
 ?>

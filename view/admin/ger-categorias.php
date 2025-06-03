@@ -1,4 +1,5 @@
 <?php
+require_once "../../proc/funcoesBD.php";
 session_start();
 ?>
 
@@ -51,15 +52,27 @@ session_start();
 
         <main class="container my-5">
             <?php
-            if (isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true) {
+            if ((isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true) || 
+            (isset($_SESSION['apagarCategoria_Ok']) && $_SESSION['apagarCategoria_Ok'] == true) ||
+            (isset($_SESSION['renomearCategoria_Ok']) && $_SESSION['renomearCategoria_Ok'] == true)) {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
                 echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
-                echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria cadastrada com sucesso!</h1>';
+                if ($_SESSION['cadastroCategoria_Ok'] == true){
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria cadastrada com sucesso!</h1>';
+                    $_SESSION['cadastroCategoria_Ok'] = false;
+                }
+                if ($_SESSION['apagarCategoria_Ok'] == true){
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria apagada com sucesso!</h1>';
+                    $_SESSION['apagarCategoria_Ok'] = false;
+                }
+                if ($_SESSION['renomearCategoria_Ok'] == true){
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria renomeada com sucesso!</h1>';
+                    $_SESSION['renomearCategoria_Ok'] = false;
+                }
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
-                $_SESSION['cadastroCategoria_Ok'] = false;
             }
             ?>
             <div class="row justify-content-center">
@@ -81,18 +94,18 @@ session_start();
                             </fieldset>
                         </form>
                         <!-- Formulário de Renomear Categoria -->
-                        <form method="POST" action="../../proc/procRenomearCategoria.php">
+                        <form method="POST" action="../../proc/procUpdCategoria.php">
                             <fieldset>
                                 <legend class="fs-5 mb-3">Renomear Categoria</legend>
                                 <div class="d-flex flex-column">
-                                    <select class="form-select mb-2" id="selectCategoriaRenomear" name="categoriaSelecionada">
+                                    <select class="form-select mb-2" id="selectCategoriaRenomear" name="selectRenomearCategoria">
                                         <option selected>Escolher...</option>
                                         <option value="1">Luta</option>
                                         <?php
-                                        // $listaCategorias = listarCategorias();
-                                        // while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
-                                        //     echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
-                                        // }
+                                            $listaCategorias = listarCategorias();
+                                            while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
+                                                echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
+                                            }
                                         ?>
                                     </select>
                                     <input type="text" class="form-control d-none" id="novoNomeCategoria" name="novoNomeCategoria" placeholder="Novo nome da categoria">
@@ -103,14 +116,18 @@ session_start();
                             </fieldset>
                         </form>
                         <!-- Formulário de Apagar Categoria -->
-                        <form>
+                        <form method="POST" action="../../proc/procDelCategoria.php">
                             <fieldset>
                                 <legend class="fs-5 mb-3">Apagar Categoria</legend>
                                 <div class="d-flex">
-                                    <select class="form-select me-2" id="inputGroupSelect01">
+                                    <select class="form-select me-2" name="selectApagarCategoria">
                                         <option selected>Escolher...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
+                                        <?php
+                                            $listaCategorias = listarCategorias();
+                                            while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
+                                                echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
+                                            }
+                                        ?>
                                     </select>
                                     <button class="btn-animated btn btn-secondary" style="padding-left: 8px;"
                                         type="submit">
