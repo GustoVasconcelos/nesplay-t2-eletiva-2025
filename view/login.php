@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
 
@@ -10,7 +14,7 @@
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="icon" type="image/png" href="../assets/img/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="../assets/img/favicon/favicon.svg" />
-    <title>NESPlay - Cadastrar</title>
+    <title>NESPlay - Login</title>
 </head>
 
 <body>
@@ -25,8 +29,8 @@
                     </h1>
                 </a>
                 <div class="d-flex">
-                    <a class="btn-animated btn btn-outline-secondary me-2" href="./login.html">Login</a>
-                    <a class="btn-animated btn btn-secondary" href="./cadastrar.html">Cadastrar</a>
+                    <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
+                    <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
                 </div>
             </div>
         </header>
@@ -34,58 +38,45 @@
         <nav class="gradiente">
             <div class="container-fluid px-3 px-md-5">
                 <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="">Sobre</a></li>
                 </ul>
             </div>
         </nav>
 
         <main class="container my-5">
+            <?php
+            if(isset($_SESSION['cadastro_Ok']) && $_SESSION['cadastro_Ok'] == true){
+                echo '<div class="row justify-content-center mb-3">';
+                echo '<div class="col-12 col-md-8 col-lg-5">';
+                echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
+                echo '<h1 class="h3 mb-4 fw-normal text-center">Cadastro efetuado com sucesso!</h1>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+                $_SESSION['cadastro_Ok'] = false;
+            }
+            ?>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
                         <form>
-                            <h1 class="h3 mb-4 fw-normal text-center">Cadastro</h1>
-                            <!-- Par Nome / Sobrenome -->
-                            <div class="row mb-3">
-                                <div class="col px-1 form-floating">
-                                    <input type="text" class="form-control" id="nomeUser" placeholder="Nome">
-                                    <label for="nomeUser">Nome</label>
-                                </div>
-                                <div class="col px-1 form-floating">
-                                    <input type="text" class="form-control" id="sobrenomeUser" placeholder="Sobrenome">
-                                    <label for="sobrenomeUser">Sobrenome</label>
-                                </div>
-                            </div>
-                            <!-- Data -->
-                            <div class="row mb-3">
-                                <div class="col px-1 form-floating">
-                                    <input type="date" class="form-control" id="nascimentoUser"
-                                        placeholder="Data de Nascimento">
-                                    <label for="nascimentoUser">Data de Nascimento</label>
-                                </div>
-                            </div>
+                            <h1 class="h3 mb-4 fw-normal text-center">Login</h1>
                             <!-- Email -->
-                            <div class="row mb-3">
-                                <div class="col px-1 form-floating">
-                                    <input type="email" class="form-control" id="emailUser" placeholder="Email">
-                                    <label for="emailUser">Email</label>
-                                </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="userEmail" placeholder="nome@email.com">
+                                <label for="userEmail">Endereço de E-mail</label>
                             </div>
-                            <!-- Par Usuário / Senha -->
-                            <div class="row mb-3">
-                                <div class="col px-1 form-floating">
-                                    <input type="text" class="form-control" id="apelidoUser"
-                                        placeholder="Nome de usuário">
-                                    <label for="apelidoUser">Nome de usuário</label>
-                                </div>
-                                <div class="col px-1 form-floating">
-                                    <input type="password" class="form-control" id="passwordUser" placeholder="Senha">
-                                    <label for="passwordUser">Senha</label>
-                                </div>
+                            <!-- Senha -->
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="userPassword" placeholder="Senha">
+                                <label for="userPassword">Senha</label>
                             </div>
-                            <button class="btn-animated btn btn-secondary w-100 py-2" type="submit">Cadastrar</button>
+                            <button class="btn-animated btn btn-secondary w-100 py-2 mb-3" type="submit">Entrar</button>
                         </form>
+                        <div class="text-center">
+                            <a class="nav-link link-body-emphasis" href="./recuperar-senha.php">Esqueceu a senha?</a>
+                        </div>
                     </div>
                 </div>
             </div>

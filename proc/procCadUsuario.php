@@ -17,8 +17,8 @@ if(!empty($_POST['nomeUser']) && !empty($_POST['sobrenomeUser']) &&
 
       //Chamada da função inserirCliente
       cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha);
-
-      header('Location:../view/cadastrar.html');
+      $_SESSION['cadastro_Ok'] = true;
+      header('Location:../view/login.php');
       die();
    }
 ?>

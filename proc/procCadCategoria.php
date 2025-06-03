@@ -10,8 +10,8 @@ if(!empty($_POST['nomeCategoria'])){
 
       //Chamada da função inserirCliente
       cadastrarCategoria($nomeCategoria);
-
-      header('Location:../view/admin/ger-categorias.html');
+      $_SESSION['cadastroCategoria_Ok'] = true;
+      header('Location:../view/admin/ger-categorias.php');
       die();
    }
 ?>

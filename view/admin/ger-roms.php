@@ -18,15 +18,15 @@
 
         <header class="gradiente py-3">
             <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
-                <a href="/" class="d-flex align-items-center text-decoration-none">
+                <a href="../../index.php" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="../../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
                         <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
                     </h1>
                 </a>
                 <div class="d-flex">
-                    <a class="btn-animated btn btn-outline-secondary me-2" href="../login.html">Login</a>
-                    <a class="btn-animated btn btn-secondary" href="../cadastrar.html">Cadastrar</a>
+                    <a class="btn-animated btn btn-outline-secondary me-2" href="../../view/login.php">Login</a>
+                    <a class="btn-animated btn btn-secondary" href="../../view/cadastrar.php">Cadastrar</a>
                 </div>
             </div>
         </header>
@@ -34,12 +34,11 @@
         <nav class="gradiente">
             <div class="container-fluid px-3 px-md-5">
                 <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../../index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Usuários</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../admin/ger-categorias.html">Gerenciar
-                            Categorias</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar Categorias</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.html">Gerenciar ROMs</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.php">Gerenciar ROMs</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
                 </ul>
             </div>
@@ -49,11 +48,11 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
-                        <h2 class="h3 mb-4 fw-normal text-center">Gerenciar Categorias</h2>
-                        <!-- Formulário de Cadastrar Categoria -->
+                        <h2 class="h3 mb-4 fw-normal text-center">Gerenciar ROMs</h2>
+                        <!-- Formulário de Cadastrar ROM -->
                         <form class="mb-4">
                             <fieldset>
-                                <legend class="fs-5 mb-3">Cadastrar Categoria</legend>
+                                <legend class="fs-5 mb-3">Cadastrar ROM</legend>
                                 <div class="d-flex">
                                     <input type="text" class="form-control me-2" id="nomeCategoria"
                                         placeholder="Categoria">
@@ -64,10 +63,10 @@
                                 </div>
                             </fieldset>
                         </form>
-                        <!-- Formulário de Renomear Categoria -->
+                        <!-- Formulário de Renomear ROM -->
                         <form>
                             <fieldset>
-                                <legend class="fs-5 mb-3">Renomear Categoria</legend>
+                                <legend class="fs-5 mb-3">Renomear ROM</legend>
                                 <div class="d-flex">
                                     <select class="form-select me-2" id="inputGroupSelect01">
                                         <option selected>Escolher...</option>
@@ -81,10 +80,10 @@
                                 </div>
                             </fieldset>
                         </form>
-                        <!-- Formulário de Apagar Categoria -->
+                        <!-- Formulário de Apagar ROM -->
                         <form>
                             <fieldset>
-                                <legend class="fs-5 mb-3">Apagar Categoria</legend>
+                                <legend class="fs-5 mb-3">Apagar ROM</legend>
                                 <div class="d-flex">
                                     <select class="form-select me-2" id="inputGroupSelect01">
                                         <option selected>Escolher...</option>

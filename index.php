@@ -23,8 +23,8 @@
                     </h1>
                 </a>
                 <div class="d-flex">
-                    <a class="btn-animated btn btn-outline-secondary me-2" href="view/login.html">Login</a>
-                    <a class="btn-animated btn btn-secondary" href="view/cadastrar.html">Cadastrar</a>
+                    <a class="btn-animated btn btn-outline-secondary me-2" href="view/login.php">Login</a>
+                    <a class="btn-animated btn btn-secondary" href="view/cadastrar.php">Cadastrar</a>
                 </div>
             </div>
         </header>
@@ -32,9 +32,9 @@
         <nav class="gradiente">
             <div class="container-fluid px-3 px-md-5">
                 <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="view/admin/admin.html">Admin</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.html">Enviar ROM</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
                 </ul>
             </div>

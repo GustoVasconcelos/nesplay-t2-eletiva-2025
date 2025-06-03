@@ -15,7 +15,7 @@ function conectarBD(){
 function cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha){
 
     $conexao = conectarBD();
-    $consulta = "INSERT INTO usuarios (nome, sobrenome, dataNascimento, email, apelido, senha) VALUES ('$nome','$sobrenome','$dataNasc','$email','$apelido','$senha')";
+    $consulta = "INSERT INTO usuarios (nome, sobrenome, dataNascimento, email, apelido, senha, adm) VALUES ('$nome','$sobrenome','$dataNasc','$email','$apelido','$senha','0')";
     mysqli_query($conexao, $consulta);
 }
 
