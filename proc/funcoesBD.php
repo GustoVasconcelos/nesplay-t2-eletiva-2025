@@ -19,7 +19,6 @@ function cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha
     mysqli_query($conexao, $consulta);
 }
 
-
 #funções relacionadas ao CRUD das categorias
 function cadastrarCategoria($nome){
 
@@ -48,6 +47,14 @@ function apagarCategoria($id){
     $conexao = conectarBD();
     $consulta = "DELETE from categorias WHERE idCategoria = '$id'";
     mysqli_query($conexao, $consulta);
+}
+
+function listarUsuarios(){
+
+    $conexao = conectarBD();
+    $consulta = "SELECT * FROM usuarios";
+    $listaUsuarios = mysqli_query($conexao, $consulta);
+    return $listaUsuarios;
 }
 
 ?>

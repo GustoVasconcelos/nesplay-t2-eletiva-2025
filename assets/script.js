@@ -94,4 +94,19 @@ window.onload = function () {
             }
         });
     }
+    // FIM--Listener para mostrar/ocultar input de novo nome ao selecionar categoria--FIM
+
+    // Funções para gerenciar os usuários
+    function editarUsuario(id) {
+        document.querySelector(`#user-${id} .user-view`).classList.add('d-none');
+        document.getElementById(`form-${id}`).classList.remove('d-none');
+    }
+    window.editarUsuario = editarUsuario;
+
+    function cancelarEdicao(id) {
+        document.getElementById(`form-${id}`).classList.add('d-none');
+        document.querySelector(`#user-${id} .user-view`).classList.remove('d-none');
+    }
+    window.cancelarEdicao = cancelarEdicao;
+    // FIM--Funções para gerenciar os usuários--FIM
 };

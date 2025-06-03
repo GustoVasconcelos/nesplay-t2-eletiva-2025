@@ -40,7 +40,7 @@ session_start();
             <div class="container-fluid px-3 px-md-5">
                 <ul class="nav nav-underline justify-content-center">
                     <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Usuários</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar
                             Categorias</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li>
@@ -52,21 +52,23 @@ session_start();
 
         <main class="container my-5">
             <?php
-            if ((isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true) || 
-            (isset($_SESSION['apagarCategoria_Ok']) && $_SESSION['apagarCategoria_Ok'] == true) ||
-            (isset($_SESSION['renomearCategoria_Ok']) && $_SESSION['renomearCategoria_Ok'] == true)) {
+            if (
+                (isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true) ||
+                (isset($_SESSION['apagarCategoria_Ok']) && $_SESSION['apagarCategoria_Ok'] == true) ||
+                (isset($_SESSION['renomearCategoria_Ok']) && $_SESSION['renomearCategoria_Ok'] == true)
+            ) {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
                 echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
-                if ($_SESSION['cadastroCategoria_Ok'] == true){
+                if ($_SESSION['cadastroCategoria_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria cadastrada com sucesso!</h1>';
                     $_SESSION['cadastroCategoria_Ok'] = false;
                 }
-                if ($_SESSION['apagarCategoria_Ok'] == true){
+                if ($_SESSION['apagarCategoria_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria apagada com sucesso!</h1>';
                     $_SESSION['apagarCategoria_Ok'] = false;
                 }
-                if ($_SESSION['renomearCategoria_Ok'] == true){
+                if ($_SESSION['renomearCategoria_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria renomeada com sucesso!</h1>';
                     $_SESSION['renomearCategoria_Ok'] = false;
                 }
@@ -98,17 +100,18 @@ session_start();
                             <fieldset>
                                 <legend class="fs-5 mb-3">Renomear Categoria</legend>
                                 <div class="d-flex flex-column">
-                                    <select class="form-select mb-2" id="selectCategoriaRenomear" name="selectRenomearCategoria">
+                                    <select class="form-select mb-2" id="selectCategoriaRenomear"
+                                        name="selectRenomearCategoria">
                                         <option selected>Escolher...</option>
-                                        <option value="1">Luta</option>
                                         <?php
-                                            $listaCategorias = listarCategorias();
-                                            while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
-                                                echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
-                                            }
+                                        $listaCategorias = listarCategorias();
+                                        while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
+                                            echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
+                                        }
                                         ?>
                                     </select>
-                                    <input type="text" class="form-control d-none" id="novoNomeCategoria" name="novoNomeCategoria" placeholder="Novo nome da categoria">
+                                    <input type="text" class="form-control d-none" id="novoNomeCategoria"
+                                        name="novoNomeCategoria" placeholder="Novo nome da categoria">
                                     <button class="btn-animated btn btn-secondary mt-2" type="submit">
                                         Renomear
                                     </button>
@@ -123,10 +126,10 @@ session_start();
                                     <select class="form-select me-2" name="selectApagarCategoria">
                                         <option selected>Escolher...</option>
                                         <?php
-                                            $listaCategorias = listarCategorias();
-                                            while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
-                                                echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
-                                            }
+                                        $listaCategorias = listarCategorias();
+                                        while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
+                                            echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
+                                        }
                                         ?>
                                     </select>
                                     <button class="btn-animated btn btn-secondary" style="padding-left: 8px;"
