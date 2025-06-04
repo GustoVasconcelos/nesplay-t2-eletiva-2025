@@ -30,8 +30,14 @@ session_start();
                     </h1>
                 </a>
                 <div class="d-flex">
-                    <a class="btn-animated btn btn-outline-secondary me-2" href="../../view/login.php">Login</a>
-                    <a class="btn-animated btn btn-secondary" href="../../view/cadastrar.php">Cadastrar</a>
+                    <?php
+                        if(!isset($_SESSION['usuario'])) {
+                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="../../view/login.php">Login</a>';
+                            echo '<a class="btn-animated btn btn-secondary" href="../../view/cadastrar.php">Cadastrar</a>';
+                        } else {
+                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="../../view/logout.php">Sair</a>';
+                        }
+                    ?>
                 </div>
             </div>
         </header>

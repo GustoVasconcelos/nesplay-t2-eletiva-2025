@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
 
@@ -23,8 +27,14 @@
                     </h1>
                 </a>
                 <div class="d-flex">
-                    <a class="btn-animated btn btn-outline-secondary me-2" href="view/login.php">Login</a>
-                    <a class="btn-animated btn btn-secondary" href="view/cadastrar.php">Cadastrar</a>
+                    <?php
+                        if(!isset($_SESSION['usuario'])) {
+                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/login.php">Login</a>';
+                            echo '<a class="btn-animated btn btn-secondary" href="view/cadastrar.php">Cadastrar</a>';
+                        } else {
+                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/logout.php">Sair</a>';
+                        }
+                    ?>
                 </div>
             </div>
         </header>
@@ -33,7 +43,11 @@
             <div class="container-fluid px-3 px-md-5">
                 <ul class="nav nav-underline justify-content-center">
                     <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>
+                    <?php
+                    if($_SESSION['usuario_adm'] == 1){
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
+                    }
+                    ?>
                     <li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
                 </ul>

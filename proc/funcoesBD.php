@@ -11,6 +11,15 @@ function conectarBD(){
     return ($conexao);
 }
 
+#função de logar no sistema
+function realizarLogin($email, $senha){
+
+    $conexao = conectarBD();
+    $consulta = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'";
+    $resposta = mysqli_query($conexao, $consulta);
+    return $resposta;
+}
+
 #funções relacionadas ao CRUD dos usuários
 function cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha){
 

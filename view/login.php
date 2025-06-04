@@ -1,6 +1,8 @@
 <?php
 require_once "../proc/funcoesBD.php";
 session_start();
+$erro = isset($_SESSION['erro_login']) ? $_SESSION['erro_login'] : "";
+unset($_SESSION['erro_login']);
 ?>
 
 <!DOCTYPE html>
@@ -47,11 +49,17 @@ session_start();
 
         <main class="container my-5">
             <?php
-            if(isset($_SESSION['cadastro_Ok']) && $_SESSION['cadastro_Ok'] == true){
+            if((isset($_SESSION['cadastro_Ok']) && $_SESSION['cadastro_Ok'] == true) || 
+                ($erro!="")){
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
                 echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
-                echo '<h1 class="h3 mb-4 fw-normal text-center">Cadastro efetuado com sucesso!</h1>';
+                if ($_SESSION['cadastro_Ok'] == true){
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">Usuário cadastrado com sucesso!</h1>';
+                }
+                if ($erro != ""){
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">Usuário e/ou senha inválidos!</h1>';
+                }
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
@@ -61,16 +69,16 @@ session_start();
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
-                        <form>
+                        <form method="POST" action="../proc/procLogin.php">
                             <h1 class="h3 mb-4 fw-normal text-center">Login</h1>
                             <!-- Email -->
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="userEmail" placeholder="nome@email.com">
+                                <input type="email" class="form-control" name="userEmail" placeholder="nome@email.com">
                                 <label for="userEmail">Endereço de E-mail</label>
                             </div>
                             <!-- Senha -->
                             <div class="form-floating mb-4">
-                                <input type="password" class="form-control" id="userPassword" placeholder="Senha">
+                                <input type="password" class="form-control" name="userPassword" placeholder="Senha">
                                 <label for="userPassword">Senha</label>
                             </div>
                             <button class="btn-animated btn btn-secondary w-100 py-2 mb-3" type="submit">Entrar</button>
