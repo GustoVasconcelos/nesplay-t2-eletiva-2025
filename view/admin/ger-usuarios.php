@@ -72,7 +72,7 @@ $listaUsuarios = listarUsuarios();
                                 <?php $_SESSION['apagarUsuario_Ok'] = false; ?>
                             <?php endif; ?>
                             <?php if ($_SESSION['renomearUsuario_Ok'] ?? false): ?>
-                                <h1 class="h3 mb-0">Usuário renomeado com sucesso!</h1>
+                                <h1 class="h3 mb-0">Usuário alterado com sucesso!</h1>
                                 <?php $_SESSION['renomearUsuario_Ok'] = false; ?>
                             <?php endif; ?>
                         </div>

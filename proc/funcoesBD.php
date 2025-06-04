@@ -19,11 +19,43 @@ function cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha
     mysqli_query($conexao, $consulta);
 }
 
-#funções relacionadas ao CRUD das categorias
-function cadastrarCategoria($nome){
+function listarUsuarios(){
 
     $conexao = conectarBD();
-    $consulta = "INSERT INTO categorias (nome) VALUES ('$nome')";
+    $consulta = "SELECT * FROM usuarios";
+    $listaUsuarios = mysqli_query($conexao, $consulta);
+    return $listaUsuarios;
+}
+
+function alterarUsuario($idUser, $nome, $sobrenome, $dataN, $email, $apelido, $senha, $adm){
+
+    $conexao = conectarBD();
+    $consulta = "
+      UPDATE usuarios SET
+        nome           = '$nome',
+        sobrenome      = '$sobrenome',
+        dataNascimento = '$dataN',
+        email          = '$email',
+        apelido        = '$apelido',
+        senha          = '$senha',
+        adm            = $adm
+      WHERE idUser = $idUser
+    ";
+    mysqli_query($conexao, $consulta);
+}
+
+function excluirUsuario($idUser){
+
+    $conexao = conectarBD();
+    $consulta = "DELETE FROM usuarios WHERE idUser = '$idUser'";
+    mysqli_query($conexao, $consulta);
+}
+
+#funções relacionadas ao CRUD das categorias
+function cadastrarCategoria($nomeCategoria){
+
+    $conexao = conectarBD();
+    $consulta = "INSERT INTO categorias (nome) VALUES ('$nomeCategoria')";
     mysqli_query($conexao, $consulta);
 }
 
@@ -35,26 +67,18 @@ function listarCategorias(){
     return $listaCategorias;
 }
 
-function renomarCategoria($id, $novoNomeCategoria){
+function renomemarCategoria($idCategoria, $novoNomeCategoria){
 
     $conexao = conectarBD();
-    $consulta = "UPDATE categorias SET nome = '$novoNomeCategoria' WHERE idCategoria = '$id'";
+    $consulta = "UPDATE categorias SET nome = '$novoNomeCategoria' WHERE idCategoria = '$idCategoria'";
     mysqli_query($conexao, $consulta);
 }
 
-function apagarCategoria($id){
+function apagarCategoria($idCategoria){
 
     $conexao = conectarBD();
-    $consulta = "DELETE from categorias WHERE idCategoria = '$id'";
+    $consulta = "DELETE from categorias WHERE idCategoria = '$idCategoria'";
     mysqli_query($conexao, $consulta);
-}
-
-function listarUsuarios(){
-
-    $conexao = conectarBD();
-    $consulta = "SELECT * FROM usuarios";
-    $listaUsuarios = mysqli_query($conexao, $consulta);
-    return $listaUsuarios;
 }
 
 ?>

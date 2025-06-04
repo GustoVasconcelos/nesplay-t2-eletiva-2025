@@ -13,19 +13,7 @@ if (!empty($_POST['idUser'])) {
     $senha  = mysqli_real_escape_string(conectarBD(), $_POST['senha']);
     $adm    = isset($_POST['adm']) ? 1 : 0;
 
-    $con = conectarBD();
-    $sql = "
-      UPDATE usuarios SET
-        nome           = '$nome',
-        sobrenome      = '$sobrenome',
-        dataNascimento = '$dataN',
-        email          = '$email',
-        apelido        = '$apelido',
-        senha          = '$senha',
-        adm            = $adm
-      WHERE idUser = $id
-    ";
-    mysqli_query($con, $sql);
+    alterarUsuario($id, $nome, $sobrenome, $dataN, $email, $apelido, $senha, $adm);
     $_SESSION['renomearUsuario_Ok'] = true;
 }
 
