@@ -81,6 +81,27 @@ body.no-anim *::after {
     transition: none !important;
 }
 
+body {
+    --sb-track-color: #252525;
+    --sb-thumb-color: #ff0000;
+    --sb-size: 14px;
+}
+
+body::-webkit-scrollbar {
+    width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 3px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 3px;
+    border: 2px solid #6d6d6d;
+}
+
 .background {
     position: relative;
     overflow: hidden;
@@ -455,5 +476,11 @@ footer.gradiente {
     main#hanging-icons {
         padding-left: 8rem;
         padding-right: 8rem;
+    }
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    body {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
     }
 }
