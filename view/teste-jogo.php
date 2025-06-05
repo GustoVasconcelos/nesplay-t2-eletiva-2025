@@ -13,6 +13,9 @@ session_start();
     <link rel="shortcut icon" type="image/png" href="../assets/img/favicon/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
+    <script type="text/javascript" src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
+	<script type="text/javascript" src="../assets/nes-embed.js"></script>
+	<script>window.onload = function(){nes_load_url("nes-canvas", "../roms/SuperMarioBros.nes");}</script>
 </head>
 
 <body>
@@ -57,7 +60,10 @@ session_start();
         </nav>
 
         <main class="container my-5">
-            
+            <div style="margin: auto; width: 75%;">
+                <canvas id="nes-canvas" width="300" height="284" style="border:10px solid #000000;"> </canvas>
+            </div>
+            <p>DPad: Arrow keys<br/>Start: Return, Select: Tab<br/>A Button: A, B Button: S</p>
         </main>
 
         <footer class="gradiente py-3">
