@@ -50,6 +50,7 @@ session_start();
                     }
                     ?>
                     <li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROM</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
                 </ul>
             </div>
