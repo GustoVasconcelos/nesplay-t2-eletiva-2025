@@ -1,7 +1,10 @@
 <?php
 require_once "../../proc/funcoesBD.php";
 session_start();
-
+if ($_SESSION['usuario_adm'] != 1){
+    header("Location: ../../index.php");
+    exit;
+}
 $listaRoms = listarRoms();
 ?>
 
