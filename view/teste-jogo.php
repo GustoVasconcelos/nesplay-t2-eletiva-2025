@@ -1,7 +1,6 @@
 <?php
 session_start();
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
 
@@ -10,20 +9,18 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NESPlay</title>
-    <link rel="shortcut icon" type="image/png" href="../assets/img/favicon/favicon-96x96.png">
+    <link rel="shortcut icon" href="../assets/img/favicon/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
-    <script type="text/javascript" src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
-	<script type="text/javascript" src="../assets/nes-embed.js"></script>
-	
+    <script src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
+    <script src="../assets/nes-embed.js"></script>
 </head>
 
 <body>
     <div class="background">
-
         <header class="gradiente py-3">
-            <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
-                <a href="index.php" class="d-flex align-items-center text-decoration-none">
+            <div class="container-fluid d-flex align-items-center justify-content-between">
+                <a href="../index.php" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
                         <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
@@ -31,14 +28,12 @@ session_start();
                 </a>
                 <div class="d-flex">
                     <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
-                    <?php
-                    if (!isset($_SESSION['usuario'])) {
-                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>';
-                        echo '<a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>';
-                    } else {
-                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="./logout.php">Sair</a>';
-                    }
-                    ?>
+                    <?php if (!isset($_SESSION['usuario'])): ?>
+                        <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
+                        <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
+                    <?php else: ?>
+                        <a class="btn-animated btn btn-outline-secondary me-2" href="./logout.php">Sair</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </header>
@@ -60,14 +55,23 @@ session_start();
         </nav>
 
         <main class="container my-5">
-            <div style="margin: auto; width: 75%;">
-                <canvas id="nes-canvas" width="300" height="284" style="width: 60%"> </canvas>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-5">
+                    <div class="gradiente p-4 rounded-3 shadow-sm">
+                        <div style="margin: auto; width: 84%;">
+                            <div id="canvas-wrapper" class="d-flex align-items-center justify-content-center" style="margin: auto; width: 94%; background: #000;">
+                                <canvas id="nes-canvas" width="256" height="240"></canvas>
+                            </div>
+                            <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
+                        </div>
+                        <p class="mt-3 texto-gradiente text-center">DPad: ←↑→↓ &nbsp; Start: Enter &nbsp; Select: Tab &nbsp; A: A/Q &nbsp; B: S/O</p>
+                    </div>
+                </div>
             </div>
-            <p>DPad: Arrow keys<br/>Start: Return, Select: Tab<br/>A Button: A, B Button: S</p>
         </main>
 
         <footer class="gradiente py-3">
-            <div class="container-fluid px-3 px-md-5 text-center">
+            <div class="container-fluid text-center">
                 <ul class="nav nav-underline justify-content-center pb-3 mb-3">
                     <li class="nav-item"><a class="nav-link px-2" href="#">Dúvidas?</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Privacidade</a></li>
@@ -77,11 +81,28 @@ session_start();
             </div>
         </footer>
 
-    </div> <!--background-->
+    </div><!--background-->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
     <script src="../assets/script.js"></script>
-    <!-- <script>window.onload = function(){nes_load_url("nes-canvas", "../roms/SuperMarioBros.nes");}</script> -->
-    <script>window.addEventListener('load', function() {nes_load_url("nes-canvas", "../roms/SuperMarioBros.nes");})</script>
+    <script>
+        window.addEventListener('load', () => {
+            nes_load_url('nes-canvas', '../roms/SuperMarioBros.nes');
+        });
+
+        const wrapper = document.getElementById('canvas-wrapper');
+        const fullscreenBtn = document.getElementById('btn-fullscreen');
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (wrapper.requestFullscreen) {
+                wrapper.requestFullscreen();
+            } else if (wrapper.webkitRequestFullscreen) {
+                wrapper.webkitRequestFullscreen();
+            } else if (wrapper.msRequestFullscreen) {
+                wrapper.msRequestFullscreen();
+            }
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

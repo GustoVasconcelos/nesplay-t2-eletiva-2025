@@ -74,6 +74,48 @@
     --border-radius: 0.75rem;
 }
 
+#canvas-wrapper:fullscreen {
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#canvas-wrapper:-webkit-full-screen {
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#canvas-wrapper:-moz-full-screen {
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#canvas-wrapper:fullscreen,
+#canvas-wrapper:-webkit-full-screen,
+#canvas-wrapper:-moz-full-screen {
+    background: black;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#nes-canvas {
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+    max-width: calc(100vh * (256 / 240));
+    /* Mantém a proporção 4:3 */
+}
+
 body.no-anim *,
 body.no-anim *::before,
 body.no-anim *::after {
@@ -231,6 +273,22 @@ footer.gradiente {
     color: rgb(255, 255, 255);
     text-decoration: none;
     transition: transform 0.3s ease-in-out;
+}
+
+.texto-gradiente {
+    background: linear-gradient(90deg,
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0));
+    background-size: 200% 100%;
+    background-position: 0% 0%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    animation: gradientFlow 3s linear infinite;
 }
 
 .nav-link:hover,
