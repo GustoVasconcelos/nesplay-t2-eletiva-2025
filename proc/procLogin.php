@@ -17,8 +17,8 @@ if (!empty($_POST['userEmail']) && !empty($_POST['userPassword'])) {
     } else {
         var_dump($_POST);
         $_SESSION['erro_login'] = "Usuário ou senha inválidos."; // Mensagem de erro
-        header("Location: ../view/login.php"); // Volta para o login
-        exit;
     }
 }
+header("Location: ../view/login.php"); // Volta para o login
+exit;
 ?>

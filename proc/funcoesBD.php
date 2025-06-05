@@ -24,7 +24,8 @@ function realizarLogin($email, $senha){
 function cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha){
 
     $conexao = conectarBD();
-    $consulta = "INSERT INTO usuarios (nome, sobrenome, dataNascimento, email, apelido, senha, adm) VALUES ('$nome','$sobrenome','$dataNasc','$email','$apelido','$senha','0')";
+    $consulta = "INSERT INTO usuarios (nome, sobrenome, dataNascimento, email, apelido, senha, adm) 
+                 VALUES ('$nome','$sobrenome','$dataNasc','$email','$apelido','$senha','0')";
     mysqli_query($conexao, $consulta);
 }
 
@@ -58,6 +59,25 @@ function excluirUsuario($idUser){
     $conexao = conectarBD();
     $consulta = "DELETE FROM usuarios WHERE idUser = '$idUser'";
     mysqli_query($conexao, $consulta);
+}
+
+#funções de checagem para não deixar cadastros duplos
+#email é um campo unico
+function checarEmail($email){
+
+    $conexao = conectarBD();
+    $consulta = "SELECT * from usuarios WHERE email = '$email'";
+    $reposta = mysqli_query($conexao, $consulta);
+    return $reposta;
+}
+
+#apelido é outro campo unico
+function checarApelido($apelido){
+
+    $conexao = conectarBD();
+    $consulta = "SELECT * from usuarios WHERE apelido = '$apelido'";
+    $reposta = mysqli_query($conexao, $consulta);
+    return $reposta;
 }
 
 #funções relacionadas ao CRUD das categorias

@@ -1,6 +1,9 @@
 <?php
-require_once "../proc/funcoesBD.php";
 session_start();
+if (isset($_SESSION['usuario'])){
+    header("Location: ../index.php");
+    exit;
+}
 $erro = isset($_SESSION['erro_login']) ? $_SESSION['erro_login'] : "";
 unset($_SESSION['erro_login']);
 ?>
@@ -60,7 +63,7 @@ unset($_SESSION['erro_login']);
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Usuário cadastrado com sucesso!</h1>';
                 }
                 if ($erro != "") {
-                    echo '<h1 class="h3 mb-4 fw-normal text-center">Usuário e/ou senha inválidos!</h1>';
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">' . $erro . '</h1>';
                 }
                 echo '</div>';
                 echo '</div>';

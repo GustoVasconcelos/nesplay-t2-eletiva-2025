@@ -1,3 +1,9 @@
+<?php
+session_start();
+$erro_cadastro = isset($_SESSION['erro_cadastro']) ? $_SESSION['erro_cadastro'] : "";
+unset($_SESSION['erro_cadastro']);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
 
@@ -42,6 +48,18 @@
         </nav>
 
         <main class="container my-5">
+            <?php
+            if ($erro_cadastro != "") {
+                echo '<div class="row justify-content-center mb-3">';
+                echo '<div class="col-12 col-md-8 col-lg-5">';
+                echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
+                echo '<h1 class="h3 mb-4 fw-normal text-center">' . $erro_cadastro . '</h1>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+                $_SESSION['cadastro_Ok'] = false;
+            }
+            ?>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
