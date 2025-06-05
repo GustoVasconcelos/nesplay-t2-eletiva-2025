@@ -4,6 +4,8 @@ if (isset($_SESSION['usuario'])){
     header("Location: ../index.php");
     exit;
 }
+$cadastro_msg = isset($_SESSION['cadastro_msg']) ? $_SESSION['cadastro_msg'] : "";
+unset($_SESSION['cadastro_msg']);
 $erro = isset($_SESSION['erro_login']) ? $_SESSION['erro_login'] : "";
 unset($_SESSION['erro_login']);
 ?>
@@ -53,14 +55,12 @@ unset($_SESSION['erro_login']);
 
         <main class="container my-5">
             <?php
-            if ((isset($_SESSION['cadastro_Ok']) && $_SESSION['cadastro_Ok'] == true) ||
-                ($erro != "")
-            ) {
+            if ($cadastro_msg != "" || $erro != "") {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
                 echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
-                if ($_SESSION['cadastro_Ok'] == true) {
-                    echo '<h1 class="h3 mb-4 fw-normal text-center">Usuário cadastrado com sucesso!</h1>';
+                if ($cadastro_msg != "") {
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">' . $cadastro_msg . '</h1>';
                 }
                 if ($erro != "") {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">' . $erro . '</h1>';
@@ -68,7 +68,6 @@ unset($_SESSION['erro_login']);
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
-                $_SESSION['cadastro_Ok'] = false;
             }
             ?>
             <div class="row justify-content-center">

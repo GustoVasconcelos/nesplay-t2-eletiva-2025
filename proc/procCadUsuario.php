@@ -29,7 +29,7 @@ if(!empty($_POST['nomeUser']) && !empty($_POST['sobrenomeUser']) &&
    }
 
    cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha);
-   $_SESSION['cadastro_Ok'] = true;
+   $_SESSION['cadastro_msg'] = "Usuário cadastrado com sucesso!";
 }
 header('Location:../view/login.php');
 exit;

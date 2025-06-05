@@ -45,7 +45,7 @@ session_start();
                 <ul class="nav nav-underline justify-content-center">
                     <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
                     <?php
-                    if ($_SESSION['usuario_adm'] == 1) {
+                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
                         echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
                     }
                     ?>
