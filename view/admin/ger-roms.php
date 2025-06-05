@@ -1,5 +1,8 @@
 <?php
+require_once "../../proc/funcoesBD.php";
 session_start();
+
+$listaRoms = listarRoms();
 ?>
 
 <!DOCTYPE html>
@@ -9,12 +12,14 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <title>NESPlay - Admin - Gerenciar ROMs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="../../assets/style.css">
-    <link rel="icon" type="image/png" href="../../assets/img/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon/favicon.svg" />
-    <title>NESPlay - Admin - Gerenciar Categorias</title>
+    <link rel="icon" type="image/png" href="../../assets/img/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="../../assets/img/favicon/favicon.svg">
 </head>
 
 <body>
@@ -29,14 +34,13 @@ session_start();
                     </h1>
                 </a>
                 <div class="d-flex">
-                    <?php
-                        if(!isset($_SESSION['usuario'])) {
-                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="../../view/login.php">Login</a>';
-                            echo '<a class="btn-animated btn btn-secondary" href="../../view/cadastrar.php">Cadastrar</a>';
-                        } else {
-                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="../../view/logout.php">Sair</a>';
-                        }
-                    ?>
+                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
+                    <?php if (!isset($_SESSION['usuario'])): ?>
+                        <a class="btn-animated btn btn-outline-secondary me-2" href="../../view/login.php">Login</a>
+                        <a class="btn-animated btn btn-secondary" href="../../view/cadastrar.php">Cadastrar</a>
+                    <?php else: ?>
+                        <a class="btn-animated btn btn-outline-secondary me-2" href="../../view/logout.php">Sair</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </header>
@@ -55,58 +59,105 @@ session_start();
         </nav>
 
         <main class="container my-5">
+            <!-- Mensagens de sucesso -->
+            <?php if (
+                ($_SESSION['cadastroRom_Ok'] ?? false) ||
+                ($_SESSION['apagarRom_Ok']   ?? false) ||
+                ($_SESSION['renomearRom_Ok'] ?? false)
+            ): ?>
+                <div class="row justify-content-center mb-3">
+                    <div class="col-12 col-md-8 col-lg-5">
+                        <div class="gradiente p-4 rounded-3 shadow-sm text-center">
+                            <?php if ($_SESSION['cadastroRom_Ok'] ?? false): ?>
+                                <h1 class="h3 mb-0">ROM cadastrada com sucesso!</h1>
+                                <?php $_SESSION['cadastroRom_Ok'] = false; ?>
+                            <?php endif; ?>
+                            <?php if ($_SESSION['apagarRom_Ok'] ?? false): ?>
+                                <h1 class="h3 mb-0">ROM apagada com sucesso!</h1>
+                                <?php $_SESSION['apagarRom_Ok'] = false; ?>
+                            <?php endif; ?>
+                            <?php if ($_SESSION['renomearRom_Ok'] ?? false): ?>
+                                <h1 class="h3 mb-0">ROM alterada com sucesso!</h1>
+                                <?php $_SESSION['renomearRom_Ok'] = false; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <!-- Lista de ROMs -->
             <div class="row justify-content-center">
-                <div class="col-12 col-md-8 col-lg-5">
+                <div class="col-12 col-lg-8">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
                         <h2 class="h3 mb-4 fw-normal text-center">Gerenciar ROMs</h2>
-                        <!-- Formulário de Cadastrar ROM -->
-                        <form class="mb-4">
-                            <fieldset>
-                                <legend class="fs-5 mb-3">Cadastrar ROM</legend>
-                                <div class="d-flex">
-                                    <input type="text" class="form-control me-2" id="nomeCategoria"
-                                        placeholder="Categoria">
-                                    <button class="btn-animated btn btn-secondary" style="padding-left: 3px;"
-                                        type="submit">
-                                        Cadastrar
+
+                        <?php while ($r = mysqli_fetch_assoc($listaRoms)):
+                            $id = $r['idRom'];
+                        ?>
+                            <div id="rom-<?= $id ?>" class="mb-4 p-3 border rounded gradiente">
+                                <div class="rom-view">
+                                    <p><strong>Nome: <?= htmlspecialchars($r['nome']) ?></strong></p>
+                                    <p>Descrição: <?= nl2br(htmlspecialchars($r['descricao'])) ?></p>
+                                    <p>Ano: <?= htmlspecialchars($r['ano']) ?></p>
+                                    <p>Arquivo: <?= htmlspecialchars($r['nomeArquivo']) ?></p>
+                                    <p>
+                                        Categoria:
+                                        <?= htmlspecialchars($r['categoria_id']) ?>
+                                        — “<?= htmlspecialchars($r['categoria_nome']) ?>”
+                                    </p>
+                                    <p>
+                                        Usuário (ID): <?= htmlspecialchars($r['user_id']) ?>
+                                        — “<?= htmlspecialchars($r['usuario_apelido']) ?>”
+                                        <!-- ou: — “<?= htmlspecialchars($r['usuario_nome_completo']) ?>” -->
+                                    </p>
+
+                                    <button
+                                        type="button"
+                                        class="btn-animated btn btn-sm btn-outline-primary me-2"
+                                        onclick="editarRom(<?= $id ?>)">
+                                        Alterar
                                     </button>
+                                    <form class="d-inline" method="POST" action="../../proc/procDelRom.php">
+                                        <input type="hidden" name="idRom" value="<?= $id ?>">
+                                        <button
+                                            type="submit"
+                                            class="btn-animated btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Confirma exclusão desta ROM?')">
+                                            Apagar
+                                        </button>
+                                    </form>
                                 </div>
-                            </fieldset>
-                        </form>
-                        <!-- Formulário de Renomear ROM -->
-                        <form>
-                            <fieldset>
-                                <legend class="fs-5 mb-3">Renomear ROM</legend>
-                                <div class="d-flex">
-                                    <select class="form-select me-2" id="inputGroupSelect01">
-                                        <option selected>Escolher...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                    </select>
-                                    <button class="btn-animated btn btn-secondary" style="padding-left: 8px;"
-                                        type="submit">
-                                        Renomear
+
+                                <!-- Formulário de Edição (inicialmente oculto) -->
+                                <form class="rom-edit d-none" id="form-<?= $id ?>"
+                                    method="POST" action="../../proc/procUpdRom.php">
+                                    <input type="hidden" name="idRom" value="<?= $id ?>">
+                                    <input type="text" class="form-control my-1" name="nome"
+                                        value="<?= htmlspecialchars($r['nome']) ?>">
+                                    <textarea class="form-control my-1" name="descricao"><?= htmlspecialchars($r['descricao']) ?></textarea>
+                                    <input type="number" class="form-control my-1" name="ano"
+                                        value="<?= htmlspecialchars($r['ano']) ?>">
+                                    <input type="text" class="form-control my-1" name="nomeArquivo"
+                                        value="<?= htmlspecialchars($r['nomeArquivo']) ?>">
+                                    <input type="number" class="form-control my-1" name="categoria_id"
+                                        value="<?= htmlspecialchars($r['categoria_id']) ?>">
+                                    <input type="number" class="form-control my-1" name="user_id"
+                                        value="<?= htmlspecialchars($r['user_id']) ?>">
+
+                                    <button
+                                        type="submit"
+                                        class="btn-animated btn btn-sm btn-success me-2 mt-2">
+                                        Confirmar Alteração
                                     </button>
-                                </div>
-                            </fieldset>
-                        </form>
-                        <!-- Formulário de Apagar ROM -->
-                        <form>
-                            <fieldset>
-                                <legend class="fs-5 mb-3">Apagar ROM</legend>
-                                <div class="d-flex">
-                                    <select class="form-select me-2" id="inputGroupSelect01">
-                                        <option selected>Escolher...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                    </select>
-                                    <button class="btn-animated btn btn-secondary" style="padding-left: 8px;"
-                                        type="submit">
-                                        Deletar
+                                    <button
+                                        type="button"
+                                        class="btn-animated btn btn-sm btn-secondary mt-2"
+                                        onclick="cancelarEdicaoRom(<?= $id ?>)">
+                                        Cancelar
                                     </button>
-                                </div>
-                            </fieldset>
-                        </form>
+                                </form>
+                            </div>
+                        <?php endwhile; ?>
                     </div>
                 </div>
             </div>
@@ -122,8 +173,8 @@ session_start();
                 <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
             </div>
         </footer>
+    </div> <!-- /background -->
 
-    </div> <!--background-->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
     <script src="../../assets/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"

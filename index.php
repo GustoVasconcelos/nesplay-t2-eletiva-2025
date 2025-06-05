@@ -27,13 +27,14 @@ session_start();
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <?php
-                        if(!isset($_SESSION['usuario'])) {
-                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/login.php">Login</a>';
-                            echo '<a class="btn-animated btn btn-secondary" href="view/cadastrar.php">Cadastrar</a>';
-                        } else {
-                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/logout.php">Sair</a>';
-                        }
+                    if (!isset($_SESSION['usuario'])) {
+                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/login.php">Login</a>';
+                        echo '<a class="btn-animated btn btn-secondary" href="view/cadastrar.php">Cadastrar</a>';
+                    } else {
+                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/logout.php">Sair</a>';
+                    }
                     ?>
                 </div>
             </div>
@@ -44,7 +45,7 @@ session_start();
                 <ul class="nav nav-underline justify-content-center">
                     <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
                     <?php
-                    if($_SESSION['usuario_adm'] == 1){
+                    if ($_SESSION['usuario_adm'] == 1) {
                         echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
                     }
                     ?>

@@ -74,6 +74,13 @@
     --border-radius: 0.75rem;
 }
 
+body.no-anim *,
+body.no-anim *::before,
+body.no-anim *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
 .background {
     position: relative;
     overflow: hidden;
@@ -408,7 +415,7 @@ footer.gradiente {
     word-break: break-word;
 }
 
-@media (max-width: 435px) {
+@media (max-width: 600px) {
     .gradiente {
         padding: 0.75rem;
     }

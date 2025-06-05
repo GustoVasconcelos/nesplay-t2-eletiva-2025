@@ -8,7 +8,31 @@
     ———————————————————————————————————————————————————————————————
 */
 
+// Função para alternar as animações
+; (function () {
+    const btn = document.getElementById('toggle-anim');
+    const body = document.body;
+    const LS_KEY = 'nesplay_no_anim';
+
+    // Aplica estado salvo
+    if (localStorage.getItem(LS_KEY) === 'true') {
+        body.classList.add('no-anim');
+        if (btn) btn.textContent = 'Ativar animações';
+    }
+
+    // Listener do botão
+    btn?.addEventListener('click', () => {
+        const off = body.classList.toggle('no-anim');
+        btn.textContent = off ? 'Ativar animações' : 'Desativar animações';
+        localStorage.setItem(LS_KEY, off);
+        location.reload(); // Força recarregar para aplicar/remover animações corretamente
+    });
+})();
+// FIM--Função para alternar as animações--FIM
+
 window.onload = function () {
+    const isAnimOff = document.body.classList.contains('no-anim');
+
     // Animação dos blocos do background
     const background = document.querySelector(".background");
     const COLORS = ["grey", "red", "black"];
@@ -28,6 +52,7 @@ window.onload = function () {
     }
 
     function animateBlock(block) {
+        if (isAnimOff) return;
         const { maxX, maxY } = getMaxCoords();
         anime({
             targets: block,
@@ -40,31 +65,35 @@ window.onload = function () {
         });
     }
 
-    for (let i = 0; i < TOTAL_BLOCKS; i++) {
-        const block = document.createElement("div");
-        block.classList.add("block");
-        block.style.backgroundColor = COLORS[anime.random(0, COLORS.length - 1)];
-        const { maxX, maxY } = getMaxCoords();
-        block.style.left = randomPosition(maxX);
-        block.style.top = randomPosition(maxY);
-        background.appendChild(block);
-        animateBlock(block);
+    if (!isAnimOff) {
+        for (let i = 0; i < TOTAL_BLOCKS; i++) {
+            const block = document.createElement("div");
+            block.classList.add("block");
+            block.style.backgroundColor = COLORS[anime.random(0, COLORS.length - 1)];
+            const { maxX, maxY } = getMaxCoords();
+            block.style.left = randomPosition(maxX);
+            block.style.top = randomPosition(maxY);
+            background.appendChild(block);
+            animateBlock(block);
+        }
     }
     // FIM--Animação dos blocos do background--FIM
 
     // Animação do logotipo
-    anime({
-        targets: 'span',
-        translateY: [
-            { value: '-1.27rem', easing: 'easeOutExpo', duration: 600 },
-            { value: '0rem', easing: 'easeOutBounce', duration: 800, delay: 200 }
-        ],
-        rotate: ['-1turn', '0turn'],
-        delay: (_, i) => i * 50,
-        easing: 'easeInOutCirc',
-        loopDelay: 1000,
-        loop: true
-    });
+    if (!isAnimOff) {
+        anime({
+            targets: 'span',
+            translateY: [
+                { value: '-1.27rem', easing: 'easeOutExpo', duration: 600 },
+                { value: '0rem', easing: 'easeOutBounce', duration: 800, delay: 200 }
+            ],
+            rotate: ['-1turn', '0turn'],
+            delay: (_, i) => i * 50,
+            easing: 'easeInOutCirc',
+            loopDelay: 1000,
+            loop: true
+        });
+    }
     // FIM--Animação do logotipo--FIM
 
     // Função para mudar o texto do arquivo (se existir input e div)
@@ -79,7 +108,7 @@ window.onload = function () {
             fileNameDiv.textContent = name;
         });
     }
-    // FIM--Função para mudar o texto do arquivo--FIM
+    // FIM--Função para mudar o texto do arquivo (se existir input e div)--FIM
 
     // Listener para mostrar/ocultar input de novo nome ao selecionar categoria
     const select = document.getElementById('selectCategoriaRenomear');
@@ -109,4 +138,18 @@ window.onload = function () {
     }
     window.cancelarEdicao = cancelarEdicao;
     // FIM--Funções para gerenciar os usuários--FIM
+
+    // Funções para gerenciar as roms
+    function editarRom(id) {
+        document.querySelector(`#rom-${id} .rom-view`).classList.add('d-none');
+        document.getElementById(`form-${id}`).classList.remove('d-none');
+    }
+    window.editarRom = editarRom;
+
+    function cancelarEdicaoRom(id) {
+        document.getElementById(`form-${id}`).classList.add('d-none');
+        document.querySelector(`#rom-${id} .rom-view`).classList.remove('d-none');
+    }
+    window.cancelarEdicaoRom = cancelarEdicaoRom;
+    // FIM--Funções para gerenciar as roms--FIM
 };

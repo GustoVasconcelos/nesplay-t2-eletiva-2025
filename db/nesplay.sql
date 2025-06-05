@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Tempo de geração: 04/06/2025 às 10:02
+-- Host: 127.0.0.1
+-- Tempo de geração: 05/06/2025 às 03:44
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -40,7 +40,8 @@ INSERT INTO `categorias` (`idCategoria`, `nome`) VALUES
 (1, 'Ação'),
 (2, 'RPG'),
 (3, 'Tiro'),
-(4, 'Futebol');
+(4, 'Futebol'),
+(6, 'Plataforma');
 
 -- --------------------------------------------------------
 
@@ -50,13 +51,22 @@ INSERT INTO `categorias` (`idCategoria`, `nome`) VALUES
 
 CREATE TABLE `roms` (
   `idRom` int(11) NOT NULL,
-  `nome` varchar(200) NOT NULL,
-  `descricao` text NOT NULL,
-  `ano` int(11) NOT NULL,
-  `nomeArquivo` varchar(200) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `descricao` text DEFAULT NULL,
+  `ano` year(4) DEFAULT NULL,
+  `nomeArquivo` varchar(255) NOT NULL,
   `categoria_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `roms`
+--
+
+INSERT INTO `roms` (`idRom`, `nome`, `descricao`, `ano`, `nomeArquivo`, `categoria_id`, `user_id`) VALUES
+(13, 'Super Mario Bros', 'Clássico plataforma 2D do NES, lançado em 1985.', '1985', 'Super_Mario_Bros.nes', 6, 2),
+(14, 'The Legend of Zelda', 'Aventura épica com Link tentando salvar a princesa Zelda.', '1986', 'Legend_of_Zelda.nes', 2, 1),
+(15, 'Metroid', 'Ação e exploração em um planeta alienígena perigoso.', '1987', 'Metroid.nes', 3, 2);
 
 -- --------------------------------------------------------
 
@@ -81,7 +91,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`idUser`, `nome`, `sobrenome`, `dataNascimento`, `email`, `apelido`, `senha`, `adm`) VALUES
 (1, 'Augusto', 'Vasconcelos', '1988-03-20', 'augusto.vasconcelos@fatec.sp.gov.br', 'trevor', 'teste32', 1),
-(2, 'Teste3', 'Testesom3', '1991-01-01', 'teste3@teste.com', 'teste3', 'teste3', 1);
+(2, 'Teste1', 'Testesom1', '1991-01-01', 'teste1@teste.com', 'teste1', 'teste1', 1),
+(4, 'Teste2', 'Testesom2', '1998-08-08', 'teste2@example.com', 'teste2', 'teste2', 0);
 
 --
 -- Índices para tabelas despejadas
@@ -97,7 +108,9 @@ ALTER TABLE `categorias`
 -- Índices de tabela `roms`
 --
 ALTER TABLE `roms`
-  ADD PRIMARY KEY (`idRom`);
+  ADD PRIMARY KEY (`idRom`),
+  ADD KEY `fk_roms_categoria` (`categoria_id`),
+  ADD KEY `fk_roms_usuario` (`user_id`);
 
 --
 -- Índices de tabela `usuarios`
@@ -113,19 +126,30 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `roms`
 --
 ALTER TABLE `roms`
-  MODIFY `idRom` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idRom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `roms`
+--
+ALTER TABLE `roms`
+  ADD CONSTRAINT `fk_roms_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`idCategoria`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_roms_usuario` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`idUser`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

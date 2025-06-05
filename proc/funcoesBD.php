@@ -90,4 +90,42 @@ function apagarCategoria($idCategoria){
     mysqli_query($conexao, $consulta);
 }
 
+function listarRoms() {
+    $conexao = conectarBD();
+    $sql = "
+      SELECT 
+        r.idRom,
+        r.nome,
+        r.descricao,
+        r.ano,
+        r.nomeArquivo,
+        r.categoria_id,
+        c.nome        AS categoria_nome,
+        r.user_id,
+        u.apelido     AS usuario_apelido,
+        CONCAT(u.nome,' ',u.sobrenome) AS usuario_nome_completo
+      FROM roms r
+      LEFT JOIN categorias c ON r.categoria_id = c.idCategoria
+      LEFT JOIN usuarios    u ON r.user_id      = u.idUser
+    ";
+    return mysqli_query($conexao, $sql);
+}
+
+function alterarRom($idRom, $nome, $descricao, $ano, $nomeArquivo, $categoria_id, $user_id) {
+    $conexao = conectarBD();
+    $nomeEsc      = mysqli_real_escape_string($conexao, $nome);
+    $descEsc      = mysqli_real_escape_string($conexao, $descricao);
+    $arquivoEsc   = mysqli_real_escape_string($conexao, $nomeArquivo);
+    $consulta = "
+        UPDATE roms SET
+            nome         = '$nomeEsc',
+            descricao    = '$descEsc',
+            ano          = $ano,
+            nomeArquivo  = '$arquivoEsc',
+            categoria_id = $categoria_id,
+            user_id      = $user_id
+        WHERE idRom = $idRom
+    ";
+    mysqli_query($conexao, $consulta);
+}
 ?>

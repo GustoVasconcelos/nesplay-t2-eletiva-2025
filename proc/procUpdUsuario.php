@@ -19,3 +19,4 @@ if (!empty($_POST['idUser'])) {
 
 header("Location: ../view/admin/ger-usuarios.php");
 exit;
+?>

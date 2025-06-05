@@ -32,6 +32,7 @@ unset($_SESSION['erro_login']);
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
                     <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
                 </div>
@@ -49,15 +50,16 @@ unset($_SESSION['erro_login']);
 
         <main class="container my-5">
             <?php
-            if((isset($_SESSION['cadastro_Ok']) && $_SESSION['cadastro_Ok'] == true) || 
-                ($erro!="")){
+            if ((isset($_SESSION['cadastro_Ok']) && $_SESSION['cadastro_Ok'] == true) ||
+                ($erro != "")
+            ) {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
                 echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
-                if ($_SESSION['cadastro_Ok'] == true){
+                if ($_SESSION['cadastro_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Usuário cadastrado com sucesso!</h1>';
                 }
-                if ($erro != ""){
+                if ($erro != "") {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Usuário e/ou senha inválidos!</h1>';
                 }
                 echo '</div>';

@@ -29,13 +29,14 @@ session_start();
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <?php
-                        if(!isset($_SESSION['usuario'])) {
-                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="../../view/login.php">Login</a>';
-                            echo '<a class="btn-animated btn btn-secondary" href="../../view/cadastrar.php">Cadastrar</a>';
-                        } else {
-                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="../../view/logout.php">Sair</a>';
-                        }
+                    if (!isset($_SESSION['usuario'])) {
+                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="../../view/login.php">Login</a>';
+                        echo '<a class="btn-animated btn btn-secondary" href="../../view/cadastrar.php">Cadastrar</a>';
+                    } else {
+                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="../../view/logout.php">Sair</a>';
+                    }
                     ?>
                 </div>
             </div>
