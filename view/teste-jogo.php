@@ -15,7 +15,7 @@ session_start();
     <link rel="stylesheet" href="../assets/style.css">
     <script type="text/javascript" src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
 	<script type="text/javascript" src="../assets/nes-embed.js"></script>
-	<script>window.onload = function(){nes_load_url("nes-canvas", "../roms/SuperMarioBros.nes");}</script>
+	
 </head>
 
 <body>
@@ -61,7 +61,7 @@ session_start();
 
         <main class="container my-5">
             <div style="margin: auto; width: 75%;">
-                <canvas id="nes-canvas" width="300" height="284" style="border:10px solid #000000;"> </canvas>
+                <canvas id="nes-canvas" width="300" height="284" style="width: 60%"> </canvas>
             </div>
             <p>DPad: Arrow keys<br/>Start: Return, Select: Tab<br/>A Button: A, B Button: S</p>
         </main>
@@ -80,6 +80,8 @@ session_start();
     </div> <!--background-->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
     <script src="../assets/script.js"></script>
+    <!-- <script>window.onload = function(){nes_load_url("nes-canvas", "../roms/SuperMarioBros.nes");}</script> -->
+    <script>window.addEventListener('load', function() {nes_load_url("nes-canvas", "../roms/SuperMarioBros.nes");})</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
