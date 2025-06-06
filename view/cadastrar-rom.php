@@ -1,5 +1,10 @@
 <?php
+require_once "../proc/funcoesBD.php";
 session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../view/login.php');
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +49,13 @@ session_start();
             <div class="container-fluid px-3 px-md-5">
                 <ul class="nav nav-underline justify-content-center">
                     <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                    <?php
+                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
+                    }
+                    ?>
+                    <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROM</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
                 </ul>
             </div>
@@ -51,27 +63,74 @@ session_start();
 
         <main class="container my-5">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-8 col-lg-5">
+                <div class="col-md-6">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
-                        <h2 class="h3 mb-4 fw-normal text-center">Enviar ROM</h2>
-                        <!-- Formulário de Upload de ROMs -->
-                        <form class="mb-4">
-                            <div class="input-file-animated d-flex flex-column align-items-center w-100 mx-auto">
-                                <input type="file" id="romFile" name="romFile" accept=".nes" required
-                                    class="file-input" />
-                                <label for="romFile" class="btn-animated btn btn-secondary w-75 py-2">
-                                    Escolher arquivo
-                                </label>
-                                <div id="romFileName" class="file-name">
-                                    Nenhum arquivo escolhido
-                                </div>
+                        <h2 class="h3 mb-4 text-center">Enviar ROM</h2>
+
+                        <?php if (isset($_SESSION['romEnviada_Ok'])): ?>
+                            <div class="alert alert-success text-center">
+                                ROM enviada com sucesso!
                             </div>
-                        </form>
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn-animated btn btn-secondary w-75 py-2">
+                            <?php unset($_SESSION['romEnviada_Ok']); ?>
+                        <?php endif; ?>
+
+                        <form method="POST" action="../proc/procCadRom.php"
+                            enctype="multipart/form-data">
+                            <!--nome-->
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome do jogo</label>
+                                <input type="text" id="nome" name="nome"
+                                    class="form-control" required>
+                            </div>
+                            <!--descrição-->
+                            <div class="mb-3">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <textarea id="descricao" name="descricao" rows="3"
+                                    class="form-control" required></textarea>
+                            </div>
+                            <!--ano-->
+                            <div class="mb-3">
+                                <label for="ano" class="form-label">Ano</label>
+                                <input type="number" id="ano" name="ano"
+                                    class="form-control" min="1983" max="2099" required>
+                            </div>
+                            <!--categoria-->
+                            <div class="mb-3">
+                                <label for="categoria" class="form-label">Categoria</label>
+                                <select id="categoria" name="categoria"
+                                    class="form-select" required>
+                                    <option value="" disabled selected>Selecione...</option>
+                                    <?php
+                                    $lista = listarCategorias();
+                                    while ($cat = mysqli_fetch_assoc($lista)):
+                                    ?>
+                                        <option value="<?= $cat['idCategoria'] ?>">
+                                            <?= htmlspecialchars($cat['nome']) ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
+                            </div>
+                            <!--upload-->
+                            <fieldset class="mb-3">
+                                <legend class="fs-5 mb-2">Arquivo ROM (.nes)</legend>
+                                <div class="input-file-animated w-100">
+                                    <input type="file" id="romFile" name="romFile"
+                                        accept=".nes" required class="file-input">
+                                    <label for="romFile"
+                                        class="btn-animated btn btn-secondary w-100 py-2">
+                                        Escolher arquivo
+                                    </label>
+                                    <div id="romFileName" class="file-name mt-2 text-center">
+                                        Nenhum arquivo escolhido
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <button type="submit"
+                                class="btn-animated btn btn-secondary w-100 ">
                                 Enviar ROM
                             </button>
-                        </div>
+                        </form>
+
                     </div>
                 </div>
             </div>

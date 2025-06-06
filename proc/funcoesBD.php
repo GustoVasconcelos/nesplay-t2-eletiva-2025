@@ -1,151 +1,199 @@
 <?php
 
-#função para se conectar ao banco de dados
-function conectarBD(){
-    
+// Conecta ao banco de dados
+function conectarBD()
+{
     $host = "localhost";
     $user = "root";
     $pass = "";
-    $db = "nesplay";
-    $conexao = mysqli_connect($host,$user,$pass,$db);
-    return ($conexao);
+    $db   = "nesplay";
+
+    $c = mysqli_connect($host, $user, $pass, $db);
+    if (!$c) {
+        die('Erro ao conectar ao banco: ' . mysqli_connect_error());
+    }
+    return $c;
 }
 
-#função de logar no sistema
-function realizarLogin($email, $senha){
-
-    $conexao = conectarBD();
-    $consulta = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'";
-    $resposta = mysqli_query($conexao, $consulta);
-    return $resposta;
+// Autentica usuário
+function realizarLogin($email, $senha)
+{
+    $c = conectarBD();
+    $e = mysqli_real_escape_string($c, $email);
+    $s = mysqli_real_escape_string($c, $senha);
+    $sql = "SELECT idUser, apelido, adm FROM usuarios WHERE email = '$e' AND senha = '$s'";
+    return mysqli_query($c, $sql);
 }
 
-#funções relacionadas ao CRUD dos usuários
-function cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha){
-
-    $conexao = conectarBD();
-    $consulta = "INSERT INTO usuarios (nome, sobrenome, dataNascimento, email, apelido, senha, adm) 
-                 VALUES ('$nome','$sobrenome','$dataNasc','$email','$apelido','$senha','0')";
-    mysqli_query($conexao, $consulta);
+// CRUD Usuários
+function cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha)
+{
+    $c  = conectarBD();
+    $n  = mysqli_real_escape_string($c, $nome);
+    $sob = mysqli_real_escape_string($c, $sobrenome);
+    $d  = mysqli_real_escape_string($c, $dataNasc);
+    $e  = mysqli_real_escape_string($c, $email);
+    $a  = mysqli_real_escape_string($c, $apelido);
+    $s  = mysqli_real_escape_string($c, $senha);
+    $sql = "INSERT INTO usuarios (nome, sobrenome, dataNascimento, email, apelido, senha, adm) 
+            VALUES ('$n','$sob','$d','$e','$a','$s',0)";
+    mysqli_query($c, $sql);
 }
 
-function listarUsuarios(){
-
-    $conexao = conectarBD();
-    $consulta = "SELECT * FROM usuarios";
-    $listaUsuarios = mysqli_query($conexao, $consulta);
-    return $listaUsuarios;
+function listarUsuarios()
+{
+    $c = conectarBD();
+    return mysqli_query($c, "SELECT * FROM usuarios ORDER BY nome");
 }
 
-function alterarUsuario($idUser, $nome, $sobrenome, $dataN, $email, $apelido, $senha, $adm){
-
-    $conexao = conectarBD();
-    $consulta = "
-      UPDATE usuarios SET
-        nome           = '$nome',
-        sobrenome      = '$sobrenome',
-        dataNascimento = '$dataN',
-        email          = '$email',
-        apelido        = '$apelido',
-        senha          = '$senha',
-        adm            = $adm
-      WHERE idUser = $idUser
-    ";
-    mysqli_query($conexao, $consulta);
+function alterarUsuario($idUser, $nome, $sobrenome, $dataN, $email, $apelido, $senha, $adm)
+{
+    $c    = conectarBD();
+    $id   = (int)$idUser;
+    $n    = mysqli_real_escape_string($c, $nome);
+    $sob  = mysqli_real_escape_string($c, $sobrenome);
+    $d    = mysqli_real_escape_string($c, $dataN);
+    $e    = mysqli_real_escape_string($c, $email);
+    $a    = mysqli_real_escape_string($c, $apelido);
+    $s    = mysqli_real_escape_string($c, $senha);
+    $adm  = $adm ? 1 : 0;
+    $sql = "UPDATE usuarios SET
+                nome           = '$n',
+                sobrenome      = '$sob',
+                dataNascimento = '$d',
+                email          = '$e',
+                apelido        = '$a',
+                senha          = '$s',
+                adm            = $adm
+            WHERE idUser = $id";
+    mysqli_query($c, $sql);
 }
 
-function excluirUsuario($idUser){
-
-    $conexao = conectarBD();
-    $consulta = "DELETE FROM usuarios WHERE idUser = '$idUser'";
-    mysqli_query($conexao, $consulta);
+function excluirUsuario($idUser)
+{
+    $c  = conectarBD();
+    $id = (int)$idUser;
+    mysqli_query($c, "DELETE FROM usuarios WHERE idUser = $id");
 }
 
-#funções de checagem para não deixar cadastros duplos
-#email é um campo unico
-function checarEmail($email){
-
-    $conexao = conectarBD();
-    $consulta = "SELECT * from usuarios WHERE email = '$email'";
-    $reposta = mysqli_query($conexao, $consulta);
-    return $reposta;
+// Verificações únicas
+function checarEmail($email)
+{
+    $c = conectarBD();
+    $e = mysqli_real_escape_string($c, $email);
+    return mysqli_query($c, "SELECT 1 FROM usuarios WHERE email = '$e' LIMIT 1");
 }
 
-#apelido é outro campo unico
-function checarApelido($apelido){
-
-    $conexao = conectarBD();
-    $consulta = "SELECT * from usuarios WHERE apelido = '$apelido'";
-    $reposta = mysqli_query($conexao, $consulta);
-    return $reposta;
+function checarApelido($apelido)
+{
+    $c = conectarBD();
+    $a = mysqli_real_escape_string($c, $apelido);
+    return mysqli_query($c, "SELECT 1 FROM usuarios WHERE apelido = '$a' LIMIT 1");
 }
 
-#funções relacionadas ao CRUD das categorias
-function cadastrarCategoria($nomeCategoria){
-
-    $conexao = conectarBD();
-    $consulta = "INSERT INTO categorias (nome) VALUES ('$nomeCategoria')";
-    mysqli_query($conexao, $consulta);
+// CRUD Categorias
+function cadastrarCategoria($nomeCategoria)
+{
+    $c   = conectarBD();
+    $n   = mysqli_real_escape_string($c, $nomeCategoria);
+    mysqli_query($c, "INSERT INTO categorias (nome) VALUES ('$n')");
 }
 
-function listarCategorias(){
-
-    $conexao = conectarBD();
-    $consulta = "SELECT * FROM categorias";
-    $listaCategorias = mysqli_query($conexao, $consulta);
-    return $listaCategorias;
+function listarCategorias()
+{
+    $c = conectarBD();
+    return mysqli_query($c, "SELECT idCategoria, nome FROM categorias ORDER BY nome");
 }
 
-function renomemarCategoria($idCategoria, $novoNomeCategoria){
-
-    $conexao = conectarBD();
-    $consulta = "UPDATE categorias SET nome = '$novoNomeCategoria' WHERE idCategoria = '$idCategoria'";
-    mysqli_query($conexao, $consulta);
+function renomearCategoria($idCategoria, $novoNomeCategoria)
+{
+    $c   = conectarBD();
+    $id  = (int)$idCategoria;
+    $n   = mysqli_real_escape_string($c, $novoNomeCategoria);
+    mysqli_query($c, "UPDATE categorias SET nome = '$n' WHERE idCategoria = $id");
 }
 
-function apagarCategoria($idCategoria){
-
-    $conexao = conectarBD();
-    $consulta = "DELETE from categorias WHERE idCategoria = '$idCategoria'";
-    mysqli_query($conexao, $consulta);
+function apagarCategoria($idCategoria)
+{
+    $c  = conectarBD();
+    $id = (int)$idCategoria;
+    mysqli_query($c, "DELETE FROM categorias WHERE idCategoria = $id");
 }
 
-function listarRoms() {
-    $conexao = conectarBD();
-    $sql = "
-      SELECT 
-        r.idRom,
-        r.nome,
-        r.descricao,
-        r.ano,
-        r.nomeArquivo,
-        r.categoria_id,
-        c.nome        AS categoria_nome,
-        r.user_id,
-        u.apelido     AS usuario_apelido,
-        CONCAT(u.nome,' ',u.sobrenome) AS usuario_nome_completo
-      FROM roms r
-      LEFT JOIN categorias c ON r.categoria_id = c.idCategoria
-      LEFT JOIN usuarios    u ON r.user_id      = u.idUser
-    ";
-    return mysqli_query($conexao, $sql);
+// CRUD Roms
+function cadastrarRom($nome, $descricao, $ano, $nomeArquivo, $caminho, $categoria_id, $user_id)
+{
+    $c    = conectarBD();
+    $n    = mysqli_real_escape_string($c, $nome);
+    $d    = mysqli_real_escape_string($c, $descricao);
+    $y    = (int)$ano;
+    $orig = mysqli_real_escape_string($c, $nomeArquivo);
+    $cam  = mysqli_real_escape_string($c, $caminho);
+    $cat  = (int)$categoria_id;
+    $usr  = (int)$user_id;
+    $sql  = "INSERT INTO roms
+                (nome, descricao, ano, nomeArquivo, caminho, categoria_id, user_id)
+             VALUES
+                ('$n','$d',$y,'$orig','$cam',$cat,$usr)";
+    return mysqli_query($c, $sql);
 }
 
-function alterarRom($idRom, $nome, $descricao, $ano, $nomeArquivo, $categoria_id, $user_id) {
-    $conexao = conectarBD();
-    $nomeEsc      = mysqli_real_escape_string($conexao, $nome);
-    $descEsc      = mysqli_real_escape_string($conexao, $descricao);
-    $arquivoEsc   = mysqli_real_escape_string($conexao, $nomeArquivo);
-    $consulta = "
-        UPDATE roms SET
-            nome         = '$nomeEsc',
-            descricao    = '$descEsc',
-            ano          = $ano,
-            nomeArquivo  = '$arquivoEsc',
-            categoria_id = $categoria_id,
-            user_id      = $user_id
-        WHERE idRom = $idRom
-    ";
-    mysqli_query($conexao, $consulta);
+function listarRoms()
+{
+    $c = conectarBD();
+    $sql = "SELECT
+                r.idRom,
+                r.nome,
+                r.descricao,
+                r.ano,
+                r.nomeArquivo,
+                r.caminho,
+                r.categoria_id,
+                c.nome AS categoria_nome,
+                r.user_id,
+                u.apelido AS usuario_apelido,
+                CONCAT(u.nome,' ',u.sobrenome) AS usuario_nome_completo
+            FROM roms r
+            LEFT JOIN categorias c ON r.categoria_id = c.idCategoria
+            LEFT JOIN usuarios u  ON r.user_id      = u.idUser";
+    return mysqli_query($c, $sql);
 }
-?>
+
+function alterarRom($idRom, $nome, $descricao, $ano, $nomeArquivo, $caminho, $categoria_id, $user_id)
+{
+    $c     = conectarBD();
+    $id    = (int)$idRom;
+    $n     = mysqli_real_escape_string($c, $nome);
+    $d     = mysqli_real_escape_string($c, $descricao);
+    $y     = (int)$ano;
+    $orig  = mysqli_real_escape_string($c, $nomeArquivo);
+    $cam   = mysqli_real_escape_string($c, $caminho);
+    $cat   = (int)$categoria_id;
+    $usr   = (int)$user_id;
+    $sql   = "UPDATE roms SET
+                 nome         = '$n',
+                 descricao    = '$d',
+                 ano          = $y,
+                 nomeArquivo  = '$orig',
+                 caminho      = '$cam',
+                 categoria_id = $cat,
+                 user_id      = $usr
+              WHERE idRom = $id";
+    mysqli_query($c, $sql);
+}
+
+function deletarRom(int $idRom): bool {
+    $c = conectarBD();
+    $sql = "DELETE FROM roms WHERE idRom = ?";
+    $stmt = mysqli_prepare($c, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $idRom);
+    return mysqli_stmt_execute($stmt);
+}
+
+function buscarRomPorId($idRom) {
+    $c = conectarBD();
+    $id = (int)$idRom;
+    $sql = "SELECT * FROM roms WHERE idRom = $id LIMIT 1";
+    $resultado = mysqli_query($c, $sql);
+    return mysqli_fetch_assoc($resultado);
+}

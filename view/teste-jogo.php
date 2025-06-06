@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once '../proc/funcoesBD.php';
+$roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY idRom DESC LIMIT 3");
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
@@ -44,7 +46,7 @@ session_start();
                     <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
                     <?php
                     if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
                     }
                     ?>
                     <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
@@ -58,7 +60,24 @@ session_start();
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
-                        <div style="margin: auto; width: 84%;">
+                        <div class="mb-3 text-center">
+                            <?php
+                            $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY idRom DESC LIMIT 3");
+                            $romPadrao = mysqli_fetch_assoc($roms);
+                            ?>
+                            <label for="rom-select" class="form-label texto-gradiente fw-bold">Selecione uma das 3 ROM recentemente adicionadas:</label>
+                            <select id="rom-select" class="form-select text-center">
+                                <option value="<?= htmlspecialchars($romPadrao['nomeArquivo']) ?>" selected>
+                                    <?= htmlspecialchars($romPadrao['nome']) ?> (Padrão)
+                                </option>
+                                <?php while ($rom = mysqli_fetch_assoc($roms)): ?>
+                                    <option value="<?= htmlspecialchars($rom['nomeArquivo']) ?>">
+                                        <?= htmlspecialchars($rom['nome']) ?>
+                                    </option>
+                                <?php endwhile; ?>
+                            </select>
+                        </div>
+                        <div style="margin: auto; width: 100%;">
                             <div id="canvas-wrapper" class="d-flex align-items-center justify-content-center" style="margin: auto; width: 94%; background: #000;">
                                 <canvas id="nes-canvas" width="256" height="240"></canvas>
                             </div>
@@ -84,26 +103,67 @@ session_start();
     </div><!--background-->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
     <script src="../assets/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const canvasId = 'nes-canvas';
+        const basePath = '../roms/';
+
+        function carregarRom(nomeArquivo) {
+            nes_load_url(canvasId, basePath + nomeArquivo);
+        }
+
+        function salvarROMEmCookie(nomeROM) {
+            document.cookie = `ultimaROM=${nomeROM}; path=/; max-age=31536000`; // 1 ano
+        }
+
+        function lerCookie(nome) {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [chave, valor] = cookie.trim().split('=');
+                if (chave === nome) return valor;
+            }
+            return null;
+        }
+
         window.addEventListener('load', () => {
-            nes_load_url('nes-canvas', '../roms/SuperMarioBros.nes');
+            const select = document.getElementById('rom-select');
+            const romSalva = lerCookie('ultimaROM');
+            const romInicial = romSalva || select.value;
+
+            select.value = romInicial;
+            carregarRom(romInicial);
+        });
+
+        document.getElementById('rom-select').addEventListener('change', function() {
+            const rom = this.value;
+            carregarRom(rom);
+            salvarROMEmCookie(rom);
         });
 
         const wrapper = document.getElementById('canvas-wrapper');
-        const fullscreenBtn = document.getElementById('btn-fullscreen');
+        document.getElementById('btn-fullscreen').addEventListener('click', () => {
+            if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+            else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
+            else if (wrapper.msRequestFullscreen) wrapper.msRequestFullscreen();
+        });
 
-        fullscreenBtn.addEventListener('click', () => {
-            if (wrapper.requestFullscreen) {
-                wrapper.requestFullscreen();
-            } else if (wrapper.webkitRequestFullscreen) {
-                wrapper.webkitRequestFullscreen();
-            } else if (wrapper.msRequestFullscreen) {
-                wrapper.msRequestFullscreen();
+        const teclasBloqueadas = [
+            'ArrowUp',
+            'ArrowDown',
+            'ArrowLeft',
+            'ArrowRight',
+            'a', 'q', 's', 'o',
+            'A', 'Q', 'S', 'O',
+            'Tab', 'Enter'
+        ];
+
+        document.addEventListener('keydown', function(e) {
+            if (teclasBloqueadas.includes(e.key)) {
+                e.preventDefault();
             }
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

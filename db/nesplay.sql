@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 05/06/2025 às 03:44
+-- Tempo de geração: 06/06/2025 às 05:41
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -55,6 +55,7 @@ CREATE TABLE `roms` (
   `descricao` text DEFAULT NULL,
   `ano` year(4) DEFAULT NULL,
   `nomeArquivo` varchar(255) NOT NULL,
+  `caminho` varchar(255) NOT NULL,
   `categoria_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -63,10 +64,11 @@ CREATE TABLE `roms` (
 -- Despejando dados para a tabela `roms`
 --
 
-INSERT INTO `roms` (`idRom`, `nome`, `descricao`, `ano`, `nomeArquivo`, `categoria_id`, `user_id`) VALUES
-(13, 'Super Mario Bros', 'Clássico plataforma 2D do NES, lançado em 1985.', '1985', 'Super_Mario_Bros.nes', 6, 2),
-(14, 'The Legend of Zelda', 'Aventura épica com Link tentando salvar a princesa Zelda.', '1986', 'Legend_of_Zelda.nes', 2, 1),
-(15, 'Metroid', 'Ação e exploração em um planeta alienígena perigoso.', '1987', 'Metroid.nes', 3, 2);
+INSERT INTO `roms` (`idRom`, `nome`, `descricao`, `ano`, `nomeArquivo`, `caminho`, `categoria_id`, `user_id`) VALUES
+(24, 'Mega Man', 'Bora regaçar o Dr Wily!', '1987', 'Mega_Man.nes', 'roms/Mega_Man.nes', 6, 2),
+(25, 'Castlevania', 'Bora regaçar o Drácula!', '1987', 'Castlevania.nes', 'roms/Castlevania.nes', 6, 2),
+(26, 'The Legend Of Zelda', 'Bora salvar a Zelda e derrotar Ganon!', '1987', 'The_Legend_of_Zelda.nes', 'roms/The_Legend_of_Zelda.nes', 2, 2),
+(27, 'Super Mario Bros', 'Bora salvar a Peach e derrotar Bowser!', '1985', 'SuperMarioBros.nes', 'roms/SuperMarioBros.nes', 6, 2);
 
 -- --------------------------------------------------------
 
@@ -132,7 +134,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de tabela `roms`
 --
 ALTER TABLE `roms`
-  MODIFY `idRom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idRom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
