@@ -51,7 +51,7 @@ if (!isset($_SESSION['usuario'])) {
                     <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
                     <?php
                     if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
                     }
                     ?>
                     <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>

@@ -77,12 +77,14 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
                                 <?php endwhile; ?>
                             </select>
                         </div>
+                        <!-- Canvas do emulador -->
                         <div style="margin: auto; width: 100%;">
-                            <div id="canvas-wrapper" class="d-flex align-items-center justify-content-center" style="margin: auto; width: 94%; background: #000;">
+                            <div id="canvas-wrapper" class="d-flex align-items-center justify-content-center canvas-animated-border" style="margin: auto; width: 100%;">
                                 <canvas id="nes-canvas" width="256" height="240"></canvas>
                             </div>
                             <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
                         </div>
+                        <!-- FIM--Canvas do emulador--FIM -->
                         <p class="mt-3 texto-gradiente text-center">DPad: ←↑→↓ &nbsp; Start: Enter &nbsp; Select: Tab &nbsp; A: A/Q &nbsp; B: S/O</p>
                     </div>
                 </div>
@@ -100,70 +102,10 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
             </div>
         </footer>
 
-    </div><!--background-->
+    </div> <!--background-->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-    <script src="../assets/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const canvasId = 'nes-canvas';
-        const basePath = '../roms/';
-
-        function carregarRom(nomeArquivo) {
-            nes_load_url(canvasId, basePath + nomeArquivo);
-        }
-
-        function salvarROMEmCookie(nomeROM) {
-            document.cookie = `ultimaROM=${nomeROM}; path=/; max-age=31536000`; // 1 ano
-        }
-
-        function lerCookie(nome) {
-            const cookies = document.cookie.split(';');
-            for (let cookie of cookies) {
-                const [chave, valor] = cookie.trim().split('=');
-                if (chave === nome) return valor;
-            }
-            return null;
-        }
-
-        window.addEventListener('load', () => {
-            const select = document.getElementById('rom-select');
-            const romSalva = lerCookie('ultimaROM');
-            const romInicial = romSalva || select.value;
-
-            select.value = romInicial;
-            carregarRom(romInicial);
-        });
-
-        document.getElementById('rom-select').addEventListener('change', function() {
-            const rom = this.value;
-            carregarRom(rom);
-            salvarROMEmCookie(rom);
-        });
-
-        const wrapper = document.getElementById('canvas-wrapper');
-        document.getElementById('btn-fullscreen').addEventListener('click', () => {
-            if (wrapper.requestFullscreen) wrapper.requestFullscreen();
-            else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
-            else if (wrapper.msRequestFullscreen) wrapper.msRequestFullscreen();
-        });
-
-        const teclasBloqueadas = [
-            'ArrowUp',
-            'ArrowDown',
-            'ArrowLeft',
-            'ArrowRight',
-            'a', 'q', 's', 'o',
-            'A', 'Q', 'S', 'O',
-            'Tab', 'Enter'
-        ];
-
-        document.addEventListener('keydown', function(e) {
-            if (teclasBloqueadas.includes(e.key)) {
-                e.preventDefault();
-            }
-        });
-    </script>
-
+    <script src="../assets/script.js"></script>
 </body>
 
 </html>

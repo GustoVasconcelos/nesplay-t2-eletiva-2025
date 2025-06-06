@@ -176,7 +176,7 @@ $listaRoms = listarRoms();
                 <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
             </div>
         </footer>
-    </div> <!-- /background -->
+    </div> <!--background-->
 
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
     <script src="../../assets/script.js"></script>
