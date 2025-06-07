@@ -1,7 +1,7 @@
 <?php
 require_once "../../proc/funcoesBD.php";
 session_start();
-if ($_SESSION['usuario_adm'] != 1){
+if ($_SESSION['usuario_adm'] != 1) {
     header("Location: ../../index.php");
     exit;
 }
@@ -72,7 +72,7 @@ $listaUsuarios = listarUsuarios();
             ): ?>
                 <div class="row justify-content-center mb-3">
                     <div class="col-12 col-md-8 col-lg-5">
-                        <div class="gradiente p-4 rounded-3 shadow-sm text-center">
+                        <div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">
                             <?php if ($_SESSION['cadastroUsuario_Ok'] ?? false): ?>
                                 <h1 class="h3 mb-0">Usuário cadastrado com sucesso!</h1>
                                 <?php $_SESSION['cadastroUsuario_Ok'] = false; ?>

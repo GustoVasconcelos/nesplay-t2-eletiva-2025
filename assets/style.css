@@ -69,6 +69,29 @@
     }
 }
 
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+
 :root {
     --transition-duration: 0.4s;
     --border-radius: 0.75rem;
@@ -511,6 +534,10 @@ footer.gradiente {
     color: #fff;
     white-space: normal;
     word-break: break-word;
+}
+
+.success-message {
+    animation: fadeInOut 4s ease-in-out forwards;
 }
 
 @media (max-width: 600px) {

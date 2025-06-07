@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION['usuario'])){
+if (isset($_SESSION['usuario'])) {
     header("Location: ../index.php");
     exit;
 }
@@ -58,7 +58,7 @@ unset($_SESSION['erro_login']);
             if ($cadastro_msg != "" || $erro != "") {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
-                echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
+                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">';
                 if ($cadastro_msg != "") {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">' . $cadastro_msg . '</h1>';
                 }

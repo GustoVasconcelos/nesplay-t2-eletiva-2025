@@ -5,6 +5,9 @@ if ($_SESSION['usuario_adm'] != 1) {
     header("Location: ../../index.php");
     exit;
 }
+$_SESSION['cadastroCategoria_Ok'] = $_SESSION['cadastroCategoria_Ok'] ?? false;
+$_SESSION['apagarCategoria_Ok'] = $_SESSION['apagarCategoria_Ok'] ?? false;
+$_SESSION['renomearCategoria_Ok'] = $_SESSION['renomearCategoria_Ok'] ?? false;
 ?>
 
 <!DOCTYPE html>
@@ -70,16 +73,16 @@ if ($_SESSION['usuario_adm'] != 1) {
             ) {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
-                echo '<div class="gradiente p-4 rounded-3 shadow-sm">';
-                if ($_SESSION['cadastroCategoria_Ok'] == true) {
+                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">';
+                if (isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria cadastrada com sucesso!</h1>';
                     $_SESSION['cadastroCategoria_Ok'] = false;
                 }
-                if ($_SESSION['apagarCategoria_Ok'] == true) {
+                if (isset($_SESSION['apagarCategoria_Ok']) && $_SESSION['apagarCategoria_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria apagada com sucesso!</h1>';
                     $_SESSION['apagarCategoria_Ok'] = false;
                 }
-                if ($_SESSION['renomearCategoria_Ok'] == true) {
+                if (isset($_SESSION['renomearCategoria_Ok']) && $_SESSION['renomearCategoria_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria renomeada com sucesso!</h1>';
                     $_SESSION['renomearCategoria_Ok'] = false;
                 }
