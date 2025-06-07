@@ -33,3 +33,4 @@ if (!empty($_POST['userEmail']) && !empty($_POST['userPassword'])) {
 // Redireciona de volta ao formulário de login
 header("Location: ../view/login.php");
 exit;
+?>

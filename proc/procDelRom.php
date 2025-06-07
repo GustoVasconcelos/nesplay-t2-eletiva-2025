@@ -35,3 +35,4 @@ $_SESSION['apagarRom_Ok'] = $sucesso;
 
 header("Location: ../view/admin/ger-roms.php");
 exit;
+?>

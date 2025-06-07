@@ -9,7 +9,8 @@ if (!empty($_POST['idUser'])) {
     
     excluirUsuario($idUser);
     $_SESSION['apagarUsuario_Ok'] = true;
-    header("Location: ../view/admin/ger-usuarios.php");
-    die();
+    
 }
+header("Location: ../view/admin/ger-usuarios.php");
+exit;
 ?>

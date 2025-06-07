@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Se o referer NÃO vier do seu próprio domínio, bloqueia
+    RewriteCond %{HTTP_REFERER} !^https?://localhost [NC] # !^https?://(www\.)?seudominio\.com [NC] trocar pelo dominio
+    RewriteRule ^.*$ - [F,L]
+</IfModule>

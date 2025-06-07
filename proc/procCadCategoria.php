@@ -9,7 +9,7 @@ if(!empty($_POST['nomeCategoria'])){
 
       cadastrarCategoria($nomeCategoria);
       $_SESSION['cadastroCategoria_Ok'] = true;
-      header('Location:../view/admin/ger-categorias.php');
-      die();
-   }
+}
+header('Location:../view/admin/ger-categorias.php');
+exit;
 ?>

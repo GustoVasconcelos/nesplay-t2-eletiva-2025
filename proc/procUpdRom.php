@@ -21,3 +21,4 @@ if (!empty($_POST['idRom'])) {
 
 header("Location: ../view/admin/ger-roms.php");
 exit;
+?>

@@ -9,7 +9,7 @@ if(!empty($_POST['selectApagarCategoria'])){
 
    apagarCategoria($idCategoria);
    $_SESSION['apagarCategoria_Ok'] = true;
-   header('Location:../view/admin/ger-categorias.php');
-   die();
 }
+header('Location:../view/admin/ger-categorias.php');
+exit;
 ?>

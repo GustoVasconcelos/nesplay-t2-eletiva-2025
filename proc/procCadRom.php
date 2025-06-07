@@ -10,8 +10,8 @@ if (!isset($_SESSION['usuario'])) {
 if (!isset($_SESSION['idUser'])) {
     die('Erro interno: usuário não identificado. Faça login novamente.');
 }
-$user_id = (int) $_SESSION['idUser'];
 
+$user_id = (int) $_SESSION['idUser'];
 $nome      = $_POST['nome']      ?? '';
 $descricao = $_POST['descricao'] ?? '';
 $ano       = $_POST['ano']       ?? '';
@@ -94,3 +94,4 @@ $_SESSION['romEnviada_Ok']   = false;
 $_SESSION['romEnviada_Erro'] = 'Nenhum arquivo enviado.';
 header('Location: ../view/cadastrar-rom.php');
 exit;
+?>
