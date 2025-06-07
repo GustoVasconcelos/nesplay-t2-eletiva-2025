@@ -106,6 +106,7 @@ function keyboard(callback, event) {
 }
 
 async function nes_init(canvas_id) {
+	// Canvas e framebuffer
 	var canvas = document.getElementById(canvas_id);
 	canvas_ctx = canvas.getContext("2d");
 	image = canvas_ctx.getImageData(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -117,16 +118,13 @@ async function nes_init(canvas_id) {
 	framebuffer_u8 = new Uint8ClampedArray(buffer);
 	framebuffer_u32 = new Uint32Array(buffer);
 
-	try {
-		audioCtx = new (window.AudioContext || window.webkitAudioContext)({
-			sampleRate: 44100 // Taxa de amostragem do NES
-		});
-
+	if (!audioCtx) {
 		try {
 			audioCtx = new (window.AudioContext || window.webkitAudioContext)({
-				sampleRate: 44100 // Taxa de amostragem do NES
+				sampleRate: 44100
 			});
 			await audioCtx.audioWorklet.addModule('../assets/nes-audio-worklet.js');
+
 			scriptProcessor = new AudioWorkletNode(audioCtx, 'nes-audio-processor', {
 				outputChannelCount: [2]
 			});
@@ -134,26 +132,24 @@ async function nes_init(canvas_id) {
 				if (!isRunning) return;
 				scriptProcessor.port.postMessage({ type: 'samples', left: l, right: r });
 			};
-			scriptProcessor.connect(audioCtx.destination);
 
-			console.log('AudioWorklet configurado com sucesso');
+			window.nesGainNode = audioCtx.createGain();
+			scriptProcessor.connect(window.nesGainNode);
+			window.nesGainNode.connect(audioCtx.destination);
+
+			console.log('Áudio inicializado com AudioWorklet + GainNode');
 		} catch (e) {
-			console.error("Erro ao configurar AudioWorklet:", e);
+			console.error("Erro ao configurar áudio:", e);
 		}
-
-		console.log('Áudio configurado com sucesso');
 
 		document.addEventListener('pointerdown', () => {
 			if (audioCtx.state === 'suspended') {
 				audioCtx.resume().then(() => {
-					console.log('Áudio desbloqueado após interação');
-					// a partir daqui isRunning pode estar true
+					console.log('Áudio desbloqueado');
 					isRunning = true;
 				});
 			}
 		}, { once: true });
-	} catch (e) {
-		console.error("Erro ao configurar áudio:", e);
 	}
 }
 
@@ -163,26 +159,20 @@ function nes_boot(rom_data) {
 	lastFrameTime = performance.now();
 	framesAccumulator = 0;
 	requestAnimationFrame(onAnimationFrame);
+	if (window.applyVolumeState) {
+		window.applyVolumeState();
+	}
 }
 
 function stopEmulator() {
 	isRunning = false;
-	if (scriptProcessor) {
-		scriptProcessor.disconnect();
-		scriptProcessor.onaudioprocess = null;
-		scriptProcessor = null;
-	}
-	if (audioCtx) {
-		audioCtx.close();
-		audioCtx = null;
-	}
+
 	audio_read_cursor = audio_write_cursor = 0;
 }
 
-function nes_load_url(canvas_id, path) {
+async function nes_load_url(canvas_id, path) {
 	stopEmulator();
-
-	nes_init(canvas_id);
+	await nes_init(canvas_id);
 
 	var req = new XMLHttpRequest();
 	req.open("GET", path);

@@ -30,6 +30,30 @@
 })();
 // FIM--Função para alternar as animações--FIM
 
+// Estado global de volume/mute para persistir entre trocas de ROM
+window.isMuted = false;
+window.prevVolume = 50;
+
+// Função global para aplicar estado de volume/mute
+window.applyVolumeState = function () {
+    const volSlider = document.getElementById('volume-slider');
+    const volDisplay = document.getElementById('volume-display');
+    const muteBtn = document.getElementById('mute-btn');
+    if (!window.nesGainNode || !volSlider || !volDisplay || !muteBtn) return;
+
+    if (window.isMuted) {
+        nesGainNode.gain.value = 0;
+        volSlider.value = 0;
+        volDisplay.textContent = '0%';
+        muteBtn.textContent = 'Volume: Desilenciar';
+    } else {
+        nesGainNode.gain.value = window.prevVolume / 100;
+        volSlider.value = window.prevVolume;
+        volDisplay.textContent = window.prevVolume + '%';
+        muteBtn.textContent = 'Volume: Silenciar';
+    }
+};
+
 window.onload = function () {
     const isAnimOff = document.body.classList.contains('no-anim');
 
@@ -152,6 +176,56 @@ window.onload = function () {
     }
     window.cancelarEdicaoRom = cancelarEdicaoRom;
     // FIM--Funções para gerenciar as roms--FIM
+
+    // Funções para gerenciar o volume e o slider do volume
+    const volSlider = document.getElementById('volume-slider');
+    const volDisplay = document.getElementById('volume-display');
+    const muteBtn = document.getElementById('mute-btn');
+
+    // Aplica estado na primeira carga
+    document.documentElement.style.setProperty('--vol-percent', window.prevVolume + '%');
+    applyVolumeState();
+
+    // Slider de volume
+    volSlider.addEventListener('input', () => {
+        const pct = volSlider.value;
+        window.prevVolume = pct;
+        // atualiza o gradiente:
+        document.documentElement.style.setProperty('--vol-percent', pct + '%');
+        // restante da sua lógica de volume/mute:
+        if (window.isMuted) window.isMuted = false;
+        applyVolumeState();
+    });
+
+    // Botão de Mudo
+    muteBtn.addEventListener('click', () => {
+        // se ainda não está mudo, guarda o prevVolume antes de mutar
+        if (!window.isMuted) {
+            window.prevVolume = volSlider.value;
+            window.isMuted = true;
+        } else {
+            // apenas desmuta, prevVolume já preserva o valor anterior
+            window.isMuted = false;
+        }
+        applyVolumeState();
+    });
+
+    function applyVolumeState() {
+        if (!window.nesGainNode) return;
+
+        if (isMuted) {
+            nesGainNode.gain.value = 0;
+            volSlider.value = 0;
+            volDisplay.textContent = '0%';
+            muteBtn.textContent = 'Volume: Desilenciar';
+        } else {
+            nesGainNode.gain.value = prevVolume / 100;
+            volSlider.value = prevVolume;
+            volDisplay.textContent = prevVolume + '%';
+            muteBtn.textContent = 'Volume: Silenciar';
+        }
+    }
+    // FIM--Funções para gerenciar o volume e o slider do volume--FIM
 };
 
 // Funções para gerenciar o emulador e o canvas

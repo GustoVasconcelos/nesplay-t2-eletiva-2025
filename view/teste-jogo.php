@@ -77,14 +77,29 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
                                 <?php endwhile; ?>
                             </select>
                         </div>
-                        <!-- Canvas do emulador -->
                         <div style="margin: auto; width: 100%;">
+                            <!-- Canvas do emulador -->
                             <div id="canvas-wrapper" class="d-flex align-items-center justify-content-center canvas-animated-border" style="margin: auto; width: 100%;">
                                 <canvas id="nes-canvas" width="256" height="240"></canvas>
                             </div>
+                            <!-- FIM--Canvas do emulador--FIM -->
                             <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
+                            <div class="text-center mt-3">
+                                <button id="mute-btn" class="btn btn-animated btn-outline-secondary mt-2">
+                                    Mudo
+                                </button>
+                                <div id="volume-display" class="small texto-gradiente mt-1">50%</div>
+                                <input
+                                    id="volume-slider"
+                                    type="range"
+                                    min="0"
+                                    max="100"
+                                    step="1"
+                                    value="50"
+                                    class="form-range"
+                                    style="width: 80%; margin: auto;">
+                            </div>
                         </div>
-                        <!-- FIM--Canvas do emulador--FIM -->
                         <p class="mt-3 texto-gradiente text-center">DPad: ←↑→↓ &nbsp; Start: Enter &nbsp; Select: Tab &nbsp; A: A/Q &nbsp; B: S/O</p>
                     </div>
                 </div>

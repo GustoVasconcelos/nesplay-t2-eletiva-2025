@@ -91,10 +91,81 @@
     }
 }
 
-
 :root {
     --transition-duration: 0.4s;
     --border-radius: 0.75rem;
+    --slider-track-height: 8px;
+    --slider-thumb-size: 20px;
+    --slider-color-filled: rgb(255, 0, 0);
+    --slider-color-bg: rgb(68, 68, 68);
+    --slider-transition: 0.3s;
+    --slider-animation-speed: 2s;
+    --vol-filled-color: rgb(255, 0, 0);
+    --vol-bg-color: rgb(51, 51, 51);
+    --vol-percent: 50%;
+}
+
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80%;
+    margin: auto;
+    background: none;
+}
+
+#volume-slider::-webkit-slider-runnable-track {
+    height: 8px;
+    background: var(--vol-bg-color);
+    border-radius: 50px;
+    overflow: visible;
+    background: linear-gradient(to right,
+            var(--vol-filled-color) 0%,
+            var(--vol-filled-color) var(--vol-percent),
+            var(--vol-bg-color) var(--vol-percent),
+            var(--vol-bg-color) 100%);
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    margin-top: -4px;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+#volume-slider:hover::-webkit-slider-thumb,
+#volume-slider:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+}
+
+#volume-slider::-moz-range-track {
+    height: 8px;
+    background: var(--vol-bg-color);
+    border-radius: 4px;
+}
+
+#volume-slider::-moz-range-progress {
+    background: var(--vol-filled-color);
+    height: 8px;
+    border-radius: 4px;
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    cursor: pointer;
+    border: none;
+    transition: transform .2s;
+}
+
+
+#volume-display{
+    font-size: 1.5em;
 }
 
 #canvas-wrapper {
@@ -122,7 +193,7 @@
     --angle: 0deg;
     position: relative;
     display: inline-block;
-    padding: 4px;
+    padding: 7px;
     border-radius: var(--border-radius);
     background: transparent;
     z-index: 1;
@@ -141,8 +212,8 @@
             rgb(154, 154, 154),
             rgb(255, 0, 0)) border-box;
     -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
+        linear-gradient(rgb(255, 255, 255) 0 0) content-box,
+        linear-gradient(rgb(255, 255, 255) 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
     animation: rotateBorder 3s linear infinite;
@@ -166,8 +237,8 @@ body.no-anim *::after {
 }
 
 body {
-    --sb-track-color: #252525;
-    --sb-thumb-color: #ff0000;
+    --sb-track-color: rgb(37, 37, 37);
+    --sb-thumb-color: rgb(255, 0, 0);
     --sb-size: 14px;
 }
 
@@ -183,7 +254,7 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
     background: var(--sb-thumb-color);
     border-radius: 3px;
-    border: 2px solid #6d6d6d;
+    border: 2px solid rgb(109, 109, 109);
 }
 
 .background {
@@ -531,7 +602,7 @@ footer.gradiente {
 .file-name {
     width: 100%;
     text-align: center;
-    color: #fff;
+    color: rgb(255, 255, 255);
     white-space: normal;
     word-break: break-word;
 }
