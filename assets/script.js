@@ -106,7 +106,7 @@ window.onload = function () {
     // Animação do logotipo
     if (!isAnimOff) {
         anime({
-            targets: 'span',
+            targets: '#texto-logotipo span',
             translateY: [
                 { value: '-1.27rem', easing: 'easeOutExpo', duration: 600 },
                 { value: '0rem', easing: 'easeOutBounce', duration: 800, delay: 200 }
@@ -187,28 +187,32 @@ window.onload = function () {
     applyVolumeState();
 
     // Slider de volume
-    volSlider.addEventListener('input', () => {
-        const pct = volSlider.value;
-        window.prevVolume = pct;
-        // atualiza o gradiente:
-        document.documentElement.style.setProperty('--vol-percent', pct + '%');
-        // restante da sua lógica de volume/mute:
-        if (window.isMuted) window.isMuted = false;
-        applyVolumeState();
-    });
+    if (volSlider) {
+        volSlider.addEventListener('input', () => {
+            const pct = volSlider.value;
+            window.prevVolume = pct;
+            // atualiza o gradiente:
+            document.documentElement.style.setProperty('--vol-percent', pct + '%');
+            // restante da sua lógica de volume/mute:
+            if (window.isMuted) window.isMuted = false;
+            applyVolumeState();
+        });
+    }
 
     // Botão de Mudo
-    muteBtn.addEventListener('click', () => {
-        // se ainda não está mudo, guarda o prevVolume antes de mutar
-        if (!window.isMuted) {
-            window.prevVolume = volSlider.value;
-            window.isMuted = true;
-        } else {
-            // apenas desmuta, prevVolume já preserva o valor anterior
-            window.isMuted = false;
-        }
-        applyVolumeState();
-    });
+    if (muteBtn) {
+        muteBtn.addEventListener('click', () => {
+            // se ainda não está mudo, guarda o prevVolume antes de mutar
+            if (!window.isMuted) {
+                window.prevVolume = volSlider.value;
+                window.isMuted = true;
+            } else {
+                // apenas desmuta, prevVolume já preserva o valor anterior
+                window.isMuted = false;
+            }
+            applyVolumeState();
+        });
+    }
 
     function applyVolumeState() {
         if (!window.nesGainNode) return;
@@ -262,25 +266,30 @@ function lerCookie(nome) {
 
 window.addEventListener('load', () => {
     const select = document.getElementById('rom-select');
+    if (!select) return;
+
     const romSalva = lerCookie('ultimaROM');
     const romInicial = romSalva || select.value;
 
     select.value = romInicial;
     carregarRom(romInicial);
-});
 
-document.getElementById('rom-select').addEventListener('change', function () {
-    const rom = this.value;
-    carregarRom(rom);
-    salvarROMEmCookie(rom);
+    select.addEventListener('change', function () {
+        const rom = this.value;
+        carregarRom(rom);
+        salvarROMEmCookie(rom);
+    });
 });
 
 const wrapper = document.getElementById('canvas-wrapper');
-document.getElementById('btn-fullscreen').addEventListener('click', () => {
-    if (wrapper.requestFullscreen) wrapper.requestFullscreen();
-    else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
-    else if (wrapper.msRequestFullscreen) wrapper.msRequestFullscreen();
-});
+const fsBtn = document.getElementById('btn-fullscreen');
+if (fsBtn && wrapper) {
+    fsBtn.addEventListener('click', () => {
+        if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+        else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
+        else if (wrapper.msRequestFullscreen) wrapper.msRequestFullscreen();
+    });
+}
 
 const teclasBloqueadas = [
     'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
@@ -288,11 +297,14 @@ const teclasBloqueadas = [
     'Tab', 'Enter'
 ];
 
-document.addEventListener('keydown', function (e) {
-    if (teclasBloqueadas.includes(e.key)) {
-        e.preventDefault();
-    }
-});
+const canvas = document.getElementById('nes-canvas');
+if (canvas) {
+    document.addEventListener('keydown', function (e) {
+        if (teclasBloqueadas.includes(e.key)) {
+            e.preventDefault();
+        }
+    });
+}
 // FIM--Funções para gerenciar o emulador e o canvas--FIM
 
 // Função para tratar o FadeInOut das mensagens de sucesso
@@ -305,3 +317,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 7000);
 });
 // FIM--Função para tratar o FadeInOut das mensagens de sucesso--FIM
+
+// Função para fazer o scroll marquee da descrição dos jogos
+function iniciarMarquee() {
+    document.querySelectorAll('.scroll-marquee').forEach(container => {
+        const span = container.querySelector('.marquee-text');
+        if (!span) return;
+
+        // reset das variáveis CSS
+        span.style.animation = 'none';
+        container.style.setProperty('--marquee-start', '0px');
+        container.style.setProperty('--marquee-end', '0px');
+
+        requestAnimationFrame(() => {
+            const Wc = container.clientWidth;
+            const Wt = span.scrollWidth;
+            const dur = container.dataset.marqueeDuration || '15s';
+
+            // dispara animação inclusive quando cabe exatamente
+            if (Wt >= Wc) {
+                container.style.setProperty('--marquee-start', `${Wc}px`);
+                container.style.setProperty('--marquee-end', `-${Wt}px`);
+                container.style.setProperty('--marquee-duration', dur);
+
+                span.style.animation =
+                    `marquee var(--marquee-duration) linear infinite, gradientFlow 3s linear infinite`;
+            }
+            // caso não queira nem o gradientFlow quando não rolar, pode zerar:
+            // else span.style.animation = 'none';
+        });
+    });
+}
+
+window.addEventListener('DOMContentLoaded', iniciarMarquee);
+window.addEventListener('resize', iniciarMarquee);
+// FIM--Função para fazer o scroll marquee da descrição dos jogos--FIM
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.descricao-textarea').forEach(textarea => {
+        const maxLength = textarea.getAttribute('maxlength');
+        const id = textarea.dataset.id;
+        const contador = document.getElementById('contador-' + id);
+
+        function atualizarContador() {
+            if (!contador) return;
+            const restante = maxLength - textarea.value.length;
+            contador.textContent = restante;
+        }
+
+        textarea.addEventListener('input', atualizarContador);
+        atualizarContador();
+    });
+});

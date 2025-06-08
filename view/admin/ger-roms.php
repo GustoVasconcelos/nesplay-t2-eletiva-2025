@@ -137,7 +137,10 @@ $listaRoms = listarRoms();
                                     <input type="hidden" name="idRom" value="<?= $id ?>">
                                     <input type="text" class="form-control my-1" name="nome"
                                         value="<?= htmlspecialchars($r['nome']) ?>">
-                                    <textarea class="form-control my-1" name="descricao"><?= htmlspecialchars($r['descricao']) ?></textarea>
+                                    <small class="form-text text-end text-muted">
+                                        Restam <span class="char-count" id="contador-<?= $id ?>">100</span> caracteres para o limite:
+                                    </small>
+                                    <textarea class="form-control my-1 descricao-textarea" name="descricao" maxlength="100" data-id="<?= $id ?>"><?= htmlspecialchars($r['descricao']) ?></textarea>
                                     <input type="number" class="form-control my-1" name="ano"
                                         value="<?= htmlspecialchars($r['ano']) ?>">
                                     <input type="text" class="form-control my-1" name="nomeArquivo"

@@ -91,6 +91,16 @@
     }
 }
 
+@keyframes marquee {
+    from {
+        transform: translateX(var(--marquee-start));
+    }
+
+    to {
+        transform: translateX(var(--marquee-end));
+    }
+}
+
 :root {
     --transition-duration: 0.4s;
     --border-radius: 0.75rem;
@@ -163,9 +173,68 @@
     transition: transform .2s;
 }
 
-
-#volume-display{
+#volume-display {
     font-size: 1.5em;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    height: 100%;
+}
+
+.card-text {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.4rem;
+    line-height: 1.4;
+}
+
+.text-comment {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.4rem;
+}
+
+.game-text {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.scroll-marquee {
+    overflow: hidden;
+    position: relative;
+    height: 1.5em;
+    --marquee-start: 0px;
+    --marquee-end: 0px;
+    --marquee-duration: 6s;
+}
+
+.scroll-marquee span {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.scroll-marquee .marquee-text.animate {
+    animation:
+        marquee var(--marquee-duration) linear infinite;
+}
+
+.marquee-text {
+    display: inline-block;
+    white-space: nowrap;
+    background: linear-gradient(90deg,
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0));
+    background-size: 200% 100%;
+    background-position: 0% 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: none;
 }
 
 #canvas-wrapper {
@@ -229,9 +298,9 @@
     image-rendering: pixelated;
 }
 
-body.no-anim *,
-body.no-anim *::before,
-body.no-anim *::after {
+body.no-anim *:not(.marquee-text),
+body.no-anim *:not(.marquee-text)::before,
+body.no-anim *:not(.marquee-text)::after {
     animation: none !important;
     transition: none !important;
 }
@@ -399,8 +468,6 @@ footer.gradiente {
     background-position: 0% 0%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
     animation: gradientFlow 3s linear infinite;
 }
 

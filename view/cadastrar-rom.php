@@ -91,7 +91,10 @@ $_SESSION['romEnviada_Ok'] = $_SESSION['romEnviada_Ok'] ?? false;
                             <div class="mb-3">
                                 <label for="descricao" class="form-label">Descrição</label>
                                 <textarea id="descricao" name="descricao" rows="3"
-                                    class="form-control" required></textarea>
+                                    class="form-control descricao-textarea" maxlength="100" data-id="cadastro" required></textarea>
+                                <small class="form-text text-end text-muted">
+                                    Restam <span class="char-count" id="contador-cadastro">100</span> caracteres para o limite
+                                </small>
                             </div>
                             <!--ano-->
                             <div class="mb-3">
