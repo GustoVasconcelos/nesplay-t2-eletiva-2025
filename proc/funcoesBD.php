@@ -25,6 +25,15 @@ function realizarLogin($email, $senha)
     return mysqli_query($conexao, $sql);
 }
 
+// Recupera a senha do usuári
+function recuperarSenha($email)
+{
+    $conexao = conectarBD();
+    $e = mysqli_real_escape_string($conexao, $email);
+    $sql = "SELECT senha FROM usuarios WHERE email = '$e' LIMIT 1";
+    return mysqli_query($conexao, $sql);
+}
+
 // CRUD Usuários
 function cadastrarUsuario($nome, $sobrenome, $dataNasc, $email, $apelido, $senha)
 {

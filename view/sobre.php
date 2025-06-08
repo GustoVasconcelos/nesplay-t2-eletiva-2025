@@ -1,11 +1,3 @@
-<?php
-session_start();
-if (isset($_SESSION['usuario'])) {
-    header("Location: ../index.php");
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
 
@@ -13,7 +5,7 @@ if (isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NESPlay</title>
+    <title>NESPlay - Sobre</title>
     <link rel="shortcut icon" type="image/png" href="../assets/img/favicon/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
@@ -49,18 +41,12 @@ if (isset($_SESSION['usuario'])) {
 
         <main class="container my-5">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-8 col-lg-5">
+                <div class="col-12 col-md-8 col-lg-10">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
-                        <form method="POST" action="../proc/procRecuperarSenha.php">
-                            <h1 class="h3 mb-4 fw-normal text-center">Recuperar Senha</h1>
-                            <!-- Email -->
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" name="userEmail" placeholder="nome@email.com">
-                                <label for="userEmail">Endereço de E-mail</label>
-                            </div>
-                            <button class="btn-animated btn btn-secondary w-100 py-2 mb-3" type="submit">Enviar e-mail
-                                de recuperação</button>
-                        </form>
+                        <h4 class="text-center">Sobre o NESPlay</h4>
+                        <p>O NESPlay surgiu de uma idéia do aluno <a class="text-decoration-none" href="https://github.com/John-Roberto">João Roberto</a>, em parceria com <a class="text-decoration-none" href="https://github.com/GustoVasconcelos">Augusto Vasconcelos</a>, ambos estudantes de Análise e Desenvolvimento em Sistemas na Faculdade de Tecnologia de Presidente Prudente (Fatec PP), sendo o Trabalho Prático 2 - Sistema WEB Integrado com Banco de dados, desenvolvido no 2° Bimestre da Matéria Eletiva - Linguagem de Programação IV INTERNET, ministrada pelo professor <a class="text-decoration-none" href="https://github.com/brunoslima">Me. Bruno Santos de Lima</a>, no ano de 2025.</p>
+                        <p>O NESPlay permite que qualquer usuário cadastrado possa jogar as <i>roms</i> que foram enviadas, inclusive por outros usuários, direto do navegador, criando assim uma comunidade onde qualquer um possa relembrar os velhos tempos dos jogos do amado Nintendinho.</p>
+                        <p>O site usa um emulador opensource escrito interamente em Javascript por <a class="text-decoration-none" href="https://github.com/bfirsh">Ben Firshman (bfirsh)</a> , chamado <a href="https://github.com/bfirsh/jsnes">JSNES</a> para emular as <i>roms</i>.</p>
                     </div>
                 </div>
             </div>

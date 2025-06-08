@@ -8,6 +8,8 @@ $cadastro_msg = isset($_SESSION['cadastro_msg']) ? $_SESSION['cadastro_msg'] : "
 unset($_SESSION['cadastro_msg']);
 $erro = isset($_SESSION['erro_login']) ? $_SESSION['erro_login'] : "";
 unset($_SESSION['erro_login']);
+$recuperar_msg = isset($_SESSION['recuperarSenha']) ? $_SESSION['recuperarSenha'] : "";
+unset($_SESSION['recuperarSenha']);
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +57,7 @@ unset($_SESSION['erro_login']);
 
         <main class="container my-5">
             <?php
-            if ($cadastro_msg != "" || $erro != "") {
+            if ($cadastro_msg != "" || $erro != "" || $recuperar_msg != "") {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
                 echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">';
@@ -64,6 +66,9 @@ unset($_SESSION['erro_login']);
                 }
                 if ($erro != "") {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">' . $erro . '</h1>';
+                }
+                if ($recuperar_msg != "") {
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">' . $recuperar_msg . '</h1>';
                 }
                 echo '</div>';
                 echo '</div>';
