@@ -15,7 +15,7 @@ $_SESSION['romEnviada_Ok'] = $_SESSION['romEnviada_Ok'] ?? false;
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NESPlay</title>
+    <title>NESPlay - Cadastrar ROM</title>
     <link rel="shortcut icon" type="image/png" href="../assets/img/favicon/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
@@ -56,6 +56,7 @@ $_SESSION['romEnviada_Ok'] = $_SESSION['romEnviada_Ok'] ?? false;
                     }
                     ?>
                     <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROM</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
                 </ul>

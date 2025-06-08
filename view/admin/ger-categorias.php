@@ -57,9 +57,9 @@ $_SESSION['renomearCategoria_Ok'] = $_SESSION['renomearCategoria_Ok'] ?? false;
                     <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar
                             Categorias</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li> -->
                     <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.php">Gerenciar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="../sobre.php">Sobre</a></li>
                 </ul>
             </div>
         </nav>

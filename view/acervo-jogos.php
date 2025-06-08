@@ -1,17 +1,11 @@
 <?php
+require_once "../proc/funcoesBD.php";
 session_start();
-require_once '../proc/funcoesBD.php';
-$roms = mysqli_query(conectarBD(), "
-    SELECT 
-        r.nome AS nomeRom, 
-        r.descricao, 
-        r.ano, 
-        r.nomeArquivo, 
-        c.nome AS nomeCategoria
-    FROM roms r
-    LEFT JOIN categorias c ON r.categoria_id = c.idCategoria
-    ORDER BY r.idRom DESC
-");
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../view/login.php');
+    exit;
+}
+$roms = listarRomsAcervo();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
@@ -20,7 +14,7 @@ $roms = mysqli_query(conectarBD(), "
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NESPlay</title>
+    <title>NESPlay - Jogos Disponíveis</title>
     <link rel="shortcut icon" href="../assets/img/favicon/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
@@ -60,8 +54,9 @@ $roms = mysqli_query(conectarBD(), "
                     }
                     ?>
                     <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROM</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
                 </ul>
             </div>
         </nav>

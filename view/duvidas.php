@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
 
@@ -24,8 +28,14 @@
                 </a>
                 <div class="d-flex">
                     <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
-                    <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
-                    <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
+                    <?php
+                    if (!isset($_SESSION['usuario'])) {
+                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>';
+                        echo '<a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>';
+                    } else {
+                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="./logout.php">Sair</a>';
+                    }
+                    ?>
                 </div>
             </div>
         </header>
@@ -34,6 +44,15 @@
             <div class="container-fluid px-3 px-md-5">
                 <ul class="nav nav-underline justify-content-center">
                     <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                    <?php
+                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
+                    }
+                    if (isset($_SESSION['usuario'])) {
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/acervo-jogos.php">Jogos Disponíveis</a></li>';
+                    }?>
+                    <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
                 </ul>
             </div>

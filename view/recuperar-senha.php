@@ -13,7 +13,7 @@ if (isset($_SESSION['usuario'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NESPlay</title>
+    <title>NESPlay - Recuperar Senha</title>
     <link rel="shortcut icon" type="image/png" href="../assets/img/favicon/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
@@ -42,6 +42,7 @@ if (isset($_SESSION['usuario'])) {
             <div class="container-fluid px-3 px-md-5">
                 <ul class="nav nav-underline justify-content-center">
                     <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
                 </ul>
             </div>

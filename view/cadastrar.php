@@ -16,7 +16,7 @@ unset($_SESSION['erro_cadastro']);
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="icon" type="image/png" href="../assets/img/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="../assets/img/favicon/favicon.svg" />
-    <title>NESPlay - Cadastrar</title>
+    <title>NESPlay - Cadastrar Usuário</title>
 </head>
 
 <body>
@@ -42,6 +42,7 @@ unset($_SESSION['erro_cadastro']);
             <div class="container-fluid px-3 px-md-5">
                 <ul class="nav nav-underline justify-content-center">
                     <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
                 </ul>
             </div>

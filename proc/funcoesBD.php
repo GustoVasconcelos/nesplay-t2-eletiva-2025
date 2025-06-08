@@ -168,6 +168,22 @@ function listarRoms()
     return mysqli_query($conexao, $sql);
 }
 
+function listarRomsAcervo()
+{
+    $conexao = conectarBD();
+    $sql = "SELECT 
+        r.nome AS nomeRom, 
+        r.descricao, 
+        r.ano, 
+        r.nomeArquivo, 
+        c.nome AS nomeCategoria
+    FROM roms r
+    LEFT JOIN categorias c ON r.categoria_id = c.idCategoria
+    ORDER BY r.idRom DESC
+    ";
+    return mysqli_query($conexao, $sql);
+}
+
 function alterarRom($idRom, $nome, $descricao, $ano, $nomeArquivo, $caminho, $categoria_id, $user_id)
 {
     $conexao     = conectarBD();

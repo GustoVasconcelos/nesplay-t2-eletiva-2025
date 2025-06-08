@@ -48,9 +48,11 @@ session_start();
                     if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
                         echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
                     }
-                    ?>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROM</a></li>
+                    if (isset($_SESSION['usuario'])) {
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/acervo-jogos.php">Jogos Disponíveis</a></li>';
+                    }?>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROMs</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./view/sobre.php">Sobre</a></li>
                 </ul>
             </div>
