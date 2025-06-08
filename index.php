@@ -51,7 +51,7 @@ session_start();
                     ?>
                     <li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROM</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/sobre.php">Sobre</a></li>
                 </ul>
             </div>
         </nav>
@@ -104,9 +104,9 @@ session_start();
         <footer class="gradiente py-3">
             <div class="container-fluid px-3 px-md-5 text-center">
                 <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Termos</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/duvidas.php">Dúvidas?</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/privacidade.php">Privacidade</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/termos.php">Termos</a></li>
                 </ul>
                 <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
             </div>

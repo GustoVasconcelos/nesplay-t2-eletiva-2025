@@ -51,7 +51,7 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
                     ?>
                     <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROM</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
                 </ul>
             </div>
         </nav>
@@ -109,9 +109,9 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
         <footer class="gradiente py-3">
             <div class="container-fluid text-center">
                 <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Termos</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="duvidas.php">Dúvidas?</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="privacidade.php">Privacidade</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="termos.php">Termos</a></li>
                 </ul>
                 <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
             </div>

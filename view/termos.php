@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NESPlay - Sobre</title>
+    <title>NESPlay - Termos de Uso</title>
     <link rel="shortcut icon" type="image/png" href="../assets/img/favicon/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
@@ -43,10 +43,34 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-10">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
-                        <h3 class="text-center mb-4">Sobre o NESPlay</h3>
-                        <p>O NESPlay surgiu de uma idéia do aluno <a class="link-body-emphasis" href="https://github.com/John-Roberto">João Roberto</a>, em parceria com <a class="link-body-emphasis" href="https://github.com/GustoVasconcelos">Augusto Vasconcelos</a>, ambos estudantes de Análise e Desenvolvimento em Sistemas na Faculdade de Tecnologia de Presidente Prudente (Fatec PP), sendo o Trabalho Prático 2 - Sistema WEB Integrado com Banco de dados, desenvolvido no 2° Bimestre da Matéria Eletiva - Linguagem de Programação IV INTERNET, ministrada pelo professor <a class="link-body-emphasis" href="https://github.com/brunoslima">Me. Bruno Santos de Lima</a>, no ano de 2025.</p>
-                        <p>O NESPlay permite que qualquer usuário cadastrado possa jogar as <i>roms</i> que foram enviadas, inclusive por outros usuários, direto do navegador, criando assim uma comunidade onde qualquer um possa relembrar os velhos tempos dos jogos do amado Nintendinho.</p>
-                        <p>O site usa um emulador opensource escrito interamente em Javascript por <a class="link-body-emphasis" href="https://github.com/bfirsh">Ben Firshman (bfirsh)</a> , chamado <a class="link-body-emphasis" href="https://github.com/bfirsh/jsnes">JSNES</a> para emular as <i>roms</i>.</p>
+                        <h3 class="text-center mb-4">Termos de Uso – NESPlay</h3>
+                        <p class="text-center">Última atualização: 12/06/2025</p>
+                        <p>Bem-vindo ao NESPlay! Ao utilizar este site, você concorda com os seguintes termos:</p>
+                        <span class="fs-4 fw-bolder">1. Sobre o NESPlay</span>
+                        <p>O NESPlay é uma plataforma que permite aos usuários cadastrados jogarem e compartilharem jogos de NES (Nintendo Entertainment System) diretamente no navegador, utilizando o emulador de código aberto JSNES.</p>
+                        <span class="fs-4 fw-bolder">2. Upload de ROMs</span>
+                        <ul>
+                            <li>Os usuários podem enviar suas próprias ROMs para uso pessoal ou compartilhamento com outros usuários cadastrados.</li>
+                            <li>Ao fazer o upload, o usuário declara que possui os direitos legais sobre o arquivo ou que ele é de distribuição livre.</li>
+                            <li>A equipe do NESPlay não se responsabiliza pelos arquivos enviados pelos usuários.</li>
+                        </ul>
+                        <span class="fs-4 fw-bolder">3. Compartilhamento de conteúdo</span>
+                        <p>As ROMs enviadas ficam disponíveis para outros usuários da plataforma. O NESPlay não verifica previamente os conteúdos enviados, mas poderá remover arquivos que violem direitos autorais ou infrinjam estes termos.</p>
+                        <span class="fs-4 fw-bolder">4. Responsabilidades</span>
+                        <ul>
+                            <li>O uso da plataforma é por sua conta e risco.</li>
+                            <li>O NESPlay não garante que os jogos funcionarão perfeitamente em todos os navegadores ou dispositivos.</li>
+                            <li>O NESPlay não hospeda nem distribui ROMs comerciais protegidas por direitos autorais.</li>
+                        </ul>
+                        <span class="fs-4 fw-bolder">5. Propriedade intelectual</span>
+                        <p>JSNES é um emulador open-source utilizado sob os termos da respectiva licença. Marcas, logos e conteúdos da Nintendo ou de terceiros pertencem a seus respectivos proprietários.</p>
+                        <span class="fs-4 fw-bolder">6. Conta de usuário</span>
+                        <ul>
+                            <li>O usuário é responsável por manter a segurança de sua conta.</li>
+                            <li>O uso indevido da plataforma poderá resultar na exclusão da conta e conteúdo associado.</li>
+                        </ul>
+                        <span class="fs-4 fw-bolder">7. Alterações nos termos</span>
+                        <p>Estes termos podem ser atualizados periodicamente. Ao continuar usando o NESPlay, você concorda com as eventuais mudanças.</p>
                     </div>
                 </div>
             </div>

@@ -43,10 +43,13 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-10">
                     <div class="gradiente p-4 rounded-3 shadow-sm">
-                        <h3 class="text-center mb-4">Sobre o NESPlay</h3>
-                        <p>O NESPlay surgiu de uma idéia do aluno <a class="link-body-emphasis" href="https://github.com/John-Roberto">João Roberto</a>, em parceria com <a class="link-body-emphasis" href="https://github.com/GustoVasconcelos">Augusto Vasconcelos</a>, ambos estudantes de Análise e Desenvolvimento em Sistemas na Faculdade de Tecnologia de Presidente Prudente (Fatec PP), sendo o Trabalho Prático 2 - Sistema WEB Integrado com Banco de dados, desenvolvido no 2° Bimestre da Matéria Eletiva - Linguagem de Programação IV INTERNET, ministrada pelo professor <a class="link-body-emphasis" href="https://github.com/brunoslima">Me. Bruno Santos de Lima</a>, no ano de 2025.</p>
-                        <p>O NESPlay permite que qualquer usuário cadastrado possa jogar as <i>roms</i> que foram enviadas, inclusive por outros usuários, direto do navegador, criando assim uma comunidade onde qualquer um possa relembrar os velhos tempos dos jogos do amado Nintendinho.</p>
-                        <p>O site usa um emulador opensource escrito interamente em Javascript por <a class="link-body-emphasis" href="https://github.com/bfirsh">Ben Firshman (bfirsh)</a> , chamado <a class="link-body-emphasis" href="https://github.com/bfirsh/jsnes">JSNES</a> para emular as <i>roms</i>.</p>
+                        <h3 class="text-center mb-4">Dúvidas? - NESPlay</h3>
+                        <span class="fs-4 fw-bolder">O NESPlay é gratuito?</span>
+                        <p>Sim. Porém por ser um projeto desenvolvido como um trabalho de faculdade, o mesmo pode sair do ar a qualquer momento, sem aviso prévio.</p>
+                        <span class="fs-4 fw-bolder">Posso hospedar minha versão do NESPlay?</span>
+                        <p>Sim, o projeto é totalmente opensource, inclusive o emulador que usamos no projeto é opensource também.</p>
+                        <span class="fs-4 fw-bolder">Vocês vão continuar com o desenvolvimento do NESPlay?</span>
+                        <p>Não temos essa resposta, pois como dito antes, ele nasceu de um trabalho de faculdade, e ainda falta um pouco pra formar rsrs...</p>
                     </div>
                 </div>
             </div>
