@@ -6,6 +6,8 @@ if ($_SESSION['usuario_adm'] != 1) {
     exit;
 }
 $listaRoms = listarRoms();
+$listaCategorias = listarCategorias();
+$listaUsuarios    = listarUsuarios();
 ?>
 
 <!DOCTYPE html>
@@ -144,11 +146,33 @@ $listaRoms = listarRoms();
                                         value="<?= htmlspecialchars($r['ano']) ?>">
                                     <input type="text" class="form-control my-1" name="nomeArquivo"
                                         value="<?= htmlspecialchars($r['nomeArquivo']) ?>">
-                                    <input type="number" class="form-control my-1" name="categoria_id"
-                                        value="<?= htmlspecialchars($r['categoria_id']) ?>">
-                                    <input type="number" class="form-control my-1" name="user_id"
-                                        value="<?= htmlspecialchars($r['user_id']) ?>">
-
+                                    <!-- Select de Categorias -->
+                                    <select name="categoria_id" class="form-select my-1">
+                                        <?php
+                                        mysqli_data_seek($listaCategorias, 0);
+                                        while ($cat = mysqli_fetch_assoc($listaCategorias)):
+                                            $sel = ($cat['idCategoria'] == $r['categoria_id']) ? ' selected' : '';
+                                        ?>
+                                            <option value="<?= $cat['idCategoria'] ?>" <?= $sel ?>>
+                                                <?= htmlspecialchars($cat['nome']) ?>
+                                            </option>
+                                        <?php endwhile; ?>
+                                    </select>
+                                    <!-- Select de Usuários -->
+                                    <select name="user_id" class="form-select my-1">
+                                        <?php
+                                        mysqli_data_seek($listaUsuarios, 0);
+                                        while ($usr = mysqli_fetch_assoc($listaUsuarios)):
+                                            $idUsr = $usr['idUser'];                  // <-- reparou aqui
+                                            $sel   = ($idUsr == $r['user_id']) ? ' selected' : '';
+                                        ?>
+                                            <option
+                                                value="<?= htmlspecialchars($idUsr, ENT_QUOTES) ?>"
+                                                <?= $sel ?>>
+                                                <?= htmlspecialchars($usr['apelido']) ?>
+                                            </option>
+                                        <?php endwhile; ?>
+                                    </select>
                                     <button
                                         type="submit"
                                         class="btn-animated btn btn-sm btn-success me-2 mt-2">

@@ -290,9 +290,7 @@ if (fsBtn && wrapper) {
 }
 
 const teclasBloqueadas = [
-    'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
-    'a', 'q', 's', 'o', 'A', 'Q', 'S', 'O',
-    'Tab', 'Enter'
+    'ArrowUp', 'ArrowDown', 'a', 'q', 's', 'o', 'A', 'Q', 'S', 'O'
 ];
 
 const canvas = document.getElementById('nes-canvas');
