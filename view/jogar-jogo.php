@@ -1,11 +1,37 @@
 <?php
-require_once "../proc/funcoesBD.php";
 session_start();
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../view/login.php');
+require_once '../proc/funcoesBD.php';
+
+// Verifica se veio a ROM pela query string
+if (empty($_GET['rom'])) {
+    header('Location: ../view/acervo-jogos.php');
     exit;
 }
-$roms = listarRomsAcervo();
+
+$romFile = basename($_GET['rom']);
+$romPath = '../roms/' . $romFile;
+
+// Segurança extra: existe?
+if (!file_exists($romPath)) {
+    echo "<p>ROM não encontrada.</p>";
+    exit;
+}
+
+// Conecta e busca o nome “amigável” (nomeRom) desta ROM
+$conn = conectarBD();
+$romFileEscaped = mysqli_real_escape_string($conn, $romFile);
+$sql = "
+    SELECT nome AS nomeRom
+    FROM roms
+    WHERE nomeArquivo = '$romFileEscaped'
+    LIMIT 1
+";
+$res = mysqli_query($conn, $sql);
+if (! $row = mysqli_fetch_assoc($res)) {
+    echo "<p>Dados da ROM não encontrados.</p>";
+    exit;
+}
+$nomeRom = $row['nomeRom'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
@@ -14,7 +40,7 @@ $roms = listarRomsAcervo();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NESPlay - Jogos Disponíveis</title>
+    <title>NESPlay</title>
     <link rel="shortcut icon" href="../assets/img/favicon/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
@@ -62,40 +88,50 @@ $roms = listarRomsAcervo();
         </nav>
 
         <main class="container my-5">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <?php while ($rom = mysqli_fetch_assoc($roms)): ?>
-                    <div class="col">
-                        <div class="gradiente card shadow-sm">
-                            <div class="card-body d-flex flex-column align-items-center text-center">
-                                <h1 class="texto-gradiente game-text">
-                                    <?= htmlspecialchars($rom['nomeRom']) ?>
-                                </h1>
-                                <p class="card-text scroll-marquee" data-marquee-duration="15s">
-                                    <span class="marquee-text"><?= htmlspecialchars($rom['descricao']) ?></span>
-                                </p>
-                                <small class="texto-gradiente text-comment mb-1">
-                                    Ano: <?= htmlspecialchars($rom['ano']) ?>
-                                </small>
-                                <small class="texto-gradiente text-comment mb-3">
-                                    Categoria: <?= htmlspecialchars($rom['nomeCategoria']) ?>
-                                </small>
-                                <a href="./jogar-jogo.php?rom=<?= urlencode($rom['nomeArquivo']) ?>"
-                                    class="btn-animated btn btn-sm btn-outline-secondary">
-                                    Jogar
-                                </a>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-5">
+                    <div class="gradiente card p-4 rounded-3 shadow-sm">
+                        <div style="margin: auto; width: 100%;">
+                            <h2 class="texto-gradiente game-text text-center">
+                                Jogando: <?= htmlspecialchars($nomeRom) ?>
+                            </h2>
+                            <!-- Canvas do emulador -->
+                            <div id="canvas-wrapper"
+                                class="canvas-animated-border d-flex align-items-center justify-content-center"
+                                data-rom-path="<?= htmlspecialchars($romPath, ENT_QUOTES) ?>"
+                                style="margin:auto; width:100%;">
+                                <canvas id="nes-canvas" width="256" height="240"></canvas>
+                            </div>
+                            <!-- FIM--Canvas do emulador--FIM -->
+                            <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
+                            <div class="text-center mt-3">
+                                <button id="mute-btn" class="btn btn-animated btn-outline-secondary mt-2">
+                                    Mudo
+                                </button>
+                                <div id="volume-display" class="small texto-gradiente mt-1">50%</div>
+                                <input
+                                    id="volume-slider"
+                                    type="range"
+                                    min="0"
+                                    max="100"
+                                    step="1"
+                                    value="50"
+                                    class="form-range"
+                                    style="width: 80%; margin: auto;">
                             </div>
                         </div>
+                        <p class="mt-3 texto-gradiente text-center">DPad: ←↑→↓ &nbsp; Start: Enter &nbsp; Select: Tab &nbsp; A: A/Q &nbsp; B: S/O</p>
                     </div>
-                <?php endwhile; ?>
+                </div>
             </div>
         </main>
 
         <footer class="gradiente py-3">
             <div class="container-fluid text-center">
                 <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Termos</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="duvidas.php">Dúvidas?</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="privacidade.php">Privacidade</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="termos.php">Termos</a></li>
                 </ul>
                 <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
             </div>

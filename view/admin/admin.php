@@ -64,7 +64,7 @@ if ($_SESSION['usuario_adm'] != 1){
             <div class="gradiente p-4 h-100 d-flex align-items-center justify-content-center">
                 <div>
                     <h3 class="fs-2">Administração</h3>
-                    <p>Seja bem-vindo</p>
+                    <p class="text-center">Seja bem-vindo</p>
                 </div>
             </div>
         </main>

@@ -30,11 +30,10 @@
 })();
 // FIM--Função para alternar as animações--FIM
 
-// Estado global de volume/mute para persistir entre trocas de ROM
+// Função global para aplicar estado de volume/mute
 window.isMuted = false;
 window.prevVolume = 50;
 
-// Função global para aplicar estado de volume/mute
 window.applyVolumeState = function () {
     const volSlider = document.getElementById('volume-slider');
     const volDisplay = document.getElementById('volume-display');
@@ -53,6 +52,7 @@ window.applyVolumeState = function () {
         muteBtn.textContent = 'Volume: Silenciar';
     }
 };
+// FIM--Função global para aplicar estado de volume/mute--FIM
 
 window.onload = function () {
     const isAnimOff = document.body.classList.contains('no-anim');
@@ -191,9 +191,7 @@ window.onload = function () {
         volSlider.addEventListener('input', () => {
             const pct = volSlider.value;
             window.prevVolume = pct;
-            // atualiza o gradiente:
             document.documentElement.style.setProperty('--vol-percent', pct + '%');
-            // restante da sua lógica de volume/mute:
             if (window.isMuted) window.isMuted = false;
             applyVolumeState();
         });
@@ -353,6 +351,7 @@ window.addEventListener('DOMContentLoaded', iniciarMarquee);
 window.addEventListener('resize', iniciarMarquee);
 // FIM--Função para fazer o scroll marquee da descrição dos jogos--FIM
 
+// Função para calcular os caracteres em textareas
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.descricao-textarea').forEach(textarea => {
         const maxLength = textarea.getAttribute('maxlength');
@@ -368,4 +367,12 @@ document.addEventListener('DOMContentLoaded', function () {
         textarea.addEventListener('input', atualizarContador);
         atualizarContador();
     });
+});
+// FIM--Função para calcular os caracteres em textareas--FIM
+
+document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.getElementById('canvas-wrapper');
+    if (wrapper && wrapper.dataset.romPath) {
+        nes_load_url('nes-canvas', wrapper.dataset.romPath);
+    }
 });

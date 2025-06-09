@@ -197,9 +197,13 @@
     font-size: 1.4rem;
 }
 
-.game-text {
+h1.game-text {
     padding-top: 40px;
     padding-bottom: 40px;
+}
+
+h2.game-text {
+    padding-bottom: 10px;
 }
 
 .scroll-marquee {
