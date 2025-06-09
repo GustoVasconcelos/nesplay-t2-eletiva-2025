@@ -61,7 +61,7 @@ unset($_SESSION['recuperarSenha']);
             if ($cadastro_msg != "" || $erro != "" || $recuperar_msg != "") {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
-                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">';
+                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm border success-message">';
                 if ($cadastro_msg != "") {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">' . $cadastro_msg . '</h1>';
                 }
@@ -78,7 +78,7 @@ unset($_SESSION['recuperarSenha']);
             ?>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
-                    <div class="gradiente p-4 rounded-3 shadow-sm">
+                    <div class="gradiente p-4 rounded-3 shadow-sm border">
                         <form method="POST" action="../proc/procLogin.php">
                             <h1 class="h3 mb-4 fw-normal text-center">Login</h1>
                             <!-- Email -->

@@ -61,7 +61,7 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
         <main class="container my-5">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
-                    <div class="gradiente card p-4 rounded-3 shadow-sm">
+                    <div class="gradiente card p-4 rounded-3 shadow-sm border">
                         <div class="mb-3 text-center">
                             <?php
                             $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY idRom DESC LIMIT 3");
@@ -70,7 +70,7 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
                             <label for="rom-select" class="form-label texto-gradiente fw-bold">Selecione uma das 3 ROM recentemente adicionadas:</label>
                             <select id="rom-select" class="form-select text-center">
                                 <option value="<?= htmlspecialchars($romPadrao['nomeArquivo']) ?>" selected>
-                                    <?= htmlspecialchars($romPadrao['nome']) ?> (Padrão)
+                                    <?= htmlspecialchars($romPadrao['nome']) ?> (Mais recentemente adicionado)
                                 </option>
                                 <?php while ($rom = mysqli_fetch_assoc($roms)): ?>
                                     <option value="<?= htmlspecialchars($rom['nomeArquivo']) ?>">

@@ -49,8 +49,8 @@ session_start();
                         echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
                     }
                     if (isset($_SESSION['usuario'])) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>';
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/acervo-jogos.php">Jogos Disponíveis</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>';
                     }?>
                     <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
@@ -61,7 +61,7 @@ session_start();
         <main class="container my-5">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-10">
-                    <div class="gradiente p-4 rounded-3 shadow-sm">
+                    <div class="gradiente p-4 rounded-3 shadow-sm border">
                         <h3 class="text-center mb-4">Política de Privacidade – NESPlay</h3>
                         <p class="text-center">Última atualização: 12/06/2025</p>
                         <p>O NESPlay valoriza a privacidade dos seus usuários. Esta política explica quais dados coletamos, como os utilizamos e como protegemos suas informações.</p>

@@ -53,7 +53,7 @@ unset($_SESSION['erro_cadastro']);
             if ($erro_cadastro != "") {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
-                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">';
+                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm border success-message">';
                 echo '<h1 class="h3 mb-4 fw-normal text-center">' . $erro_cadastro . '</h1>';
                 echo '</div>';
                 echo '</div>';
@@ -63,7 +63,7 @@ unset($_SESSION['erro_cadastro']);
             ?>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
-                    <div class="gradiente p-4 rounded-3 shadow-sm">
+                    <div class="gradiente p-4 rounded-3 shadow-sm border">
                         <form method="POST" action="../proc/procCadUsuario.php">
                             <h1 class="h3 mb-4 fw-normal text-center">Cadastro</h1>
                             <!-- Par Nome / Sobrenome -->

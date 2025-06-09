@@ -61,7 +61,7 @@ if ($_SESSION['usuario_adm'] != 1){
 
         <main class="container px-3 px-md-5 py-5 d-flex flex-column" id="hanging-icons">
             <!-- Card -->
-            <div class="gradiente p-4 h-100 d-flex align-items-center justify-content-center">
+            <div class="gradiente p-4 h-100 d-flex align-items-center justify-content-center border">
                 <div>
                     <h3 class="fs-2">Administração</h3>
                     <p class="text-center">Seja bem-vindo</p>

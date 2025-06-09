@@ -72,7 +72,7 @@ $listaUsuarios = listarUsuarios();
             ): ?>
                 <div class="row justify-content-center mb-3">
                     <div class="col-12 col-md-8 col-lg-5">
-                        <div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">
+                        <div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm border success-message">
                             <?php if ($_SESSION['cadastroUsuario_Ok'] ?? false): ?>
                                 <h1 class="text-center h3 mb-0">Usuário cadastrado com sucesso!</h1>
                                 <?php $_SESSION['cadastroUsuario_Ok'] = false; ?>
@@ -93,7 +93,7 @@ $listaUsuarios = listarUsuarios();
             <!-- Lista de usuários -->
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
-                    <div class="gradiente p-4 rounded-3 shadow-sm">
+                    <div class="gradiente p-4 rounded-3 shadow-sm border">
                         <h2 class="h3 mb-4 fw-normal text-center">Gerenciar Usuários</h2>
 
                         <?php

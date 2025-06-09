@@ -73,7 +73,7 @@ $_SESSION['renomearCategoria_Ok'] = $_SESSION['renomearCategoria_Ok'] ?? false;
             ) {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
-                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">';
+                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm border success-message">';
                 if (isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria cadastrada com sucesso!</h1>';
                     $_SESSION['cadastroCategoria_Ok'] = false;
@@ -93,7 +93,7 @@ $_SESSION['renomearCategoria_Ok'] = $_SESSION['renomearCategoria_Ok'] ?? false;
             ?>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
-                    <div class="gradiente p-4 rounded-3 shadow-sm">
+                    <div class="gradiente p-4 rounded-3 shadow-sm border">
                         <h2 class="h3 mb-4 fw-normal text-center">Gerenciar Categorias</h2>
                         <!-- Formulário de Cadastrar Categoria -->
                         <form class="mb-4" method="POST" action="../../proc/procCadCategoria.php">

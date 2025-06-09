@@ -62,7 +62,7 @@ session_start();
             <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3">
                 <!-- 1º Card -->
                 <div class="col">
-                    <div class="gradiente p-4 h-100 d-flex align-items-start">
+                    <div class="gradiente p-4 h-100 d-flex align-items-start border">
                         <div
                             class="icon-square d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
                             <img src="assets/img/tv_nes.svg" alt="" class="img-fluid">
@@ -75,7 +75,7 @@ session_start();
                 </div>
                 <!-- 2º Card -->
                 <div class="col">
-                    <div class="gradiente p-4 h-100 d-flex align-items-start">
+                    <div class="gradiente p-4 h-100 d-flex align-items-start border">
                         <div
                             class="icon-square d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
                             <img src="assets/img/cartucho_nes.svg" alt="" class="img-fluid">
@@ -89,7 +89,7 @@ session_start();
                 </div>
                 <!-- 3º Card -->
                 <div class="col">
-                    <div class="gradiente p-4 h-100 d-flex align-items-start">
+                    <div class="gradiente p-4 h-100 d-flex align-items-start border">
                         <div
                             class="icon-square d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
                             <img src="assets/img/console_nes.svg" alt="" class="img-fluid">

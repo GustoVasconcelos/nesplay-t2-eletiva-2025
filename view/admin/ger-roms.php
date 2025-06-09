@@ -7,7 +7,7 @@ if ($_SESSION['usuario_adm'] != 1) {
 }
 $listaRoms = listarRoms();
 $listaCategorias = listarCategorias();
-$listaUsuarios    = listarUsuarios();
+$listaUsuarios = listarUsuarios();
 ?>
 
 <!DOCTYPE html>
@@ -71,7 +71,7 @@ $listaUsuarios    = listarUsuarios();
             ): ?>
                 <div class="row justify-content-center mb-3">
                     <div class="col-12 col-md-8 col-lg-5">
-                        <div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">
+                        <div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm border success-message">
                             <?php if ($_SESSION['cadastroRom_Ok'] ?? false): ?>
                                 <h1 class="h3 mb-0 text-center">ROM cadastrada com sucesso!</h1>
                                 <?php $_SESSION['cadastroRom_Ok'] = false; ?>
@@ -92,7 +92,7 @@ $listaUsuarios    = listarUsuarios();
             <!-- Lista de ROMs -->
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
-                    <div class="gradiente p-4 rounded-3 shadow-sm">
+                    <div class="gradiente p-4 rounded-3 shadow-sm border">
                         <h2 class="h3 mb-4 fw-normal text-center">Gerenciar ROMs</h2>
 
                         <?php while ($r = mysqli_fetch_assoc($listaRoms)):
