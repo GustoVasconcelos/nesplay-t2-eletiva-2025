@@ -74,15 +74,15 @@ $listaUsuarios = listarUsuarios();
                     <div class="col-12 col-md-8 col-lg-5">
                         <div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">
                             <?php if ($_SESSION['cadastroUsuario_Ok'] ?? false): ?>
-                                <h1 class="h3 mb-0">Usuário cadastrado com sucesso!</h1>
+                                <h1 class="text-center h3 mb-0">Usuário cadastrado com sucesso!</h1>
                                 <?php $_SESSION['cadastroUsuario_Ok'] = false; ?>
                             <?php endif; ?>
                             <?php if ($_SESSION['apagarUsuario_Ok'] ?? false): ?>
-                                <h1 class="h3 mb-0">Usuário apagado com sucesso!</h1>
+                                <h1 class="text-center h3 mb-0">Usuário apagado com sucesso!</h1>
                                 <?php $_SESSION['apagarUsuario_Ok'] = false; ?>
                             <?php endif; ?>
                             <?php if ($_SESSION['renomearUsuario_Ok'] ?? false): ?>
-                                <h1 class="h3 mb-0">Usuário alterado com sucesso!</h1>
+                                <h1 class="text-center h3 mb-0">Usuário alterado com sucesso!</h1>
                                 <?php $_SESSION['renomearUsuario_Ok'] = false; ?>
                             <?php endif; ?>
                         </div>

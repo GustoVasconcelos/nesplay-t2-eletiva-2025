@@ -54,7 +54,6 @@ $listaRoms = listarRoms();
                     <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar Categorias</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.php">Gerenciar ROMs</a></li>
                     <li class="nav-item"><a class="nav-link px-2" href="../sobre.php">Sobre</a></li>
                 </ul>
@@ -72,15 +71,15 @@ $listaRoms = listarRoms();
                     <div class="col-12 col-md-8 col-lg-5">
                         <div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm success-message">
                             <?php if ($_SESSION['cadastroRom_Ok'] ?? false): ?>
-                                <h1 class="h3 mb-0">ROM cadastrada com sucesso!</h1>
+                                <h1 class="h3 mb-0 text-center">ROM cadastrada com sucesso!</h1>
                                 <?php $_SESSION['cadastroRom_Ok'] = false; ?>
                             <?php endif; ?>
                             <?php if ($_SESSION['apagarRom_Ok'] ?? false): ?>
-                                <h1 class="h3 mb-0">ROM apagada com sucesso!</h1>
+                                <h1 class="h3 mb-0 text-center">ROM apagada com sucesso!</h1>
                                 <?php $_SESSION['apagarRom_Ok'] = false; ?>
                             <?php endif; ?>
                             <?php if ($_SESSION['renomearRom_Ok'] ?? false): ?>
-                                <h1 class="h3 mb-0">ROM alterada com sucesso!</h1>
+                                <h1 class="h3 mb-0 text-center">ROM alterada com sucesso!</h1>
                                 <?php $_SESSION['renomearRom_Ok'] = false; ?>
                             <?php endif; ?>
                         </div>
