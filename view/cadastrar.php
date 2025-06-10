@@ -22,8 +22,8 @@ unset($_SESSION['erro_cadastro']);
 <body>
     <div class="background">
 
-        <header class="gradiente py-3">
-            <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+        <header class="border-bottom-animated-glass">
+            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
                 <a href="/" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
@@ -31,6 +31,7 @@ unset($_SESSION['erro_cadastro']);
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
                     <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
                     <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
@@ -38,13 +39,15 @@ unset($_SESSION['erro_cadastro']);
             </div>
         </header>
 
-        <nav class="gradiente">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -53,8 +56,10 @@ unset($_SESSION['erro_cadastro']);
             if ($erro_cadastro != "") {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
-                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm border success-message">';
+                echo '<div class="border-animated-glass">';
+                echo '<div id="successMessage" class="frosted content gradiente p-4 rounded-3 shadow-sm border success-message">';
                 echo '<h1 class="h3 mb-4 fw-normal text-center">' . $erro_cadastro . '</h1>';
+                echo '</div>';
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
@@ -63,62 +68,66 @@ unset($_SESSION['erro_cadastro']);
             ?>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
-                    <div class="gradiente p-4 rounded-3 shadow-sm border">
-                        <form method="POST" action="../proc/procCadUsuario.php">
-                            <h1 class="h3 mb-4 fw-normal text-center">Cadastro</h1>
-                            <!-- Par Nome / Sobrenome -->
-                            <div class="row mb-3">
-                                <div class="col px-1 form-floating">
-                                    <input type="text" class="form-control" name="nomeUser" placeholder="Nome">
-                                    <label for="nomeUser">Nome</label>
+                    <div class="border-animated-glass">
+                        <div class="frosted content gradiente card p-4 rounded-3 shadow-sm border">
+                            <form method="POST" action="../proc/procCadUsuario.php">
+                                <h1 class="h3 mb-4 fw-normal text-center">Cadastro</h1>
+                                <!-- Par Nome / Sobrenome -->
+                                <div class="row mb-3">
+                                    <div class="col px-1 form-floating">
+                                        <input type="text" class="form-control" name="nomeUser" placeholder="Nome">
+                                        <label for="nomeUser">Nome</label>
+                                    </div>
+                                    <div class="col px-1 form-floating">
+                                        <input type="text" class="form-control" name="sobrenomeUser" placeholder="Sobrenome">
+                                        <label for="sobrenomeUser">Sobrenome</label>
+                                    </div>
                                 </div>
-                                <div class="col px-1 form-floating">
-                                    <input type="text" class="form-control" name="sobrenomeUser" placeholder="Sobrenome">
-                                    <label for="sobrenomeUser">Sobrenome</label>
+                                <!-- Data -->
+                                <div class="row mb-3">
+                                    <div class="col px-1 form-floating">
+                                        <input type="date" class="form-control" name="nascimentoUser"
+                                            placeholder="Data de Nascimento">
+                                        <label for="nascimentoUser">Data de Nascimento</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Data -->
-                            <div class="row mb-3">
-                                <div class="col px-1 form-floating">
-                                    <input type="date" class="form-control" name="nascimentoUser"
-                                        placeholder="Data de Nascimento">
-                                    <label for="nascimentoUser">Data de Nascimento</label>
+                                <!-- Email -->
+                                <div class="row mb-3">
+                                    <div class="col px-1 form-floating">
+                                        <input type="email" class="form-control" name="emailUser" placeholder="Email">
+                                        <label for="emailUser">Email</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Email -->
-                            <div class="row mb-3">
-                                <div class="col px-1 form-floating">
-                                    <input type="email" class="form-control" name="emailUser" placeholder="Email">
-                                    <label for="emailUser">Email</label>
+                                <!-- Par Usuário / Senha -->
+                                <div class="row mb-3">
+                                    <div class="col px-1 form-floating">
+                                        <input type="text" class="form-control" name="apelidoUser"
+                                            placeholder="Nome de usuário">
+                                        <label for="apelidoUser">Nome de usuário</label>
+                                    </div>
+                                    <div class="col px-1 form-floating">
+                                        <input type="password" class="form-control" name="passwordUser" placeholder="Senha">
+                                        <label for="passwordUser">Senha</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Par Usuário / Senha -->
-                            <div class="row mb-3">
-                                <div class="col px-1 form-floating">
-                                    <input type="text" class="form-control" name="apelidoUser"
-                                        placeholder="Nome de usuário">
-                                    <label for="apelidoUser">Nome de usuário</label>
-                                </div>
-                                <div class="col px-1 form-floating">
-                                    <input type="password" class="form-control" name="passwordUser" placeholder="Senha">
-                                    <label for="passwordUser">Senha</label>
-                                </div>
-                            </div>
-                            <button class="btn-animated btn btn-secondary w-100 py-2" type="submit">Cadastrar</button>
-                        </form>
+                                <button class="btn-animated btn btn-secondary w-100 py-2" type="submit">Cadastrar</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer class="gradiente py-3">
-            <div class="container-fluid px-3 px-md-5 text-center">
-                <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="./duvidas.php">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./privacidade.php">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./termos.php">Termos</a></li>
-                </ul>
-                <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+        <footer class="border-top-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid px-3 px-md-5 text-center">
+                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
+                        <li class="nav-item"><a class="nav-link px-2" href="./duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./termos.php">Termos</a></li>
+                    </ul>
+                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+                </div>
             </div>
         </footer>
 

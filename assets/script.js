@@ -28,19 +28,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // === BOTÃO: DESATIVAR BORDAS NEON ===
-    const bordaBtn = document.getElementById("toggle-bordas"); // ← FALTAVA ESTA LINHA
+    const bordaBtn = document.getElementById("toggle-bordas");
     const LS_BORDAS_KEY = "nesplay_bordas_neon";
 
+    // Se salvo como "false", já começa sem neon
     if (localStorage.getItem(LS_BORDAS_KEY) === "false") {
         alternarBordas(false);
         bordaBtn.textContent = "Ativar bordas neon";
     }
 
     bordaBtn.addEventListener("click", () => {
-        let neonAtivo = !!document.querySelector(".border-animated-glass, .border-top-animated-glass, .border-bottom-animated-glass");
+        // detecta se alguma borda neon está ativa
+        const neonAtivo = !!document.querySelector(
+            ".border-animated-glass, .border-top-animated-glass, .border-bottom-animated-glass"
+        );
+
+        // alterna as classes de borda/neon
         alternarBordas(!neonAtivo);
-        bordaBtn.textContent = neonAtivo ? "Ativar bordas neon" : "Desativar bordas neon";
+
+        // atualiza texto do botão
+        bordaBtn.textContent = neonAtivo
+            ? "Ativar bordas neon"
+            : "Desativar bordas neon";
+
+        // persiste estado (true = neon ativado; false = neon desativado)
         localStorage.setItem(LS_BORDAS_KEY, !neonAtivo);
+
+        // recarrega a página para reaplicar corretamente
+        location.reload();
     });
 
     function alternarBordas(ativar) {
@@ -53,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (const customClass in toggleMap) {
             const bootstrapClass = toggleMap[customClass];
             document.querySelectorAll("." + customClass + ", ." + bootstrapClass).forEach(el => {
-                const tag = el.tagName.toLowerCase(); // Captura a tag em minúsculo
+                const tag = el.tagName.toLowerCase();
 
                 if (ativar) {
                     el.classList.remove(bootstrapClass);
@@ -63,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     el.classList.remove(customClass);
                     el.classList.add(bootstrapClass);
 
-                    // Adiciona `rounded` somente se não for nav, header ou footer
+                    // só aplica rounded se não for nav, header ou footer
                     if (tag !== "nav" && tag !== "header" && tag !== "footer") {
                         el.classList.add("rounded");
                     }

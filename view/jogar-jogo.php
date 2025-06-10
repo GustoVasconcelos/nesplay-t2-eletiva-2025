@@ -50,8 +50,9 @@ $nomeRom = $row['nomeRom'];
 
 <body>
     <div class="background">
-        <header class="gradiente py-3">
-            <div class="container-fluid d-flex align-items-center justify-content-between">
+
+        <header class="border-bottom-animated-glass">
+            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
                 <a href="../index.php" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
@@ -59,6 +60,7 @@ $nomeRom = $row['nomeRom'];
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
                     <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <?php if (!isset($_SESSION['usuario'])): ?>
                         <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
@@ -70,70 +72,76 @@ $nomeRom = $row['nomeRom'];
             </div>
         </header>
 
-        <nav class="gradiente">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
-                    <?php
-                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
-                    }
-                    ?>
-                    <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                        <?php
+                        if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
+                        }
+                        ?>
+                        <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
         <main class="container my-5">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
-                    <div class="gradiente card p-4 rounded-3 shadow-sm border">
-                        <div style="margin: auto; width: 100%;">
-                            <h2 class="texto-gradiente game-text text-center">
-                                Jogando: <?= htmlspecialchars($nomeRom) ?>
-                            </h2>
-                            <!-- Canvas do emulador -->
-                            <div id="canvas-wrapper"
-                                class="canvas-animated-border d-flex align-items-center justify-content-center"
-                                data-rom-path="<?= htmlspecialchars($romPath, ENT_QUOTES) ?>"
-                                style="margin:auto; width:100%;">
-                                <canvas id="nes-canvas" width="256" height="240"></canvas>
+                    <div class="border-animated-glass">
+                        <div class="frosted content gradiente card p-4 rounded-3 shadow-sm border">
+                            <div style="margin: auto; width: 100%;">
+                                <h2 class="texto-gradiente game-text text-center">
+                                    Jogando: <?= htmlspecialchars($nomeRom) ?>
+                                </h2>
+                                <!-- Canvas do emulador -->
+                                <div id="canvas-wrapper"
+                                    class="canvas-animated-border d-flex align-items-center justify-content-center"
+                                    data-rom-path="<?= htmlspecialchars($romPath, ENT_QUOTES) ?>"
+                                    style="margin:auto; width:100%;">
+                                    <canvas id="nes-canvas" width="256" height="240"></canvas>
+                                </div>
+                                <!-- FIM--Canvas do emulador--FIM -->
+                                <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
+                                <div class="text-center mt-3">
+                                    <button id="mute-btn" class="btn btn-animated btn-outline-secondary mt-2">
+                                        Mudo
+                                    </button>
+                                    <div id="volume-display" class="small texto-gradiente mt-1">50%</div>
+                                    <input
+                                        id="volume-slider"
+                                        type="range"
+                                        min="0"
+                                        max="100"
+                                        step="1"
+                                        value="50"
+                                        class="form-range"
+                                        style="width: 80%; margin: auto;">
+                                </div>
                             </div>
-                            <!-- FIM--Canvas do emulador--FIM -->
-                            <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
-                            <div class="text-center mt-3">
-                                <button id="mute-btn" class="btn btn-animated btn-outline-secondary mt-2">
-                                    Mudo
-                                </button>
-                                <div id="volume-display" class="small texto-gradiente mt-1">50%</div>
-                                <input
-                                    id="volume-slider"
-                                    type="range"
-                                    min="0"
-                                    max="100"
-                                    step="1"
-                                    value="50"
-                                    class="form-range"
-                                    style="width: 80%; margin: auto;">
-                            </div>
+                            <p class="mt-3 texto-gradiente text-center">DPad: ←↑→↓ &nbsp; Start: Enter &nbsp; Select: Tab &nbsp; A: A/Q &nbsp; B: S/O</p>
                         </div>
-                        <p class="mt-3 texto-gradiente text-center">DPad: ←↑→↓ &nbsp; Start: Enter &nbsp; Select: Tab &nbsp; A: A/Q &nbsp; B: S/O</p>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer class="gradiente py-3">
-            <div class="container-fluid text-center">
-                <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="duvidas.php">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="privacidade.php">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="termos.php">Termos</a></li>
-                </ul>
-                <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+        <footer class="border-top-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid px-3 px-md-5 text-center">
+                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
+                        <li class="nav-item"><a class="nav-link px-2" href="duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="termos.php">Termos</a></li>
+                    </ul>
+                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+                </div>
             </div>
         </footer>
 

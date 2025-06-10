@@ -24,8 +24,8 @@ $_SESSION['romEnviada_Ok'] = $_SESSION['romEnviada_Ok'] ?? false;
 <body>
     <div class="background">
 
-        <header class="gradiente py-3">
-            <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+        <header class="border-bottom-animated-glass">
+            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
                 <a href="index.php" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
@@ -33,6 +33,7 @@ $_SESSION['romEnviada_Ok'] = $_SESSION['romEnviada_Ok'] ?? false;
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
                     <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <?php
                     if (!isset($_SESSION['usuario'])) {
@@ -46,20 +47,22 @@ $_SESSION['romEnviada_Ok'] = $_SESSION['romEnviada_Ok'] ?? false;
             </div>
         </header>
 
-        <nav class="gradiente">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
-                    <?php
-                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
-                    }
-                    ?>
-                    <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                        <?php
+                        if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
+                        }
+                        ?>
+                        <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -68,8 +71,10 @@ $_SESSION['romEnviada_Ok'] = $_SESSION['romEnviada_Ok'] ?? false;
             if ($_SESSION['romEnviada_Ok'] === true) {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '  <div class="col-12 col-md-8 col-lg-5">';
-                echo '    <div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm border success-message">';
-                echo '      <h1 class="h3 mb-4 fw-normal text-center">ROM enviada com sucesso!</h1>';
+                echo '    <div class="border-animated-glass">';
+                echo '      <div id="successMessage" class="frosted content gradiente card p-4 rounded-3 shadow-sm border">';
+                echo '        <h1 class="h3 mb-4 fw-normal text-center">ROM enviada com sucesso!</h1>';
+                echo '      </div>';
                 echo '    </div>';
                 echo '  </div>';
                 echo '</div>';
@@ -78,81 +83,85 @@ $_SESSION['romEnviada_Ok'] = $_SESSION['romEnviada_Ok'] ?? false;
             ?>
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="gradiente p-4 rounded-3 shadow-sm border">
-                        <h2 class="h3 mb-4 text-center">Enviar ROM</h2>
-                        <form method="POST" action="../proc/procCadRom.php"
-                            enctype="multipart/form-data">
-                            <!--nome-->
-                            <div class="mb-3">
-                                <label for="nome" class="form-label">Nome do jogo</label>
-                                <input type="text" id="nome" name="nome"
-                                    class="form-control" required>
-                            </div>
-                            <!--descrição-->
-                            <div class="mb-3">
-                                <label for="descricao" class="form-label">Descrição</label>
-                                <textarea id="descricao" name="descricao" rows="3"
-                                    class="form-control descricao-textarea" maxlength="100" data-id="cadastro" required></textarea>
-                                <small class="form-text text-end text-muted">
-                                    Restam <span class="char-count" id="contador-cadastro">100</span> caracteres para o limite
-                                </small>
-                            </div>
-                            <!--ano-->
-                            <div class="mb-3">
-                                <label for="ano" class="form-label">Ano</label>
-                                <input type="number" id="ano" name="ano"
-                                    class="form-control" min="1983" max="2099" required>
-                            </div>
-                            <!--categoria-->
-                            <div class="mb-3">
-                                <label for="categoria" class="form-label">Categoria</label>
-                                <select id="categoria" name="categoria"
-                                    class="form-select" required>
-                                    <option value="" disabled selected>Selecione...</option>
-                                    <?php
-                                    $lista = listarCategorias();
-                                    while ($cat = mysqli_fetch_assoc($lista)):
-                                    ?>
-                                        <option value="<?= $cat['idCategoria'] ?>">
-                                            <?= htmlspecialchars($cat['nome']) ?>
-                                        </option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-                            <!--upload-->
-                            <fieldset class="mb-3">
-                                <legend class="fs-5 mb-2">Arquivo ROM (.nes)</legend>
-                                <div class="input-file-animated w-100">
-                                    <input type="file" id="romFile" name="romFile"
-                                        accept=".nes" required class="file-input">
-                                    <label for="romFile"
-                                        class="btn-animated btn btn-secondary w-100 py-2">
-                                        Escolher arquivo
-                                    </label>
-                                    <div id="romFileName" class="file-name mt-2 text-center">
-                                        Nenhum arquivo escolhido
-                                    </div>
+                    <div class="border-animated-glass">
+                        <div class="frosted content gradiente card p-4 rounded-3 shadow-sm border">
+                            <h2 class="h3 mb-4 text-center">Enviar ROM</h2>
+                            <form method="POST" action="../proc/procCadRom.php"
+                                enctype="multipart/form-data">
+                                <!--nome-->
+                                <div class="mb-3">
+                                    <label for="nome" class="form-label">Nome do jogo</label>
+                                    <input type="text" id="nome" name="nome"
+                                        class="form-control" required>
                                 </div>
-                            </fieldset>
-                            <button type="submit"
-                                class="btn-animated btn btn-secondary w-100 ">
-                                Enviar ROM
-                            </button>
-                        </form>
+                                <!--descrição-->
+                                <div class="mb-3">
+                                    <label for="descricao" class="form-label">Descrição</label>
+                                    <textarea id="descricao" name="descricao" rows="3"
+                                        class="form-control descricao-textarea" maxlength="100" data-id="cadastro" required></textarea>
+                                    <small class="form-text text-end text-muted">
+                                        Restam <span class="char-count" id="contador-cadastro">100</span> caracteres para o limite
+                                    </small>
+                                </div>
+                                <!--ano-->
+                                <div class="mb-3">
+                                    <label for="ano" class="form-label">Ano</label>
+                                    <input type="number" id="ano" name="ano"
+                                        class="form-control" min="1983" max="2099" required>
+                                </div>
+                                <!--categoria-->
+                                <div class="mb-3">
+                                    <label for="categoria" class="form-label">Categoria</label>
+                                    <select id="categoria" name="categoria"
+                                        class="form-select" required>
+                                        <option value="" disabled selected>Selecione...</option>
+                                        <?php
+                                        $lista = listarCategorias();
+                                        while ($cat = mysqli_fetch_assoc($lista)):
+                                        ?>
+                                            <option value="<?= $cat['idCategoria'] ?>">
+                                                <?= htmlspecialchars($cat['nome']) ?>
+                                            </option>
+                                        <?php endwhile; ?>
+                                    </select>
+                                </div>
+                                <!--upload-->
+                                <fieldset class="mb-3">
+                                    <legend class="fs-5 mb-2">Arquivo ROM (.nes)</legend>
+                                    <div class="input-file-animated w-100">
+                                        <input type="file" id="romFile" name="romFile"
+                                            accept=".nes" required class="file-input">
+                                        <label for="romFile"
+                                            class="btn-animated btn btn-secondary w-100 py-2">
+                                            Escolher arquivo
+                                        </label>
+                                        <div id="romFileName" class="file-name mt-2 text-center">
+                                            Nenhum arquivo escolhido
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <button type="submit"
+                                    class="btn-animated btn btn-secondary w-100 ">
+                                    Enviar ROM
+                                </button>
+                            </form>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer class="gradiente py-3">
-            <div class="container-fluid px-3 px-md-5 text-center">
-                <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="./duvidas.php">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./privacidade.php">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./termos.php">Termos</a></li>
-                </ul>
-                <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+        <footer class="border-top-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid px-3 px-md-5 text-center">
+                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
+                        <li class="nav-item"><a class="nav-link px-2" href="duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="termos.php">Termos</a></li>
+                    </ul>
+                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+                </div>
             </div>
         </footer>
 

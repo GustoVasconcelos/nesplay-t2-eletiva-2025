@@ -24,8 +24,9 @@ $roms = listarRomsAcervo();
 
 <body>
     <div class="background">
-        <header class="gradiente py-3">
-            <div class="container-fluid d-flex align-items-center justify-content-between">
+
+        <header class="border-bottom-animated-glass">
+            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
                 <a href="../index.php" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
@@ -33,6 +34,7 @@ $roms = listarRomsAcervo();
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
                     <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <?php if (!isset($_SESSION['usuario'])): ?>
                         <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
@@ -44,20 +46,22 @@ $roms = listarRomsAcervo();
             </div>
         </header>
 
-        <nav class="gradiente">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
-                    <?php
-                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
-                    }
-                    ?>
-                    <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                        <?php
+                        if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
+                        }
+                        ?>
+                        <li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -65,24 +69,26 @@ $roms = listarRomsAcervo();
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <?php while ($rom = mysqli_fetch_assoc($roms)): ?>
                     <div class="col">
-                        <div class="gradiente card shadow-sm border">
-                            <div class="card-body d-flex flex-column align-items-center text-center">
-                                <h1 class="texto-gradiente game-text">
-                                    <?= htmlspecialchars($rom['nomeRom']) ?>
-                                </h1>
-                                <p class="card-text scroll-marquee" data-marquee-duration="15s">
-                                    <span class="marquee-text"><?= htmlspecialchars($rom['descricao']) ?></span>
-                                </p>
-                                <small class="texto-gradiente text-comment mb-1">
-                                    Ano: <?= htmlspecialchars($rom['ano']) ?>
-                                </small>
-                                <small class="texto-gradiente text-comment mb-3">
-                                    Categoria: <?= htmlspecialchars($rom['nomeCategoria']) ?>
-                                </small>
-                                <a href="./jogar-jogo.php?rom=<?= urlencode($rom['nomeArquivo']) ?>"
-                                    class="btn-animated btn btn-sm btn-outline-secondary">
-                                    Jogar
-                                </a>
+                        <div class="border-animated-glass">
+                            <div class="frosted content gradiente card p-4 rounded-3 shadow-sm border card-body d-flex flex-column align-items-center text-center">
+                                <div class="card-body d-flex flex-column align-items-center text-center">
+                                    <h1 class="texto-gradiente game-text">
+                                        <?= htmlspecialchars($rom['nomeRom']) ?>
+                                    </h1>
+                                    <p class="card-text scroll-marquee" data-marquee-duration="15s">
+                                        <span class="marquee-text"><?= htmlspecialchars($rom['descricao']) ?></span>
+                                    </p>
+                                    <small class="texto-gradiente text-comment mb-1">
+                                        Ano: <?= htmlspecialchars($rom['ano']) ?>
+                                    </small>
+                                    <small class="texto-gradiente text-comment mb-3">
+                                        Categoria: <?= htmlspecialchars($rom['nomeCategoria']) ?>
+                                    </small>
+                                    <a href="./jogar-jogo.php?rom=<?= urlencode($rom['nomeArquivo']) ?>"
+                                        class="btn-animated btn btn-sm btn-outline-secondary">
+                                        Jogar
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,14 +96,16 @@ $roms = listarRomsAcervo();
             </div>
         </main>
 
-        <footer class="gradiente py-3">
-            <div class="container-fluid text-center">
-                <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Termos</a></li>
-                </ul>
-                <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+        <footer class="border-top-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid px-3 px-md-5 text-center">
+                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
+                        <li class="nav-item"><a class="nav-link px-2" href="duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="termos.php">Termos</a></li>
+                    </ul>
+                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+                </div>
             </div>
         </footer>
 

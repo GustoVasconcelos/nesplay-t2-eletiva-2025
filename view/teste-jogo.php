@@ -30,8 +30,8 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
                     </h1>
                 </a>
                 <div class="d-flex">
-                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar bordas neon</button>
-                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
+                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
+                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar Animações</button>
                     <?php if (!isset($_SESSION['usuario'])): ?>
                         <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
                         <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
