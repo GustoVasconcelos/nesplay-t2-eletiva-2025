@@ -413,6 +413,31 @@
 =================================
 */
 
+.no-neon.border-animated-glass::before,
+.no-neon.border-animated-glass::after {
+    opacity: 0 !important;
+    animation: none !important;
+}
+
+.border-animated-glass.no-neon::before,
+.border-animated-glass.no-neon::after {
+    opacity: 0 !important;
+    animation: none !important;
+}
+
+.cards-animated {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cards-animated:hover {
+    transform: translateY(-8px);
+    box-shadow:
+        0 0 10px rgba(255, 0, 0, 0.6),
+        0 0 14px rgba(255, 255, 255, 0.4),
+        0 0 18px rgba(154, 154, 154, 0.4);
+    transition: transform 0.2s ease-in-out;
+}
+
 h1.game-text {
     padding-top: 40px;
     padding-bottom: 40px;

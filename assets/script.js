@@ -368,8 +368,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!msg) return;
 
     setTimeout(() => {
-        msg.remove();
-    }, 7000);
+        const neonWrapper = msg.closest('.border-animated-glass');
+        if (neonWrapper) neonWrapper.classList.add('no-neon');
+        msg.style.transition = 'opacity 0.5s ease';
+        msg.style.opacity = '0';
+        setTimeout(() => msg.remove(), 500);
+    }, 3900);
 });
 // FIM--Função para tratar o FadeInOut das mensagens de sucesso--FIM
 

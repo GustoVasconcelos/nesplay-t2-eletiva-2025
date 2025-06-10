@@ -110,6 +110,7 @@ $nomeRom = $row['nomeRom'];
                                 <!-- FIM--Canvas do emulador--FIM -->
                                 <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
                                 <div class="text-center mt-3">
+                                    <p class="mt-3 texto-gradiente text-center">DPad: ←↑→↓ &nbsp; Start: Enter &nbsp; Select: Tab &nbsp; A: A/Q &nbsp; B: S/O</p>
                                     <button id="mute-btn" class="btn btn-animated btn-outline-secondary mt-2">
                                         Mudo
                                     </button>
@@ -125,7 +126,6 @@ $nomeRom = $row['nomeRom'];
                                         style="width: 80%; margin: auto;">
                                 </div>
                             </div>
-                            <p class="mt-3 texto-gradiente text-center">DPad: ←↑→↓ &nbsp; Start: Enter &nbsp; Select: Tab &nbsp; A: A/Q &nbsp; B: S/O</p>
                         </div>
                     </div>
                 </div>

@@ -28,8 +28,8 @@ $listaUsuarios = listarUsuarios();
 <body>
     <div class="background">
 
-        <header class="gradiente py-3">
-            <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+        <header class="border-bottom-animated-glass">
+            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
                 <a href="../../index.php" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="../../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
@@ -37,6 +37,7 @@ $listaUsuarios = listarUsuarios();
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
                     <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <?php
                     if (!isset($_SESSION['usuario'])) {
@@ -50,16 +51,18 @@ $listaUsuarios = listarUsuarios();
             </div>
         </header>
 
-        <nav class="gradiente">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar Categorias</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li> -->
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.php">Gerenciar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar Categorias</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li> -->
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.php">Gerenciar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="../sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -72,19 +75,21 @@ $listaUsuarios = listarUsuarios();
             ): ?>
                 <div class="row justify-content-center mb-3">
                     <div class="col-12 col-md-8 col-lg-5">
-                        <div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm border success-message">
-                            <?php if ($_SESSION['cadastroUsuario_Ok'] ?? false): ?>
-                                <h1 class="text-center h3 mb-0">Usuário cadastrado com sucesso!</h1>
-                                <?php $_SESSION['cadastroUsuario_Ok'] = false; ?>
-                            <?php endif; ?>
-                            <?php if ($_SESSION['apagarUsuario_Ok'] ?? false): ?>
-                                <h1 class="text-center h3 mb-0">Usuário apagado com sucesso!</h1>
-                                <?php $_SESSION['apagarUsuario_Ok'] = false; ?>
-                            <?php endif; ?>
-                            <?php if ($_SESSION['renomearUsuario_Ok'] ?? false): ?>
-                                <h1 class="text-center h3 mb-0">Usuário alterado com sucesso!</h1>
-                                <?php $_SESSION['renomearUsuario_Ok'] = false; ?>
-                            <?php endif; ?>
+                        <div class="border-animated-glass">
+                            <div id="successMessage" class="frosted content gradiente p-4 rounded-3 shadow-sm border success-message">
+                                <?php if ($_SESSION['cadastroUsuario_Ok'] ?? false): ?>
+                                    <h1 class="text-center h3 mb-0">Usuário cadastrado com sucesso!</h1>
+                                    <?php $_SESSION['cadastroUsuario_Ok'] = false; ?>
+                                <?php endif; ?>
+                                <?php if ($_SESSION['apagarUsuario_Ok'] ?? false): ?>
+                                    <h1 class="text-center h3 mb-0">Usuário apagado com sucesso!</h1>
+                                    <?php $_SESSION['apagarUsuario_Ok'] = false; ?>
+                                <?php endif; ?>
+                                <?php if ($_SESSION['renomearUsuario_Ok'] ?? false): ?>
+                                    <h1 class="text-center h3 mb-0">Usuário alterado com sucesso!</h1>
+                                    <?php $_SESSION['renomearUsuario_Ok'] = false; ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -93,79 +98,83 @@ $listaUsuarios = listarUsuarios();
             <!-- Lista de usuários -->
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
-                    <div class="gradiente p-4 rounded-3 shadow-sm border">
-                        <h2 class="h3 mb-4 fw-normal text-center">Gerenciar Usuários</h2>
+                    <div class="border-animated-glass">
+                        <div class="frosted content gradiente card p-4 rounded-3 shadow-sm border">
+                            <h2 class="h3 mb-4 fw-normal text-center">Gerenciar Usuários</h2>
 
-                        <?php
-                        while ($u = mysqli_fetch_assoc($listaUsuarios)):
-                            $id = $u['idUser'];
-                        ?>
-                            <div id="user-<?= $id ?>" class="mb-4 p-3 border rounded gradiente">
-                                <div class="user-view">
-                                    <p><strong>Nome: <?= htmlspecialchars($u['nome']) ?> <?= htmlspecialchars($u['sobrenome']) ?></strong></p>
-                                    <p>Data de Nascimento: <?= htmlspecialchars($u['dataNascimento']) ?></p>
-                                    <p>E-mail: <?= htmlspecialchars($u['email']) ?></p>
-                                    <p>Apelido: <?= htmlspecialchars($u['apelido']) ?></p>
-                                    <p>Senha: <?= htmlspecialchars($u['senha']) ?></p>
-                                    <p>
-                                        <label>
-                                            <input type="checkbox" disabled <?= $u['adm'] ? 'checked' : '' ?>>
-                                            Administrador
-                                        </label>
-                                    </p>
-                                    <button class="btn-animated btn btn-sm btn-outline-primary me-2" onclick="editarUsuario(<?= $id ?>)">
-                                        Alterar
-                                    </button>
-                                    <form class="d-inline" method="POST" action="../../proc/procDelUsuario.php">
+                            <?php
+                            while ($u = mysqli_fetch_assoc($listaUsuarios)):
+                                $id = $u['idUser'];
+                            ?>
+                                <div id="user-<?= $id ?>" class="mb-4 p-3 border rounded gradiente">
+                                    <div class="user-view">
+                                        <p><strong>Nome: <?= htmlspecialchars($u['nome']) ?> <?= htmlspecialchars($u['sobrenome']) ?></strong></p>
+                                        <p>Data de Nascimento: <?= htmlspecialchars($u['dataNascimento']) ?></p>
+                                        <p>E-mail: <?= htmlspecialchars($u['email']) ?></p>
+                                        <p>Apelido: <?= htmlspecialchars($u['apelido']) ?></p>
+                                        <p>Senha: <?= htmlspecialchars($u['senha']) ?></p>
+                                        <p>
+                                            <label>
+                                                <input type="checkbox" disabled <?= $u['adm'] ? 'checked' : '' ?>>
+                                                Administrador
+                                            </label>
+                                        </p>
+                                        <button class="btn-animated btn btn-sm btn-outline-primary me-2" onclick="editarUsuario(<?= $id ?>)">
+                                            Alterar
+                                        </button>
+                                        <form class="d-inline" method="POST" action="../../proc/procDelUsuario.php">
+                                            <input type="hidden" name="idUser" value="<?= $id ?>">
+                                            <button
+                                                class="btn-animated btn btn-sm btn-outline-danger"
+                                                type="submit"
+                                                onclick="return confirm('Confirma exclusão deste usuário?')">
+                                                Apagar
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <!-- Formulário de Edição (inicialmente oculto) -->
+                                    <form class="user-edit d-none" id="form-<?= $id ?>"
+                                        method="POST" action="../../proc/procUpdUsuario.php">
                                         <input type="hidden" name="idUser" value="<?= $id ?>">
-                                        <button
-                                            class="btn-animated btn btn-sm btn-outline-danger"
-                                            type="submit"
-                                            onclick="return confirm('Confirma exclusão deste usuário?')">
-                                            Apagar
+                                        <input type="text" class="form-control my-1" name="nome" value="<?= htmlspecialchars($u['nome']) ?>">
+                                        <input type="text" class="form-control my-1" name="sobrenome" value="<?= htmlspecialchars($u['sobrenome']) ?>">
+                                        <input type="date" class="form-control my-1" name="dataNascimento" value="<?= htmlspecialchars($u['dataNascimento']) ?>">
+                                        <input type="email" class="form-control my-1" name="email" value="<?= htmlspecialchars($u['email']) ?>">
+                                        <input type="text" class="form-control my-1" name="apelido" value="<?= htmlspecialchars($u['apelido']) ?>">
+                                        <input type="text" class="form-control my-1" name="senha" value="<?= htmlspecialchars($u['senha']) ?>">
+                                        <label class="my-1">
+                                            <input type="checkbox" name="adm" <?= $u['adm'] ? 'checked' : '' ?>>
+                                            Administrador
+                                        </label><br>
+                                        <button type="submit"
+                                            class="btn-animated btn btn-sm btn-success me-2 mt-2">
+                                            Confirmar Alteração
+                                        </button>
+                                        <button type="button"
+                                            class="btn-animated btn btn-sm btn-secondary mt-2"
+                                            onclick="cancelarEdicao(<?= $id ?>)">
+                                            Cancelar
                                         </button>
                                     </form>
                                 </div>
-
-                                <!-- Formulário de Edição (inicialmente oculto) -->
-                                <form class="user-edit d-none" id="form-<?= $id ?>"
-                                    method="POST" action="../../proc/procUpdUsuario.php">
-                                    <input type="hidden" name="idUser" value="<?= $id ?>">
-                                    <input type="text" class="form-control my-1" name="nome" value="<?= htmlspecialchars($u['nome']) ?>">
-                                    <input type="text" class="form-control my-1" name="sobrenome" value="<?= htmlspecialchars($u['sobrenome']) ?>">
-                                    <input type="date" class="form-control my-1" name="dataNascimento" value="<?= htmlspecialchars($u['dataNascimento']) ?>">
-                                    <input type="email" class="form-control my-1" name="email" value="<?= htmlspecialchars($u['email']) ?>">
-                                    <input type="text" class="form-control my-1" name="apelido" value="<?= htmlspecialchars($u['apelido']) ?>">
-                                    <input type="text" class="form-control my-1" name="senha" value="<?= htmlspecialchars($u['senha']) ?>">
-                                    <label class="my-1">
-                                        <input type="checkbox" name="adm" <?= $u['adm'] ? 'checked' : '' ?>>
-                                        Administrador
-                                    </label><br>
-                                    <button type="submit"
-                                        class="btn-animated btn btn-sm btn-success me-2 mt-2">
-                                        Confirmar Alteração
-                                    </button>
-                                    <button type="button"
-                                        class="btn-animated btn btn-sm btn-secondary mt-2"
-                                        onclick="cancelarEdicao(<?= $id ?>)">
-                                        Cancelar
-                                    </button>
-                                </form>
-                            </div>
-                        <?php endwhile; ?><!-- Fim do while -->
+                            <?php endwhile; ?><!-- Fim do while -->
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer class="gradiente py-3">
-            <div class="container-fluid px-3 px-md-5 text-center">
-                <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="../duvidas.php">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../privacidade.php">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../termos.php">Termos</a></li>
-                </ul>
-                <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+        <footer class="border-top-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid px-3 px-md-5 text-center">
+                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
+                        <li class="nav-item"><a class="nav-link px-2" href="../duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="../privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="../termos.php">Termos</a></li>
+                    </ul>
+                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+                </div>
             </div>
         </footer>
 

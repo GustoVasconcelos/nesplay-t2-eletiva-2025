@@ -30,8 +30,8 @@ unset($_SESSION['erro_editar_categoria']);
 <body>
     <div class="background">
 
-        <header class="gradiente py-3">
-            <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+        <header class="border-bottom-animated-glass">
+            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
                 <a href="../../index.php" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="../../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
@@ -39,6 +39,7 @@ unset($_SESSION['erro_editar_categoria']);
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
                     <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <?php
                     if (!isset($_SESSION['usuario'])) {
@@ -52,17 +53,18 @@ unset($_SESSION['erro_editar_categoria']);
             </div>
         </header>
 
-        <nav class="gradiente">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar
-                            Categorias</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li> -->
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.php">Gerenciar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar Categorias</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li> -->
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.php">Gerenciar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="../sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -76,7 +78,8 @@ unset($_SESSION['erro_editar_categoria']);
             ) {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
-                echo '<div id="successMessage" class="gradiente p-4 rounded-3 shadow-sm border success-message">';
+                echo '<div class="border-animated-glass">';
+                echo '<div id="successMessage" class="frosted content gradiente p-4 rounded-3 shadow-sm border success-message">';
                 if (isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria cadastrada com sucesso!</h1>';
                     $_SESSION['cadastroCategoria_Ok'] = false;
@@ -89,10 +92,10 @@ unset($_SESSION['erro_editar_categoria']);
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria renomeada com sucesso!</h1>';
                     $_SESSION['renomearCategoria_Ok'] = false;
                 }
-                if ($erro_editar != "")
-                {
-                    echo '<h1 class="h3 mb-4 fw-normal text-center">'. $erro_editar .'</h1>';
+                if ($erro_editar != "") {
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">' . $erro_editar . '</h1>';
                 }
+                echo '</div>';
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
@@ -100,79 +103,83 @@ unset($_SESSION['erro_editar_categoria']);
             ?>
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">
-                    <div class="gradiente p-4 rounded-3 shadow-sm border">
-                        <h2 class="h3 mb-4 fw-normal text-center">Gerenciar Categorias</h2>
-                        <!-- Formulário de Cadastrar Categoria -->
-                        <form class="mb-4" method="POST" action="../../proc/procCadCategoria.php">
-                            <fieldset>
-                                <legend class="fs-5 mb-3">Cadastrar Categoria</legend>
-                                <div class="d-flex">
-                                    <input type="text" class="form-control me-2" name="nomeCategoria"
-                                        placeholder="Categoria">
-                                    <button class="btn-animated btn btn-secondary" style="padding-left: 3px;"
-                                        type="submit">
-                                        Cadastrar
-                                    </button>
-                                </div>
-                            </fieldset>
-                        </form>
-                        <!-- Formulário de Renomear Categoria -->
-                        <form method="POST" action="../../proc/procUpdCategoria.php">
-                            <fieldset>
-                                <legend class="fs-5 mb-3">Renomear Categoria</legend>
-                                <div class="d-flex flex-column">
-                                    <select class="form-select mb-2" id="selectCategoriaRenomear"
-                                        name="selectRenomearCategoria">
-                                        <option selected>Escolher...</option>
-                                        <?php
-                                        $listaCategorias = listarCategorias();
-                                        while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
-                                            echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                    <input type="text" class="form-control d-none" id="novoNomeCategoria"
-                                        name="novoNomeCategoria" placeholder="Novo nome da categoria">
-                                    <button class="btn-animated btn btn-secondary mt-2" type="submit">
-                                        Renomear
-                                    </button>
-                                </div>
-                            </fieldset>
-                        </form>
-                        <!-- Formulário de Apagar Categoria -->
-                        <form method="POST" action="../../proc/procDelCategoria.php">
-                            <fieldset>
-                                <legend class="fs-5 mb-3">Apagar Categoria</legend>
-                                <div class="d-flex">
-                                    <select class="form-select me-2" name="selectApagarCategoria">
-                                        <option selected>Escolher...</option>
-                                        <?php
-                                        $listaCategorias = listarCategorias();
-                                        while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
-                                            echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                    <button class="btn-animated btn btn-secondary" style="padding-left: 8px;"
-                                        type="submit">
-                                        Deletar
-                                    </button>
-                                </div>
-                            </fieldset>
-                        </form>
+                    <div class="border-animated-glass">
+                        <div class="frosted content gradiente card p-4 rounded-3 shadow-sm border">
+                            <h2 class="h3 mb-4 fw-normal text-center">Gerenciar Categorias</h2>
+                            <!-- Formulário de Cadastrar Categoria -->
+                            <form class="mb-4" method="POST" action="../../proc/procCadCategoria.php">
+                                <fieldset>
+                                    <legend class="fs-5 mb-3">Cadastrar Categoria</legend>
+                                    <div class="d-flex flex-column">
+                                        <input type="text" class="form-control me-2" name="nomeCategoria"
+                                            placeholder="Categoria">
+                                        <button class="btn-animated btn btn-secondary mt-2" style="padding-left: 3px;"
+                                            type="submit">
+                                            Cadastrar
+                                        </button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <!-- Formulário de Renomear Categoria -->
+                            <form method="POST" action="../../proc/procUpdCategoria.php">
+                                <fieldset>
+                                    <legend class="fs-5 mb-3">Renomear Categoria</legend>
+                                    <div class="d-flex flex-column">
+                                        <select class="form-select mb-2" id="selectCategoriaRenomear"
+                                            name="selectRenomearCategoria">
+                                            <option selected>Escolher...</option>
+                                            <?php
+                                            $listaCategorias = listarCategorias();
+                                            while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
+                                                echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                        <input type="text" class="form-control d-none" id="novoNomeCategoria"
+                                            name="novoNomeCategoria" placeholder="Novo nome da categoria">
+                                        <button class="btn-animated btn btn-secondary mt-2" type="submit">
+                                            Renomear
+                                        </button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <!-- Formulário de Apagar Categoria -->
+                            <form method="POST" action="../../proc/procDelCategoria.php">
+                                <fieldset>
+                                    <legend class="fs-5 mb-3">Apagar Categoria</legend>
+                                    <div class="d-flex flex-column">
+                                        <select class="form-select me-2" name="selectApagarCategoria">
+                                            <option selected>Escolher...</option>
+                                            <?php
+                                            $listaCategorias = listarCategorias();
+                                            while ($categoria = mysqli_fetch_assoc($listaCategorias)) {
+                                                echo "<option value=\"" . $categoria["idCategoria"] . "\">" . $categoria["nome"] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                        <button class="btn-animated btn btn-secondary mt-2" style="padding-left: 8px;"
+                                            type="submit">
+                                            Deletar
+                                        </button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
 
-        <footer class="gradiente py-3">
-            <div class="container-fluid px-3 px-md-5 text-center">
-                <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="../duvidas.php">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../privacidade.php">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../termos.php">Termos</a></li>
-                </ul>
-                <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+        <footer class="border-top-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid px-3 px-md-5 text-center">
+                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
+                        <li class="nav-item"><a class="nav-link px-2" href="../duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="../privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="../termos.php">Termos</a></li>
+                    </ul>
+                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+                </div>
             </div>
         </footer>
 

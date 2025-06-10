@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION['usuario_adm'] != 1){
+if ($_SESSION['usuario_adm'] != 1) {
     header("Location: ../../index.php");
     exit;
 }
@@ -24,8 +24,8 @@ if ($_SESSION['usuario_adm'] != 1){
 <body>
     <div class="background">
 
-        <header class="gradiente py-3">
-            <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+        <header class="border-bottom-animated-glass">
+            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
                 <a href="../../index.php" class="d-flex align-items-center text-decoration-none">
                     <img class="logotipo img-fluid" src="../../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
@@ -33,6 +33,7 @@ if ($_SESSION['usuario_adm'] != 1){
                     </h1>
                 </a>
                 <div class="d-flex">
+                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
                     <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                     <?php
                     if (!isset($_SESSION['usuario'])) {
@@ -46,37 +47,43 @@ if ($_SESSION['usuario_adm'] != 1){
             </div>
         </header>
 
-        <nav class="gradiente">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar Categorias</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li> -->
-                    <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.php">Gerenciar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar Categorias</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li> -->
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-roms.php">Gerenciar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="../sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
         <main class="container px-3 px-md-5 py-5 d-flex flex-column" id="hanging-icons">
             <!-- Card -->
-            <div class="gradiente p-4 h-100 d-flex align-items-center justify-content-center border">
-                <div>
-                    <h3 class="fs-2">Administração</h3>
-                    <p class="text-center">Seja bem-vindo</p>
+            <div class="border-animated-glass">
+                <div class="frosted content gradiente card p-4 rounded-3 shadow-sm p-4 h-100 d-flex align-items-center justify-content-center border">
+                    <div>
+                        <h3 class="fs-2">Administração</h3>
+                        <p class="text-center">Seja bem-vindo</p>
+                    </div>
                 </div>
             </div>
         </main>
 
-        <footer class="gradiente py-3">
-            <div class="container-fluid px-3 px-md-5 text-center">
-                <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="../duvidas.php">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../privacidade.php">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="../termos.php">Termos</a></li>
-                </ul>
-                <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+        <footer class="border-top-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid px-3 px-md-5 text-center">
+                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
+                        <li class="nav-item"><a class="nav-link px-2" href="../duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="../privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="../termos.php">Termos</a></li>
+                    </ul>
+                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+                </div>
             </div>
         </footer>
 

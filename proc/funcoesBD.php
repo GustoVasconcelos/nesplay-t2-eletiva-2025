@@ -108,7 +108,7 @@ function checarNomeCategoria($nomeCategoria)
     $nomeCategoria = mysqli_real_escape_string($conexao, $nomeCategoria);
     $sql = "SELECT 1 from categorias WHERE nome = '$nomeCategoria' LIMIT 1";
     $existe_categoria = mysqli_query($conexao, $sql);
-    if($existe_categoria->num_rows === 1)
+    if ($existe_categoria->num_rows === 1)
         return true;
     return false;
 }
@@ -197,6 +197,29 @@ function listarRomsAcervo()
     return mysqli_query($conexao, $sql);
 }
 
+function listarUltimosRoms(int $limit = 5)
+{
+    $conexao = conectarBD();
+    $l = (int)$limit;
+    $sql = "
+        SELECT 
+            r.idRom,
+            r.nome       AS nomeRom,
+            r.descricao,
+            r.ano,
+            r.nomeArquivo,
+            r.caminho,
+            c.nome       AS nomeCategoria,
+            u.apelido    AS usuario_apelido
+        FROM roms r
+        LEFT JOIN categorias c ON r.categoria_id = c.idCategoria
+        LEFT JOIN usuarios   u ON r.user_id      = u.idUser
+        ORDER BY r.idRom DESC
+        LIMIT $l
+    ";
+    return mysqli_query($conexao, $sql);
+}
+
 function alterarRom($idRom, $nome, $descricao, $ano, $nomeArquivo, $caminho, $categoria_id, $user_id)
 {
     $conexao     = conectarBD();
@@ -220,7 +243,8 @@ function alterarRom($idRom, $nome, $descricao, $ano, $nomeArquivo, $caminho, $ca
     mysqli_query($conexao, $sql);
 }
 
-function deletarRom(int $idRom): bool {
+function deletarRom(int $idRom): bool
+{
     $conexao = conectarBD();
     $sql = "DELETE FROM roms WHERE idRom = ?";
     $stmt = mysqli_prepare($conexao, $sql);
@@ -228,7 +252,8 @@ function deletarRom(int $idRom): bool {
     return mysqli_stmt_execute($stmt);
 }
 
-function buscarRomPorId($idRom) {
+function buscarRomPorId($idRom)
+{
     $conexao = conectarBD();
     $id = (int)$idRom;
     $sql = "SELECT * FROM roms WHERE idRom = $id LIMIT 1";
