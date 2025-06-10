@@ -101,6 +101,28 @@
     }
 }
 
+@keyframes neonPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 2px rgba(255, 0, 0, 0.5),
+            0 0 4px rgba(154, 154, 154, 0.5),
+            0 0 6px rgba(255, 255, 255, 0.5),
+            0 0 8px rgba(154, 154, 154, 0.5),
+            0 0 10px rgba(255, 0, 0, 0.5);
+    }
+
+    50% {
+        box-shadow:
+            0 0 4px rgba(255, 0, 0, 1),
+            0 0 8px rgba(154, 154, 154, 1),
+            0 0 12px rgba(255, 255, 255, 1),
+            0 0 16px rgba(154, 154, 154, 1),
+            0 0 20px rgba(255, 0, 0, 1);
+    }
+}
+
 :root {
     --transition-duration: 0.4s;
     --border-radius: 0.75rem;
@@ -196,6 +218,200 @@
     font-family: 'Press Start 2P', monospace;
     font-size: 1.4rem;
 }
+
+.frosted-content {
+    z-index: 0;
+    position: relative;
+    border-radius: inherit;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 2rem;
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+}
+
+/*
+=================================
+>      Borda Neon Completa      <
+=================================
+*/
+.border-animated-glass {
+    z-index: 1;
+    position: relative;
+    border-radius: 1rem;
+    overflow: visible;
+    height: 100%;
+}
+
+.border-animated-glass::before {
+    z-index: 1;
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 3px;
+    border-radius: inherit;
+    background: conic-gradient(from var(--angle, 0deg),
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0));
+    mask:
+        linear-gradient(rgb(255, 255, 255) 0 0) content-box,
+        linear-gradient(rgb(255, 255, 255) 0 0);
+    mask-composite: exclude;
+    -webkit-mask:
+        linear-gradient(rgb(255, 255, 255) 0 0) content-box,
+        linear-gradient(rgb(255, 255, 255) 0 0);
+    -webkit-mask-composite: xor;
+    animation: rotateBorder 1.6s linear infinite;
+}
+
+.border-animated-glass::after {
+    z-index: 1;
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: transparent;
+    box-shadow:
+        0 0 2px rgba(255, 0, 0, 0.5),
+        0 0 4px rgba(154, 154, 154, 0.5),
+        0 0 6px rgba(255, 255, 255, 0.5),
+        0 0 8px rgba(154, 154, 154, 0.5),
+        0 0 10px rgba(255, 0, 0, 0.5);
+    animation: neonPulse 1.9s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/*
+=================================
+==FIM--Borda Neon Completa--FIM==
+=================================
+*/
+
+/*
+=================================
+>        Borda Neon Topo        <
+=================================
+*/
+.border-top-animated-glass {
+    z-index: 1;
+    position: relative;
+    overflow: visible;
+    height: 100%;
+}
+
+.border-top-animated-glass::before {
+    z-index: 2;
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    padding: 3px 0 0 0;
+    background: conic-gradient(from var(--angle, 0deg),
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0));
+    mask:
+        linear-gradient(rgb(255, 255, 255) 0 0) content-box,
+        linear-gradient(rgb(255, 255, 255) 0 0);
+    mask-composite: exclude;
+    -webkit-mask:
+        linear-gradient(rgb(255, 255, 255) 0 0) content-box,
+        linear-gradient(rgb(255, 255, 255) 0 0);
+    -webkit-mask-composite: xor;
+    animation: rotateBorder 1.6s linear infinite;
+}
+
+.border-top-animated-glass::after {
+    z-index: 1;
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    box-shadow:
+        0 0 2px rgba(255, 0, 0, 0.5),
+        0 0 4px rgba(154, 154, 154, 0.5),
+        0 0 6px rgba(255, 255, 255, 0.5),
+        0 0 8px rgba(154, 154, 154, 0.5),
+        0 0 10px rgba(255, 0, 0, 0.5);
+    animation: neonPulse 1.9s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/*
+=================================
+====FIM--Borda Neon Topo--FIM====
+=================================
+*/
+
+/*
+=================================
+>        Borda Neon Base        <
+=================================
+*/
+.border-bottom-animated-glass {
+    position: relative;
+    overflow: visible;
+    --angle: 0deg;
+}
+
+.border-bottom-animated-glass::before,
+.border-bottom-animated-glass::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 0 0 3px 0;
+    border-radius: 0;
+    pointer-events: none;
+}
+
+/* faixa nítida de gradiente */
+.border-bottom-animated-glass::before {
+    z-index: 2;
+    background: conic-gradient(from var(--angle),
+            rgb(255, 0, 0),
+            rgb(154, 154, 154),
+            rgb(255, 255, 255),
+            rgb(154, 154, 154),
+            rgb(255, 0, 0)) border-box;
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    animation: rotateBorder 1.6s linear infinite;
+}
+
+/* glow pulsante */
+.border-bottom-animated-glass::after {
+    z-index: 1;
+    background: transparent;
+    box-shadow:
+        0 0 2px rgba(255, 0, 0, 0.5),
+        0 0 4px rgba(154, 154, 154, 0.5),
+        0 0 6px rgba(255, 255, 255, 0.5),
+        0 0 8px rgba(154, 154, 154, 0.5),
+        0 0 10px rgba(255, 0, 0, 0.5);
+    filter: blur(4px);
+    opacity: 0.6;
+    animation:
+        rotateBorder 1.6s linear infinite,
+        neonPulse 1.9s ease-in-out infinite alternate;
+}
+
+/*
+=================================
+====FIM--Borda Neon Base--FIM====
+=================================
+*/
 
 h1.game-text {
     padding-top: 40px;
@@ -392,7 +608,6 @@ main {
     position: relative;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 1rem;
     overflow: hidden;
     box-shadow: 20px 20px 22px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(8px);
@@ -439,12 +654,6 @@ main {
     opacity: 0.1;
     z-index: -1;
     animation: gradientShift 7s linear infinite;
-}
-
-header.gradiente,
-nav.gradiente,
-footer.gradiente {
-    border-radius: 0 !important;
 }
 
 footer.gradiente {
@@ -538,7 +747,7 @@ footer.gradiente {
     content: "";
     position: absolute;
     inset: 0;
-    padding: 3px;
+    padding: 2px;
     border-radius: inherit;
     background: conic-gradient(from var(--angle),
             rgb(255, 0, 0),

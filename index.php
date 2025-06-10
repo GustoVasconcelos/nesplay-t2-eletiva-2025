@@ -18,43 +18,46 @@ session_start();
 <body>
     <div class="background">
 
-        <header class="gradiente py-3">
-            <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
-                <a href="index.php" class="d-flex align-items-center text-decoration-none">
-                    <img class="logotipo img-fluid" src="assets/img/logo.svg" alt="NESPlay Logo">
-                    <h1 id="texto-logotipo" class="ms-2 mb-0">
-                        <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
-                    </h1>
-                </a>
-                <div class="d-flex">
-                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
-                    <?php
-                    if (!isset($_SESSION['usuario'])) {
-                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/login.php">Login</a>';
-                        echo '<a class="btn-animated btn btn-secondary" href="view/cadastrar.php">Cadastrar</a>';
-                    } else {
-                        echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/logout.php">Sair</a>';
-                    }
-                    ?>
+        <header class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+                    <a href="index.php" class="d-flex align-items-center text-decoration-none">
+                        <img class="logotipo img-fluid" src="assets/img/logo.svg" alt="NESPlay Logo">
+                        <h1 id="texto-logotipo" class="ms-2 mb-0">
+                            <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
+                        </h1>
+                    </a>
+                    <div class="d-flex">
+                        <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
+                        <?php
+                        if (!isset($_SESSION['usuario'])) {
+                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/login.php">Login</a>';
+                            echo '<a class="btn-animated btn btn-secondary" href="view/cadastrar.php">Cadastrar</a>';
+                        } else {
+                            echo '<a class="btn-animated btn btn-outline-secondary me-2" href="view/logout.php">Sair</a>';
+                        }
+                        ?>
+                    </div>
                 </div>
-            </div>
         </header>
 
-        <nav class="gradiente">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
-                    <?php
-                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
-                    }
-                    if (isset($_SESSION['usuario'])) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>';
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/acervo-jogos.php">Jogos Disponíveis</a></li>';
-                    }?>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
+                        <?php
+                        if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
+                        }
+                        if (isset($_SESSION['usuario'])) {
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>';
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./view/acervo-jogos.php">Jogos Disponíveis</a></li>';
+                        } ?>
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -62,55 +65,53 @@ session_start();
             <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3">
                 <!-- 1º Card -->
                 <div class="col">
-                    <div class="gradiente p-4 h-100 d-flex align-items-start border">
-                        <div
-                            class="icon-square d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                    <div class="border-animated-glass">
+                        <div class="frosted-content gradiente p-4 shadow-sm">
                             <img src="assets/img/tv_nes.svg" alt="" class="img-fluid">
-                        </div>
-                        <div>
-                            <h3 class="fs-2">Crie sua conta</h3>
-                            <p>De maneira simples e objetiva, você cria sua conta e já começa a jogar.</p>
+                            <div>
+                                <h3 class="fs-2">Crie sua conta</h3>
+                                <p>De maneira simples e objetiva, você cria sua conta e já começa a jogar.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- 2º Card -->
                 <div class="col">
-                    <div class="gradiente p-4 h-100 d-flex align-items-start border">
-                        <div
-                            class="icon-square d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                    <div class="border-animated-glass">
+                        <div class="frosted-content gradiente p-4 shadow-sm">
                             <img src="assets/img/cartucho_nes.svg" alt="" class="img-fluid">
-                        </div>
-                        <div>
-                            <h3 class="fs-2">Faça upload das suas roms</h3>
-                            <p>Disponibilizamos um espaço no servidor para você fazer o upload de suas roms favoritas.
-                            </p>
+                            <div>
+                                <h3 class="fs-2">Faça upload das suas roms</h3>
+                                <p>Disponibilizamos um espaço no servidor para você fazer o upload de suas roms favoritas.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- 3º Card -->
                 <div class="col">
-                    <div class="gradiente p-4 h-100 d-flex align-items-start border">
-                        <div
-                            class="icon-square d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                    <div class="border-animated-glass">
+                        <div class="frosted-content gradiente p-4 shadow-sm">
                             <img src="assets/img/console_nes.svg" alt="" class="img-fluid">
-                        </div>
-                        <div>
-                            <h3 class="fs-2">Jogue direto do navegador</h3>
-                            <p>Sem downloads ou configurações complexas. Basta apenas escolher o jogo e se divertir.</p>
+                            <div>
+                                <h3 class="fs-2">Jogue direto do navegador</h3>
+                                <p>Sem downloads ou configurações complexas. Basta apenas escolher o jogo e se divertir.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </main>
 
-        <footer class="gradiente py-3">
-            <div class="container-fluid px-3 px-md-5 text-center">
-                <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/duvidas.php">Dúvidas?</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/privacidade.php">Privacidade</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/termos.php">Termos</a></li>
-                </ul>
-                <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+        <footer class="border-top-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid px-3 px-md-5 text-center">
+                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/termos.php">Termos</a></li>
+                    </ul>
+                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+                </div>
             </div>
         </footer>
 
