@@ -28,6 +28,7 @@ session_start();
                         </h1>
                     </a>
                     <div class="d-flex">
+                        <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar bordas neon</button>
                         <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
                         <?php
                         if (!isset($_SESSION['usuario'])) {
@@ -62,7 +63,7 @@ session_start();
         </nav>
 
         <main class="container px-3 px-md-5 py-5 d-flex flex-column" id="hanging-icons">
-            <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3">
+            <div class="row g-4 row-cols-1 ro w-cols-sm-2 row-cols-lg-3">
                 <!-- 1º Card -->
                 <div class="col">
                     <div class="border-animated-glass">

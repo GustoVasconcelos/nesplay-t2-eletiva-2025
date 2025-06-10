@@ -9,25 +9,61 @@
 */
 
 // Função para alternar as animações
-; (function () {
-    const btn = document.getElementById('toggle-anim');
+document.addEventListener("DOMContentLoaded", () => {
+    // === BOTÃO: DESATIVAR ANIMAÇÕES ===
+    const animBtn = document.getElementById("toggle-anim");
     const body = document.body;
-    const LS_KEY = 'nesplay_no_anim';
+    const LS_ANIM_KEY = "nesplay_no_anim";
 
-    // Aplica estado salvo
-    if (localStorage.getItem(LS_KEY) === 'true') {
-        body.classList.add('no-anim');
-        if (btn) btn.textContent = 'Ativar animações';
+    if (localStorage.getItem(LS_ANIM_KEY) === "true") {
+        body.classList.add("no-anim");
+        animBtn.textContent = "Ativar animações";
     }
 
-    // Listener do botão
-    btn?.addEventListener('click', () => {
-        const off = body.classList.toggle('no-anim');
-        btn.textContent = off ? 'Ativar animações' : 'Desativar animações';
-        localStorage.setItem(LS_KEY, off);
-        location.reload(); // Força recarregar para aplicar/remover animações corretamente
+    animBtn.addEventListener("click", () => {
+        const desativado = body.classList.toggle("no-anim");
+        animBtn.textContent = desativado ? "Ativar animações" : "Desativar animações";
+        localStorage.setItem(LS_ANIM_KEY, desativado);
+        location.reload();
     });
-})();
+
+    // === BOTÃO: DESATIVAR BORDAS NEON ===
+    const bordaBtn = document.getElementById("toggle-bordas"); // ← FALTAVA ESTA LINHA
+    const LS_BORDAS_KEY = "nesplay_bordas_neon";
+
+    if (localStorage.getItem(LS_BORDAS_KEY) === "false") {
+        alternarBordas(false);
+        bordaBtn.textContent = "Ativar bordas neon";
+    }
+
+    bordaBtn.addEventListener("click", () => {
+        let neonAtivo = !!document.querySelector(".border-animated-glass, .border-top-animated-glass, .border-bottom-animated-glass");
+        alternarBordas(!neonAtivo);
+        bordaBtn.textContent = neonAtivo ? "Ativar bordas neon" : "Desativar bordas neon";
+        localStorage.setItem(LS_BORDAS_KEY, !neonAtivo);
+    });
+
+    function alternarBordas(ativar) {
+        const toggleMap = {
+            "border-animated-glass": "border",
+            "border-top-animated-glass": "border-top",
+            "border-bottom-animated-glass": "border-bottom"
+        };
+
+        for (const customClass in toggleMap) {
+            const bootstrapClass = toggleMap[customClass];
+            document.querySelectorAll("." + customClass + ", ." + bootstrapClass).forEach(el => {
+                if (ativar) {
+                    el.classList.remove(bootstrapClass);
+                    el.classList.add(customClass);
+                } else {
+                    el.classList.remove(customClass);
+                    el.classList.add(bootstrapClass);
+                }
+            });
+        }
+    }
+});
 // FIM--Função para alternar as animações--FIM
 
 // Função global para aplicar estado de volume/mute
