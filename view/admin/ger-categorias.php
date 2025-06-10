@@ -8,6 +8,8 @@ if ($_SESSION['usuario_adm'] != 1) {
 $_SESSION['cadastroCategoria_Ok'] = $_SESSION['cadastroCategoria_Ok'] ?? false;
 $_SESSION['apagarCategoria_Ok'] = $_SESSION['apagarCategoria_Ok'] ?? false;
 $_SESSION['renomearCategoria_Ok'] = $_SESSION['renomearCategoria_Ok'] ?? false;
+$erro_editar = isset($_SESSION['erro_editar_categoria']) ? $_SESSION['erro_editar_categoria'] : "";
+unset($_SESSION['erro_editar_categoria']);
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +71,8 @@ $_SESSION['renomearCategoria_Ok'] = $_SESSION['renomearCategoria_Ok'] ?? false;
             if (
                 (isset($_SESSION['cadastroCategoria_Ok']) && $_SESSION['cadastroCategoria_Ok'] == true) ||
                 (isset($_SESSION['apagarCategoria_Ok']) && $_SESSION['apagarCategoria_Ok'] == true) ||
-                (isset($_SESSION['renomearCategoria_Ok']) && $_SESSION['renomearCategoria_Ok'] == true)
+                (isset($_SESSION['renomearCategoria_Ok']) && $_SESSION['renomearCategoria_Ok'] == true) ||
+                $erro_editar != ""
             ) {
                 echo '<div class="row justify-content-center mb-3">';
                 echo '<div class="col-12 col-md-8 col-lg-5">';
@@ -85,6 +88,10 @@ $_SESSION['renomearCategoria_Ok'] = $_SESSION['renomearCategoria_Ok'] ?? false;
                 if (isset($_SESSION['renomearCategoria_Ok']) && $_SESSION['renomearCategoria_Ok'] == true) {
                     echo '<h1 class="h3 mb-4 fw-normal text-center">Categoria renomeada com sucesso!</h1>';
                     $_SESSION['renomearCategoria_Ok'] = false;
+                }
+                if ($erro_editar != "")
+                {
+                    echo '<h1 class="h3 mb-4 fw-normal text-center">'. $erro_editar .'</h1>';
                 }
                 echo '</div>';
                 echo '</div>';

@@ -90,14 +90,27 @@ function checarEmail($email)
 {
     $conexao = conectarBD();
     $e = mysqli_real_escape_string($conexao, $email);
-    return mysqli_query($conexao, "SELECT 1 FROM usuarios WHERE email = '$e' LIMIT 1");
+    $sql = "SELECT 1 FROM usuarios WHERE email = '$e' LIMIT 1";
+    return mysqli_query($conexao, $sql);
 }
 
 function checarApelido($apelido)
 {
     $conexao = conectarBD();
     $a = mysqli_real_escape_string($conexao, $apelido);
-    return mysqli_query($conexao, "SELECT 1 FROM usuarios WHERE apelido = '$a' LIMIT 1");
+    $sql = "SELECT 1 FROM usuarios WHERE apelido = '$a' LIMIT 1";
+    return mysqli_query($conexao, $sql);
+}
+
+function checarNomeCategoria($nomeCategoria)
+{
+    $conexao = conectarBD();
+    $nomeCategoria = mysqli_real_escape_string($conexao, $nomeCategoria);
+    $sql = "SELECT 1 from categorias WHERE nome = '$nomeCategoria' LIMIT 1";
+    $existe_categoria = mysqli_query($conexao, $sql);
+    if($existe_categoria->num_rows === 1)
+        return true;
+    return false;
 }
 
 // CRUD Categorias

@@ -7,6 +7,12 @@ if(!empty($_POST['selectRenomearCategoria'])) {
 
       $idCategoria = $_POST['selectRenomearCategoria'];
       $novoNomeCategoria = $_POST['novoNomeCategoria'];
+      
+      if (checarNomeCategoria($novoNomeCategoria)){
+            $_SESSION['erro_editar_categoria'] = "Categoria já existe.";
+            header('Location:../view/admin/ger-categorias.php');
+            exit;
+      }
 
       renomearCategoria($idCategoria, $novoNomeCategoria);
       $_SESSION['renomearCategoria_Ok'] = true;
