@@ -65,34 +65,33 @@ session_start();
         <main class="container px-3 px-md-5 py-5 d-flex flex-column" id="hanging-icons">
             <div class="row g-4 row-cols-1 ro w-cols-sm-2 row-cols-lg-3">
                 <!-- 1º Card -->
-                <div class="col">
-                    <div class="border-animated-glass">
-                        <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="col d-flex align-items-stretch">
+                    <div class="border-animated-glass w-100">
+                        <div class="frosted-content gradiente p-4 shadow-sm h-100">
                             <img src="assets/img/tv_nes.svg" alt="" class="img-fluid">
                             <div>
                                 <h3 class="fs-2">Crie sua conta</h3>
-                                <p>De maneira simples e objetiva, você cria sua conta e já começa a jogar.</p>
+                                <p>De maneira simples, rápida e objetiva, você cria sua conta em poucos passos e já começa a jogar sem complicações.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- 2º Card -->
-                <div class="col">
-                    <div class="border-animated-glass">
-                        <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="col d-flex align-items-stretch">
+                    <div class="border-animated-glass w-100">
+                        <div class="frosted-content gradiente p-4 shadow-sm h-100">
                             <img src="assets/img/cartucho_nes.svg" alt="" class="img-fluid">
                             <div>
                                 <h3 class="fs-2">Faça upload das suas roms</h3>
-                                <p>Disponibilizamos um espaço no servidor para você fazer o upload de suas roms favoritas.
-                                </p>
+                                <p>Disponibilizamos um espaço no servidor para você fazer o upload de suas roms favoritas.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- 3º Card -->
-                <div class="col">
-                    <div class="border-animated-glass">
-                        <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="col d-flex align-items-stretch">
+                    <div class="border-animated-glass w-100">
+                        <div class="frosted-content gradiente p-4 shadow-sm h-100">
                             <img src="assets/img/console_nes.svg" alt="" class="img-fluid">
                             <div>
                                 <h3 class="fs-2">Jogue direto do navegador</h3>

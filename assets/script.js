@@ -8,7 +8,7 @@
     ———————————————————————————————————————————————————————————————
 */
 
-// Função para alternar as animações
+// Funções para alternar as animações
 document.addEventListener("DOMContentLoaded", () => {
     // === BOTÃO: DESATIVAR ANIMAÇÕES ===
     const animBtn = document.getElementById("toggle-anim");
@@ -53,18 +53,26 @@ document.addEventListener("DOMContentLoaded", () => {
         for (const customClass in toggleMap) {
             const bootstrapClass = toggleMap[customClass];
             document.querySelectorAll("." + customClass + ", ." + bootstrapClass).forEach(el => {
+                const tag = el.tagName.toLowerCase(); // Captura a tag em minúsculo
+
                 if (ativar) {
                     el.classList.remove(bootstrapClass);
                     el.classList.add(customClass);
+                    el.classList.remove("rounded");
                 } else {
                     el.classList.remove(customClass);
                     el.classList.add(bootstrapClass);
+
+                    // Adiciona `rounded` somente se não for nav, header ou footer
+                    if (tag !== "nav" && tag !== "header" && tag !== "footer") {
+                        el.classList.add("rounded");
+                    }
                 }
             });
         }
     }
 });
-// FIM--Função para alternar as animações--FIM
+// FIM--Funções para alternar as animações--FIM
 
 // Função global para aplicar estado de volume/mute
 window.isMuted = false;
