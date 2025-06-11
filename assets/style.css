@@ -135,6 +135,56 @@
     --vol-filled-color: rgb(255, 0, 0);
     --vol-bg-color: rgb(51, 51, 51);
     --vol-percent: 50%;
+    --header-height: 4rem;
+    --nav-height: 2.1rem;
+    --top-for-sticky: 6.1rem;
+}
+
+main {
+    flex: 1 0 auto;
+    padding-top: 0;
+}
+
+.sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+}
+
+/* Nav fixo logo abaixo */
+.sticky-nav {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    z-index: 1020;
+}
+
+/* Empurra todo o background/main para baixo, abaixo de header+nav */
+.background {
+    padding-top: calc(var(--header-height) + var(--nav-height) + 3rem);
+}
+
+header.border-bottom-animated-glass,
+nav.border-bottom-animated-glass {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+}
+
+header.border-bottom-animated-glass {
+    top: 0;
+}
+
+nav.border-bottom-animated-glass {
+    top: var(--top-for-sticky);
+}
+
+nav.no-neon.border-bottom-animated-glass {
+    top: calc(var(--top-for-sticky) + 0.1rem);
 }
 
 #volume-slider {
@@ -414,7 +464,11 @@
 */
 
 .no-neon.border-animated-glass::before,
-.no-neon.border-animated-glass::after {
+.no-neon.border-animated-glass::after,
+.no-neon.border-top-animated-glass::before,
+.no-neon.border-top-animated-glass::after,
+.no-neon.border-bottom-animated-glass::before,
+.no-neon.border-bottom-animated-glass::after {
     opacity: 0 !important;
     animation: none !important;
 }
@@ -581,9 +635,6 @@ body::-webkit-scrollbar-thumb {
     background: url('./img/fundo.jpg') center/cover no-repeat;
 }
 
-main {
-    flex: 1 0 auto;
-}
 
 .block {
     position: absolute;
@@ -681,11 +732,6 @@ main {
     animation: gradientShift 7s linear infinite;
 }
 
-footer.gradiente {
-    margin-top: auto;
-    position: sticky;
-    bottom: 0;
-}
 
 .nav-link {
     position: relative;
@@ -916,7 +962,55 @@ footer.gradiente {
     animation: fadeInOut 4s ease-in-out forwards;
 }
 
-@media (max-width: 729px) {
+@media (min-width: 1200px) {
+    main#hanging-icons {
+        padding-left: 8rem;
+        padding-right: 8rem;
+    }
+}
+
+@media (min-width: 757px) {
+    header.sticky-header .container-fluid {
+        display: flex;
+        flex-direction: row !important;
+        justify-content: space-between;
+        align-items: center;
+        overflow-x: visible;
+        text-align: left;
+        gap: 0;
+    }
+
+    header.sticky-header .container-fluid>#div-logo {
+        order: 0;
+        flex-shrink: 0;
+        margin-right: 1rem;
+        white-space: nowrap;
+    }
+
+    header.sticky-header .container-fluid>.scroll-horizontal-buttons {
+        order: 1;
+        width: auto;
+        overflow-x: visible;
+        padding-bottom: 0;
+    }
+
+    header.sticky-header .container-fluid>.scroll-horizontal-buttons .d-flex {
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0.75rem;
+        white-space: normal;
+    }
+
+    header.sticky-header .container-fluid>.scroll-horizontal-buttons .d-flex>* {
+        flex-shrink: 0;
+        white-space: normal;
+    }
+}
+
+@media (max-width: 756px) {
     .gradiente {
         padding: 0.75rem;
     }
@@ -925,39 +1019,103 @@ footer.gradiente {
         font-size: 1.5rem;
         padding-top: 0.3rem;
         margin-top: 0.3rem;
+        white-space: nowrap;
     }
 
-    header .container-fluid {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-        text-align: center;
-    }
-
-    header a.d-flex {
-        margin-right: 0;
-        justify-content: center;
-    }
-
-    header .d-flex {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        gap: 0.5rem;
+    #div-logo {
+        flex-shrink: 0;
+        align-self: center;
+        white-space: nowrap;
     }
 
     .btn-outline-secondary.me-2 {
         margin-right: 0;
     }
-}
 
-@media (min-width: 1200px) {
-    main#hanging-icons {
-        padding-left: 8rem;
-        padding-right: 8rem;
+    .background {
+        padding-top: calc(var(--header-height) + var(--nav-height) + 10rem);
+    }
+
+    nav.border-bottom-animated-glass {
+        top: calc(var(--top-for-sticky) + 3.54rem);
+    }
+
+    nav.no-neon.border-bottom-animated-glass {
+        top: calc(var(--top-for-sticky) + 3.68rem);
+    }
+
+    header .container-fluid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+        overflow-x: hidden;
+    }
+
+    header .scroll-horizontal-buttons {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.5rem;
+    }
+
+    header .scroll-horizontal-buttons .d-flex {
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        white-space: nowrap;
+    }
+
+    header .scroll-horizontal-buttons::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    header .scroll-horizontal-buttons::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    header .scroll-horizontal-buttons .d-flex>* {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 0.5rem 1rem;
+    }
+    
+    nav.scroll-horizontal .container-fluid {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 1rem;
+        padding-bottom: 0.5rem;
+    }
+
+    nav.scroll-horizontal .container-fluid>.nav {
+        flex: 0 0 auto;
+    }
+
+    nav.scroll-horizontal .container-fluid::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    nav.scroll-horizontal .container-fluid::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
     }
 }
+
+@media (max-width: 519px) {
+    nav.border-bottom-animated-glass {
+        top: calc(var(--top-for-sticky) + 3.93rem);
+    }
+
+    nav.no-neon.border-bottom-animated-glass {
+        top: calc(var(--top-for-sticky) + 4.05rem);
+    }
+}
+
 
 @supports not selector(::-webkit-scrollbar) {
     body {

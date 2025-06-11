@@ -17,74 +17,81 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (localStorage.getItem(LS_ANIM_KEY) === "true") {
         body.classList.add("no-anim");
-        animBtn.textContent = "Ativar animações";
+        if (animBtn) animBtn.textContent = "Ativar animações";
     }
-
-    animBtn.addEventListener("click", () => {
-        const desativado = body.classList.toggle("no-anim");
-        animBtn.textContent = desativado ? "Ativar animações" : "Desativar animações";
-        localStorage.setItem(LS_ANIM_KEY, desativado);
-        location.reload();
-    });
+    if (animBtn) {
+        animBtn.addEventListener("click", () => {
+            const desativado = body.classList.toggle("no-anim");
+            animBtn.textContent = desativado ? "Ativar animações" : "Desativar animações";
+            localStorage.setItem(LS_ANIM_KEY, desativado);
+            location.reload();
+        });
+    }
 
     // === BOTÃO: DESATIVAR BORDAS NEON ===
     const bordaBtn = document.getElementById("toggle-bordas");
     const LS_BORDAS_KEY = "nesplay_bordas_neon";
 
-    // Se salvo como "false", já começa sem neon
-    if (localStorage.getItem(LS_BORDAS_KEY) === "false") {
-        alternarBordas(false);
-        bordaBtn.textContent = "Ativar bordas neon";
-    }
-
-    bordaBtn.addEventListener("click", () => {
-        // detecta se alguma borda neon está ativa
-        const neonAtivo = !!document.querySelector(
-            ".border-animated-glass, .border-top-animated-glass, .border-bottom-animated-glass"
-        );
-
-        // alterna as classes de borda/neon
-        alternarBordas(!neonAtivo);
-
-        // atualiza texto do botão
-        bordaBtn.textContent = neonAtivo
-            ? "Ativar bordas neon"
-            : "Desativar bordas neon";
-
-        // persiste estado (true = neon ativado; false = neon desativado)
-        localStorage.setItem(LS_BORDAS_KEY, !neonAtivo);
-
-        // recarrega a página para reaplicar corretamente
-        location.reload();
-    });
-
-    function alternarBordas(ativar) {
-        const toggleMap = {
-            "border-animated-glass": "border",
-            "border-top-animated-glass": "border-top",
-            "border-bottom-animated-glass": "border-bottom"
-        };
-
-        for (const customClass in toggleMap) {
-            const bootstrapClass = toggleMap[customClass];
-            document.querySelectorAll("." + customClass + ", ." + bootstrapClass).forEach(el => {
+    // Função para alternar neon e borda Bootstrap
+    function toggleNeon(ativar) {
+        document.querySelectorAll('.border-animated-glass, .border-top-animated-glass, .border-bottom-animated-glass')
+            .forEach(el => {
                 const tag = el.tagName.toLowerCase();
-
                 if (ativar) {
-                    el.classList.remove(bootstrapClass);
-                    el.classList.add(customClass);
-                    el.classList.remove("rounded");
+                    el.classList.remove('no-neon');
+                    // Remove bordas Bootstrap adicionadas antes
+                    el.classList.remove('border', 'border-2', 'border-bottom', 'border-top', 'rounded-3');
                 } else {
-                    el.classList.remove(customClass);
-                    el.classList.add(bootstrapClass);
-
-                    // só aplica rounded se não for nav, header ou footer
-                    if (tag !== "nav" && tag !== "header" && tag !== "footer") {
-                        el.classList.add("rounded");
+                    el.classList.add('no-neon');
+                    // Header e nav: borda só embaixo
+                    if (tag === 'header' || tag === 'nav') {
+                        el.classList.add('border-bottom', 'border-2');
+                        // opcional: sem rounded em header/nav
+                        el.classList.remove('rounded-3');
+                    }
+                    // Footer: borda só em cima
+                    else if (tag === 'footer') {
+                        el.classList.add('border-top', 'border-2');
+                        el.classList.remove('rounded-3');
+                    }
+                    // Outros elementos de conteúdo: borda em todos os lados
+                    else {
+                        el.classList.add('border', 'border-2', 'rounded-3');
                     }
                 }
             });
+    }
+
+    // Inicialização: lê do localStorage e aplica
+    if (bordaBtn) {
+        const neonn = localStorage.getItem(LS_BORDAS_KEY);
+        if (neonn === "false") {
+            // Neon off: chamamos toggleNeon(false)
+            toggleNeon(false);
+            bordaBtn.textContent = "Ativar bordas neon";
+        } else {
+            // Neon on: certifique-se de mostrar texto correto
+            bordaBtn.textContent = "Desativar bordas neon";
         }
+
+        bordaBtn.addEventListener("click", () => {
+            // Detecta se há algum elemento com neon ativo (sem .no-neon)
+            const algumComNeon = document.querySelector(
+                '.border-animated-glass:not(.no-neon), .border-top-animated-glass:not(.no-neon), .border-bottom-animated-glass:not(.no-neon)'
+            ) !== null;
+
+            const novoEstadoAtivarNeon = !algumComNeon;
+            toggleNeon(novoEstadoAtivarNeon);
+
+            bordaBtn.textContent = novoEstadoAtivarNeon
+                ? "Desativar bordas neon"
+                : "Ativar bordas neon";
+
+            localStorage.setItem(LS_BORDAS_KEY, novoEstadoAtivarNeon);
+
+            // Se quiser recarregar para garantir reaplicar estilos/estado:
+            location.reload();
+        });
     }
 });
 // FIM--Funções para alternar as animações--FIM
@@ -348,6 +355,13 @@ if (fsBtn && wrapper) {
     });
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.getElementById('canvas-wrapper');
+    if (wrapper && wrapper.dataset.romPath) {
+        nes_load_url('nes-canvas', wrapper.dataset.romPath);
+    }
+});
+
 const teclasBloqueadas = [
     'ArrowUp', 'ArrowDown', 'a', 'q', 's', 'o', 'A', 'Q', 'S', 'O'
 ];
@@ -431,9 +445,51 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 // FIM--Função para calcular os caracteres em textareas--FIM
 
+
+// Funções para avançar e retornar as notícias
 document.addEventListener('DOMContentLoaded', () => {
-    const wrapper = document.getElementById('canvas-wrapper');
-    if (wrapper && wrapper.dataset.romPath) {
-        nes_load_url('nes-canvas', wrapper.dataset.romPath);
+    const items = Array.from(document.querySelectorAll('#news-container .news-item'));
+    let current = 0;
+
+    function show(idx) {
+        items.forEach((el, i) => {
+            el.style.display = (i === idx ? 'block' : 'none');
+        });
     }
+
+    document.getElementById('prev-news').addEventListener('click', () => {
+        current = (current - 1 + items.length) % items.length;
+        show(current);
+    });
+
+    document.getElementById('next-news').addEventListener('click', () => {
+        current = (current + 1) % items.length;
+        show(current);
+    });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const items = Array.from(document.querySelectorAll('#news-container .news-item'));
+    const counter = document.getElementById('news-counter');
+    let current = 0;
+
+    function show(idx) {
+        items.forEach((el, i) => el.style.display = i === idx ? 'block' : 'none');
+        if (counter) {
+            counter.textContent = `${idx + 1}/${items.length}`;
+        }
+    }
+
+    document.getElementById('prev-news').addEventListener('click', () => {
+        current = (current - 1 + items.length) % items.length;
+        show(current);
+    });
+
+    document.getElementById('next-news').addEventListener('click', () => {
+        current = (current + 1) % items.length;
+        show(current);
+    });
+
+    show(0);
+});
+// FIM--Funções para avançar e retornar as notícias--FIM

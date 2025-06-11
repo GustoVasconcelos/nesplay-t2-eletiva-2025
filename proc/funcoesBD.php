@@ -260,3 +260,24 @@ function buscarRomPorId($idRom)
     $resultado = mysqli_query($conexao, $sql);
     return mysqli_fetch_assoc($resultado);
 }
+
+function listarNoticias(?int $limit = null): mysqli_result
+{
+    $conexao = conectarBD();
+    $sql = "
+      SELECT
+        idNoticia,
+        titulo,
+        subtitulo,
+        texto,
+        DATE_FORMAT(`data`, '%d/%m/%Y %H:%i') AS data_formatada,
+        idUser,
+        adminNome
+      FROM noticias
+      ORDER BY `data` DESC
+    ";
+    if ($limit !== null && $limit > 0) {
+        $sql .= " LIMIT " . $limit;
+    }
+    return mysqli_query($conexao, $sql);
+}
