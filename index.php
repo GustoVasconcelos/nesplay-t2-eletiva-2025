@@ -19,55 +19,8 @@ $listaNoticias = listarNoticias(5);
 </head>
 
 <body>
-    <header class="sticky-header border-bottom-animated-glass">
-        <div class="frosted-content gradiente p-4 shadow-sm">
-            <div class="container-fluid">
-
-                <!-- Logotipo fora do scroll -->
-                <a id="div-logo" href="index.php" class="d-flex align-items-center text-decoration-none">
-                    <img class="logotipo img-fluid" src="assets/img/logo.svg" alt="NESPlay Logo">
-                    <h1 id="texto-logotipo" class="ms-2 mb-0">
-                        <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
-                    </h1>
-                </a>
-
-                <!-- Área de botões com scroll horizontal -->
-                <div class="scroll-horizontal-buttons">
-                    <div class="d-flex">
-                        <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
-                        <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar Animações</button>
-                        <?php if (!isset($_SESSION['usuario'])): ?>
-                            <a class="btn-animated btn btn-outline-secondary me-2" href="view/login.php">Login</a>
-                            <a class="btn-animated btn btn-secondary" href="view/cadastrar.php">Cadastrar</a>
-                        <?php else: ?>
-                            <a class="btn-animated btn btn-outline-secondary me-2" href="view/logout.php">Sair</a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </header>
-
-    <nav class="scroll-horizontal sticky-nav border-bottom-animated-glass">
-        <div class="frosted-content gradiente p-1 shadow-sm">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
-                    <?php
-                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
-                    }
-                    if (isset($_SESSION['usuario'])) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>';
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/acervo-jogos.php">Jogos Disponíveis</a></li>';
-                    } ?>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/sobre.php">Sobre</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include './view/partials/header.php'; ?>
+    <?php include './view/partials/nav.php' ?>
 
     <div class="background">
 
@@ -212,20 +165,10 @@ $listaNoticias = listarNoticias(5);
             <?php endif; ?>
         </main>
 
-        <footer class="border-top-animated-glass">
-            <div class="frosted-content gradiente p-4 shadow-sm">
-                <div class="container-fluid px-3 px-md-5 text-center">
-                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                        <li class="nav-item"><a class="nav-link px-2" href="./view/duvidas.php">Dúvidas?</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="./view/privacidade.php">Privacidade</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="./view/termos.php">Termos</a></li>
-                    </ul>
-                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
-                </div>
-            </div>
-        </footer>
+        <?php include './view/partials/footer.php' ?>
 
     </div> <!--background-->
+
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
     <script src="./assets/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
