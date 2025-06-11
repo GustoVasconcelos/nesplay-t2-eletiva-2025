@@ -19,8 +19,8 @@ $listaNoticias = listarNoticias(5);
 </head>
 
 <body>
-    <?php include './view/partials/header.php'; ?>
-    <?php include './view/partials/nav.php' ?>
+    <?php include __DIR__ . '/view/partials/header.php'; ?>
+    <?php include __DIR__ . '/view/partials/nav.php'; ?>
 
     <div class="background">
 
@@ -165,7 +165,7 @@ $listaNoticias = listarNoticias(5);
             <?php endif; ?>
         </main>
 
-        <?php include './view/partials/footer.php' ?>
+        <?php include __DIR__ . '/view/partials/footer.php'; ?>
 
     </div> <!--background-->
 

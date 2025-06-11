@@ -19,48 +19,10 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
 </head>
 
 <body>
+    <?php include __DIR__ . '/partials/header.php'; ?>
+    <?php include __DIR__ . '/partials/nav.php'; ?>
+
     <div class="background">
-
-        <header class="border-bottom-animated-glass">
-            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
-                <a href="../index.php" class="d-flex align-items-center text-decoration-none">
-                    <img class="logotipo img-fluid" src="../assets/img/logo.svg" alt="NESPlay Logo">
-                    <h1 id="texto-logotipo" class="ms-2 mb-0">
-                        <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
-                    </h1>
-                </a>
-                <div class="d-flex">
-                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
-                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar Animações</button>
-                    <?php if (!isset($_SESSION['usuario'])): ?>
-                        <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
-                        <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
-                    <?php else: ?>
-                        <a class="btn-animated btn btn-outline-secondary me-2" href="./logout.php">Sair</a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </header>
-
-        <nav class="border-bottom-animated-glass">
-            <div class="frosted-content gradiente p-1 shadow-sm">
-                <div class="container-fluid px-3 px-md-5">
-                    <ul class="nav nav-underline justify-content-center">
-                        <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
-                        <?php
-                        if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                            echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
-                        }
-                        if (isset($_SESSION['usuario'])) {
-                            echo '<li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>';
-                            echo '<li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>';
-                        } ?>
-                        <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
 
         <main class="container my-5">
             <div class="row justify-content-center">
@@ -114,20 +76,10 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
             </div>
         </main>
 
-        <footer class="border-top-animated-glass">
-            <div class="frosted-content gradiente p-4 shadow-sm">
-                <div class="container-fluid px-3 px-md-5 text-center">
-                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                        <li class="nav-item"><a class="nav-link px-2" href="duvidas.php">Dúvidas?</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="privacidade.php">Privacidade</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="termos.php">Termos</a></li>
-                    </ul>
-                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
-                </div>
-            </div>
-        </footer>
+        <?php include __DIR__ . '/partials/footer.php'; ?>
 
     </div> <!--background-->
+
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/script.js"></script>
