@@ -2,7 +2,8 @@
 session_start();
 require_once './proc/funcoesBD.php';
 $resultRoms = listarUltimosRoms(5);
-$listaNoticias = listarNoticias(5);
+$listaNoticias = listarNoticias(3);
+$usuario = $_SESSION['usuario'] ?? 'Visitante';
 ?>
 
 <!DOCTYPE html>
@@ -19,8 +20,56 @@ $listaNoticias = listarNoticias(5);
 </head>
 
 <body>
-    <?php include __DIR__ . '/view/partials/header.php'; ?>
-    <?php include __DIR__ . '/view/partials/nav.php'; ?>
+
+    <header class="sticky-header border-bottom-animated-glass">
+        <div class="frosted-content gradiente p-4 shadow-sm">
+            <div class="container-fluid">
+                <a id="div-logo" href="./index.php" class="d-flex align-items-center text-decoration-none">
+                    <img class="logotipo img-fluid" src="/nesplay-t2-eletiva-2025/assets/img/logo.svg" alt="NESPlay Logo">
+                    <h1 id="texto-logotipo" class="ms-2 mb-0">
+                        <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
+                    </h1>
+                </a>
+                <div class="scroll-horizontal-buttons">
+                    <div class="d-flex">
+                        <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
+                        <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar Animações</button>
+                        <div class="welcome-message text-end">
+                            <span class="text-white">Bem-vindo de volta, <strong><?= htmlspecialchars($usuario) ?></strong>!</span>
+                        </div>
+                        <?php if (!isset($_SESSION['usuario'])): ?>
+                            <a class="btn-animated btn btn-outline-secondary me-2" href="./view/login.php">Login</a>
+                            <a class="btn-animated btn btn-secondary" href="./view/cadastrar.php">Cadastrar</a>
+                        <?php else: ?>
+                            <a class="btn-animated btn btn-outline-secondary me-2" href="./view/logout.php">Sair</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <nav class="scroll-horizontal sticky-nav border-bottom-animated-glass">
+        <div class="frosted-content gradiente p-1 shadow-sm">
+            <div class="container-fluid px-3 px-md-5">
+                <ul class="nav nav-underline justify-content-center">
+                    <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/todas-noticias.php">Notícias</a></li>
+                    <?php
+                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
+                    }
+                    if (isset($_SESSION['usuario'])) {
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/acervo-jogos.php">Jogos Disponíveis</a></li>';
+                    } ?>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROMs</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="./view/sobre.php">Sobre</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="background">
 
@@ -88,11 +137,9 @@ $listaNoticias = listarNoticias(5);
                         <div id="news-container">
                             <?php $i = 0; ?>
                             <?php while ($not = mysqli_fetch_assoc($listaNoticias)): ?>
-                                <div class="news-item border-animated-glass mb-4"
-                                    data-index="<?= $i ?>"
-                                    style="<?= $i === 0 ? 'display:block;' : 'display:none;' ?>">
-                                    <div class="frosted-content gradiente card p-4 rounded-3 shadow-sm border">
-                                        <div class="card-body d-flex flex-column align-items-center text-center">
+                                <div class="news-item border-animated-glass mb-4">
+                                    <div class="frosted-content gradiente p-4 rounded-3 shadow-sm">
+                                        <div class="d-flex flex-column align-items-center text-center">
                                             <h2 class="game-text mb-2"><?= htmlspecialchars($not['titulo']) ?></h2>
                                             <?php if (!empty($not['subtitulo'])): ?>
                                                 <h5 class="text-white mb-3"><?= htmlspecialchars($not['subtitulo']) ?></h5>
@@ -103,8 +150,7 @@ $listaNoticias = listarNoticias(5);
                                         </div>
                                     </div>
                                 </div>
-                            <?php $i++;
-                            endwhile; ?>
+                            <?php endwhile; ?>
                         </div>
 
                         <!-- CONTADOR -->
@@ -119,11 +165,20 @@ $listaNoticias = listarNoticias(5);
                         <!-- BOTOES -->
                         <div class="d-flex justify-content-center align-items-center gap-3">
                             <button id="prev-news" class="btn-animated btn btn-outline-light btn-sm">Anterior</button>
-                            <a href="todas-noticias.php" class="btn-animated btn btn-outline-light btn-sm">Ver Todas as Notícias</a>
+                            <a href="./view/todas-noticias.php" class="btn-animated btn btn-outline-light btn-sm">Ver Todas as Notícias</a>
                             <button id="next-news" class="btn-animated btn btn-outline-light btn-sm">Próxima</button>
                         </div>
                     </div>
                 </section>
+            <?php else: ?>
+                <!-- Mensagem quando não há notícias -->
+                <div class="text-center text-light py-5">
+                    <div class="border-animated-glass d-inline-block">
+                        <div class="frosted-content gradiente px-4 py-2 shadow-sm">
+                            <p class="mb-0">Não há notícias disponíveis no momento.</p>
+                        </div>
+                    </div>
+                </div>
             <?php endif; ?>
 
             <!-- ÚLTIMOS JOGOS -->
@@ -154,7 +209,7 @@ $listaNoticias = listarNoticias(5);
                                         </p>
 
                                         <!-- Botão -->
-                                        <a href="view/jogar-jogo.php?rom=<?= urlencode($j['nomeArquivo']) ?>"
+                                        <a href="./view/jogar-jogo.php?rom=<?= urlencode($j['nomeArquivo']) ?>"
                                             class="btn-animated btn btn-sm btn-outline-light mt-auto w-100">Jogar</a>
                                     </div>
                                 </div>
@@ -165,7 +220,18 @@ $listaNoticias = listarNoticias(5);
             <?php endif; ?>
         </main>
 
-        <?php include __DIR__ . '/view/partials/footer.php'; ?>
+        <footer class="border-top-animated-glass">
+            <div class="frosted-content gradiente p-4 shadow-sm">
+                <div class="container-fluid px-3 px-md-5 text-center">
+                    <ul class="nav nav-underline justify-content-center pb-3 mb-3">
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/termos.php">Termos</a></li>
+                    </ul>
+                    <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
+                </div>
+            </div>
+        </footer>
 
     </div> <!--background-->
 

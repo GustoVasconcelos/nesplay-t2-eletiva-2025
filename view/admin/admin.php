@@ -52,6 +52,7 @@ if ($_SESSION['usuario_adm'] != 1) {
                 <div class="container-fluid px-3 px-md-5">
                     <ul class="nav nav-underline justify-content-center">
                         <li class="nav-item"><a class="nav-link px-2" href="../../index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./ger-noticias.php">Gerenciar Notícias</a></li>
                         <li class="nav-item"><a class="nav-link px-2" href="./ger-usuarios.php">Gerenciar Usuários</a></li>
                         <li class="nav-item"><a class="nav-link px-2" href="./ger-categorias.php">Gerenciar Categorias</a></li>
                         <!-- <li class="nav-item"><a class="nav-link px-2" href="#">Gerenciar Comentários</a></li> -->

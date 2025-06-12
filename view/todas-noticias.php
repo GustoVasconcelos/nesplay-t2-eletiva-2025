@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../proc/funcoesBD.php';
-$roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY idRom DESC LIMIT 3");
+require_once "../proc/funcoesBD.php";
+$listaNoticias = listarTodasNoticias();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" data-bs-theme="dark">
@@ -10,7 +10,7 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NESPlay - Teste de Jogos</title>
+    <title>NESPlay - Jogos Disponíveis</title>
     <link rel="shortcut icon" href="../assets/img/favicon/favicon-96x96.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/style.css">
@@ -19,12 +19,11 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
 </head>
 
 <body>
-
     <header class="sticky-header border-bottom-animated-glass">
         <div class="frosted-content gradiente p-4 shadow-sm">
             <div class="container-fluid">
-                <a id="div-logo" href="../index.php" class="d-flex align-items-center text-decoration-none">
-                    <img class="logotipo img-fluid" src="/nesplay-t2-eletiva-2025/assets/img/logo.svg" alt="NESPlay Logo">
+                <a id="div-logo" href="index.php" class="d-flex align-items-center text-decoration-none">
+                    <img class="logotipo img-fluid" src="../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
                         <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
                     </h1>
@@ -41,7 +40,6 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
                         <?php endif; ?>
                     </div>
                 </div>
-
             </div>
         </div>
     </header>
@@ -69,65 +67,50 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
 
     <div class="background">
 
-        <main class="container my-5">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-8 col-lg-5">
-                    <div class="border-animated-glass">
-                        <div class="frosted content gradiente card p-4 rounded-3 shadow-sm border">
-                            <div class="mb-3 text-center">
-                                <?php
-                                $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY idRom DESC LIMIT 3");
-                                $romPadrao = mysqli_fetch_assoc($roms);
-                                ?>
-                                <label for="rom-select" class="form-label texto-gradiente fw-bold">Selecione uma das 3 ROM recentemente adicionadas:</label>
-                                <select id="rom-select" class="form-select text-center">
-                                    <option value="<?= htmlspecialchars($romPadrao['nomeArquivo']) ?>" selected>
-                                        <?= htmlspecialchars($romPadrao['nome']) ?> (Mais recentemente adicionado)
-                                    </option>
-                                    <?php while ($rom = mysqli_fetch_assoc($roms)): ?>
-                                        <option value="<?= htmlspecialchars($rom['nomeArquivo']) ?>">
-                                            <?= htmlspecialchars($rom['nome']) ?>
-                                        </option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-                            <div style="margin: auto; width: 100%;">
-                                <!-- Canvas do emulador -->
-                                <div id="canvas-wrapper" class="d-flex align-items-center justify-content-center canvas-animated-border" style="margin: auto; width: 100%;">
-                                    <canvas id="nes-canvas" width="256" height="240"></canvas>
-                                </div>
-                                <!-- FIM--Canvas do emulador--FIM -->
-                                <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
-                                <div class="text-center mt-3">
-                                    <button id="mute-btn" class="btn btn-animated btn-outline-secondary mt-2">
-                                        Mudo
-                                    </button>
-                                    <div id="volume-display" class="small texto-gradiente mt-1">50%</div>
-                                    <input
-                                        id="volume-slider"
-                                        type="range"
-                                        min="0"
-                                        max="100"
-                                        step="1"
-                                        value="50"
-                                        class="form-range"
-                                        style="width: 80%; margin: auto;">
-                                </div>
-                            </div>
-                            <p class="mt-3 texto-gradiente text-center">DPad: ←↑→↓ &nbsp; Start: Enter &nbsp; Select: Tab &nbsp; A: A/Q &nbsp; B: S/O</p>
-                        </div>
+        <main class="container px-3 px-md-5 py-5" id="hanging-icons">
+            <div class="text-center mb-4">
+                <div class="border-animated-glass d-inline-block">
+                    <div class="frosted-content gradiente px-4 py-2 shadow-sm">
+                        <h2 class="fs-3 mb-0 text-light">Todas as Notícias</h2>
                     </div>
                 </div>
             </div>
+
+            <?php if ($listaNoticias && $listaNoticias->num_rows > 0): ?>
+                <?php while ($not = mysqli_fetch_assoc($listaNoticias)): ?>
+                    <div class="news-full-item border-animated-glass mb-4">
+                        <div class="frosted-content gradiente card p-4 rounded-3 shadow-sm border">
+                            <div class="card-body">
+                                <h2 class="game-text mb-2"><?= htmlspecialchars($not['titulo']) ?></h2>
+                                <?php if (!empty($not['subtitulo'])): ?>
+                                    <h5 class="text-white mb-3"><?= htmlspecialchars($not['subtitulo']) ?></h5>
+                                <?php endif; ?>
+                                <p class="card-text mb-3"><?= nl2br(htmlspecialchars($not['texto'])) ?></p>
+                                <small class="text-comment mb-1"><?= $not['data_formatada'] ?></small>
+                                <small class="text-comment mb-3">Por <?= htmlspecialchars($not['adminNome']) ?></small>
+                            </div>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <!-- Mensagem quando não há notícias -->
+                <div class="text-center text-light py-5">
+                    <div class="border-animated-glass d-inline-block">
+                        <div class="frosted-content gradiente px-4 py-2 shadow-sm">
+                            <p class="mb-0">Não há notícias disponíveis no momento.</p>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
         </main>
 
         <footer class="border-top-animated-glass">
             <div class="frosted-content gradiente p-4 shadow-sm">
                 <div class="container-fluid px-3 px-md-5 text-center">
                     <ul class="nav nav-underline justify-content-center pb-3 mb-3">
-                        <li class="nav-item"><a class="nav-link px-2" href="./duvidas.php">Dúvidas?</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="./privacidade.php">Privacidade</a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="./termos.php">Termos</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="duvidas.php">Dúvidas?</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="privacidade.php">Privacidade</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="termos.php">Termos</a></li>
                     </ul>
                     <p class="text-body-secondary mb-0">© 2025 NESPlay</p>
                 </div>
@@ -135,7 +118,6 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
         </footer>
 
     </div> <!--background-->
-
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/script.js"></script>

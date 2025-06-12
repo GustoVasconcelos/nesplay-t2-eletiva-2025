@@ -264,8 +264,7 @@ function buscarRomPorId($idRom)
 function listarNoticias(?int $limit = null): mysqli_result
 {
     $conexao = conectarBD();
-    $sql = "
-      SELECT
+    $sql = "SELECT
         idNoticia,
         titulo,
         subtitulo,
@@ -279,5 +278,79 @@ function listarNoticias(?int $limit = null): mysqli_result
     if ($limit !== null && $limit > 0) {
         $sql .= " LIMIT " . $limit;
     }
+    return mysqli_query($conexao, $sql);
+}
+
+function listarTodasNoticias()
+{
+    $conexao = conectarBD();
+    $sql = "SELECT 
+                idNoticia, 
+                titulo, 
+                subtitulo, 
+                texto, 
+                DATE_FORMAT(data, '%d/%m/%Y %H:%i') AS data_formatada, 
+                adminNome
+            FROM noticias
+            ORDER BY data DESC";
+    return mysqli_query($conexao, $sql);
+}
+
+function listarNoticiasAdmin()
+{
+    $conexao = conectarBD();
+    $sql = "SELECT 
+                idNoticia,
+                idUser,
+                titulo,
+                subtitulo,
+                texto,
+                data,
+                adminNome 
+            FROM noticias 
+            ORDER BY data DESC";
+    return mysqli_query($conexao, $sql);
+}
+
+function inserirNoticia($titulo, $subtitulo, $texto, $adminNome, $idUser)
+{
+    $conexao = conectarBD();
+    $t  = mysqli_real_escape_string($conexao, $titulo);
+    $st = mysqli_real_escape_string($conexao, $subtitulo);
+    $tx = mysqli_real_escape_string($conexao, $texto);
+    $an = mysqli_real_escape_string($conexao, $adminNome);
+    $id = (int)$idUser;
+    $sql = "INSERT INTO noticias (titulo, subtitulo, texto, data, adminNome, idUser)
+            VALUES ('$t', '$st', '$tx', NOW(), '$an', $id)";
+    return mysqli_query($conexao, $sql);
+}
+
+function atualizarNoticia($idNoticia, $titulo, $subtitulo, $texto, $adminNome, $idUser)
+{
+    $conexao = conectarBD();
+    $id   = (int)$idNoticia;
+    $t    = mysqli_real_escape_string($conexao, $titulo);
+    $st   = mysqli_real_escape_string($conexao, $subtitulo);
+    $tx   = mysqli_real_escape_string($conexao, $texto);
+    $an   = mysqli_real_escape_string($conexao, $adminNome);
+    $iu   = (int)$idUser;
+
+    $sql = "UPDATE noticias 
+            SET titulo    = '$t',
+                subtitulo = '$st',
+                texto     = '$tx',
+                data      = NOW(),
+                adminNome = '$an',
+                idUser    = $iu
+            WHERE idNoticia = $id";
+    return mysqli_query($conexao, $sql);
+}
+
+
+function deletarNoticia($idNoticia)
+{
+    $conexao = conectarBD();
+    $id = (int)$idNoticia;
+    $sql = "DELETE FROM noticias WHERE idNoticia = $id";
     return mysqli_query($conexao, $sql);
 }

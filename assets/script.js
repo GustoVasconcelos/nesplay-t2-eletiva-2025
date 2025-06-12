@@ -17,12 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (localStorage.getItem(LS_ANIM_KEY) === "true") {
         body.classList.add("no-anim");
-        if (animBtn) animBtn.textContent = "Ativar animações";
+        if (animBtn) animBtn.textContent = "Ativar Animações";
     }
     if (animBtn) {
         animBtn.addEventListener("click", () => {
             const desativado = body.classList.toggle("no-anim");
-            animBtn.textContent = desativado ? "Ativar animações" : "Desativar animações";
+            animBtn.textContent = desativado ? "Ativar Animações" : "Desativar Animações";
             localStorage.setItem(LS_ANIM_KEY, desativado);
             location.reload();
         });
@@ -68,10 +68,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (neonn === "false") {
             // Neon off: chamamos toggleNeon(false)
             toggleNeon(false);
-            bordaBtn.textContent = "Ativar bordas neon";
+            bordaBtn.textContent = "Ativar Bordas Neon";
         } else {
             // Neon on: certifique-se de mostrar texto correto
-            bordaBtn.textContent = "Desativar bordas neon";
+            bordaBtn.textContent = "Desativar Bordas Neon";
         }
 
         bordaBtn.addEventListener("click", () => {
@@ -84,8 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
             toggleNeon(novoEstadoAtivarNeon);
 
             bordaBtn.textContent = novoEstadoAtivarNeon
-                ? "Desativar bordas neon"
-                : "Ativar bordas neon";
+                ? "Desativar Bordas Neon"
+                : "Ativar Bordas Neon";
 
             localStorage.setItem(LS_BORDAS_KEY, novoEstadoAtivarNeon);
 
@@ -243,6 +243,37 @@ window.onload = function () {
     window.cancelarEdicaoRom = cancelarEdicaoRom;
     // FIM--Funções para gerenciar as roms--FIM
 
+    // Funções para gerenciar as notícias
+    function editarNoticia(id) {
+        const wrapper = document.getElementById(`noticia-${id}`);
+        if (!wrapper) return;
+        const viewDiv = wrapper.querySelector('.noticia-view');
+        const form = document.getElementById(`form-noticia-${id}`);
+        if (viewDiv && form) {
+            viewDiv.classList.add('d-none');
+            form.classList.remove('d-none');
+        }
+    }
+
+    function cancelarEdicaoNoticia(id) {
+        const wrapper = document.getElementById(`noticia-${id}`);
+        if (!wrapper) return;
+        const viewDiv = wrapper.querySelector('.noticia-view');
+        const form = document.getElementById(`form-noticia-${id}`);
+        if (viewDiv && form) {
+            form.classList.add('d-none');
+            viewDiv.classList.remove('d-none');
+        }
+    }
+
+    window.editarNoticia = editarNoticia;
+    window.cancelarEdicaoNoticia = cancelarEdicaoNoticia;
+    // FIM--Funções para gerenciar as notícias--FIM
+
+    // Torne-as globais se necessário, e garanta que rodem após carregar o script:
+    window.editarNoticia = editarNoticia;
+    window.cancelarEdicaoNoticia = cancelarEdicaoNoticia;
+
     // Funções para gerenciar o volume e o slider do volume
     const volSlider = document.getElementById('volume-slider');
     const volDisplay = document.getElementById('volume-display');
@@ -380,14 +411,32 @@ if (canvas) {
 document.addEventListener('DOMContentLoaded', () => {
     const msg = document.getElementById('successMessage');
     if (!msg) return;
+    const wrapper = msg.closest('.border-animated-glass, .border-top-animated-glass, .border-bottom-animated-glass');
+    const wrapperHadNoNeon = wrapper?.classList.contains('no-neon');
+
+    if (wrapper) {
+        if (!wrapperHadNoNeon) {
+            wrapper.classList.remove('no-neon');
+        }
+        wrapper.classList.remove('fade-message');
+        void wrapper.offsetWidth;
+        wrapper.classList.add('fade-message');
+    } else {
+        msg.classList.remove('fade-message');
+        void msg.offsetWidth;
+        msg.classList.add('fade-message');
+    }
 
     setTimeout(() => {
-        const neonWrapper = msg.closest('.border-animated-glass');
-        if (neonWrapper) neonWrapper.classList.add('no-neon');
-        msg.style.transition = 'opacity 0.5s ease';
-        msg.style.opacity = '0';
-        setTimeout(() => msg.remove(), 500);
-    }, 3900);
+        if (wrapper) {
+            if (!wrapperHadNoNeon) {
+                wrapper.classList.add('no-neon');
+            }
+            wrapper.remove();
+        } else {
+            msg.remove();
+        }
+    }, 4000);
 });
 // FIM--Função para tratar o FadeInOut das mensagens de sucesso--FIM
 
@@ -449,46 +498,34 @@ document.addEventListener('DOMContentLoaded', function () {
 // Funções para avançar e retornar as notícias
 document.addEventListener('DOMContentLoaded', () => {
     const items = Array.from(document.querySelectorAll('#news-container .news-item'));
+    if (items.length === 0) return;  // nada a fazer se não houver notícias
+
+    const prevBtn = document.getElementById('prev-news');
+    const nextBtn = document.getElementById('next-news');
+    const counter = document.getElementById('news-counter');
     let current = 0;
 
     function show(idx) {
         items.forEach((el, i) => {
             el.style.display = (i === idx ? 'block' : 'none');
         });
-    }
-
-    document.getElementById('prev-news').addEventListener('click', () => {
-        current = (current - 1 + items.length) % items.length;
-        show(current);
-    });
-
-    document.getElementById('next-news').addEventListener('click', () => {
-        current = (current + 1) % items.length;
-        show(current);
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const items = Array.from(document.querySelectorAll('#news-container .news-item'));
-    const counter = document.getElementById('news-counter');
-    let current = 0;
-
-    function show(idx) {
-        items.forEach((el, i) => el.style.display = i === idx ? 'block' : 'none');
         if (counter) {
             counter.textContent = `${idx + 1}/${items.length}`;
         }
     }
 
-    document.getElementById('prev-news').addEventListener('click', () => {
-        current = (current - 1 + items.length) % items.length;
-        show(current);
-    });
-
-    document.getElementById('next-news').addEventListener('click', () => {
-        current = (current + 1) % items.length;
-        show(current);
-    });
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            current = (current - 1 + items.length) % items.length;
+            show(current);
+        });
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            current = (current + 1) % items.length;
+            show(current);
+        });
+    }
 
     show(0);
 });
