@@ -38,16 +38,18 @@ unset($_SESSION['recuperarSenha']);
                         <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
                     </h1>
                 </a>
-                <div class="d-flex">
-                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
-                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
-                    <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
-                    <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
+                <div class="scroll-horizontal-buttons">
+                    <div class="d-flex">
+                        <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
+                        <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar animações</button>
+                        <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
+                        <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <nav class="border-bottom-animated-glass">
+        <nav class="scroll-horizontal border-bottom-animated-glass">
             <div class="frosted-content gradiente p-1 shadow-sm">
                 <div class="container-fluid px-3 px-md-5">
                     <ul class="nav nav-underline justify-content-center">
