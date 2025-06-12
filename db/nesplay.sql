@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11/06/2025 às 07:33
+-- Tempo de geração: 12/06/2025 às 07:15
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -65,9 +65,8 @@ CREATE TABLE `noticias` (
 --
 
 INSERT INTO `noticias` (`idNoticia`, `titulo`, `subtitulo`, `texto`, `data`, `idUser`, `adminNome`) VALUES
-(1, 'Site NESPlay alcança 10.000 usuários', 'Marco histórico de comunidade', 'É com grande satisfação que anunciamos que alcançamos a marca de 10.000 usuários cadastrados em nossa plataforma. Obrigado pelo apoio de todos!', '2025-06-01 10:00:00', 1, 'Augusto'),
-(2, 'Nova categoria: Jogos de RPG', 'Novas aventuras à disposição', 'Criamos uma categoria especial para RPGs clássicos de NES. Agora ficou ainda mais fácil encontrar seus jogos de RPG preferidos e viver grandes aventuras.', '2025-06-05 16:45:00', 2, 'Teste1'),
-(3, 'Lançamento do Emulador Atualizado', 'Performance e compatibilidade', 'Disponibilizamos uma nova versão do emulador JSNES com melhorias de performance e suporte a várias roms que antes não rodavam corretamente.', '2025-06-10 14:30:00', 2, 'Teste1');
+(2, 'Nova categoria: Jogos de RPG', 'Novas aventuras à disposição', 'Criamos uma categoria especial para RPGs clássicos de NES. Agora ficou ainda mais fácil encontrar seus jogos de RPG preferidos e viver grandes aventuras.', '2025-06-12 01:56:07', 1, 'Augusto Vasconcelos'),
+(3, 'Lançamento do Emulador Atualizado', 'Performance e compatibilidade', 'Disponibilizamos uma nova versão do emulador JSNES com melhorias de performance e suporte a várias roms que antes não rodavam corretamente.', '2025-06-12 01:56:13', 5, 'João Roberto');
 
 -- --------------------------------------------------------
 
@@ -123,7 +122,8 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`idUser`, `nome`, `sobrenome`, `dataNascimento`, `email`, `apelido`, `senha`, `adm`) VALUES
 (1, 'Augusto', 'Vasconcelos', '1988-03-20', 'augusto.vasconcelos@fatec.sp.gov.br', 'trevor', 'teste32', 1),
 (2, 'Teste1', 'Testesom1', '1991-01-01', 'teste1@teste.com', 'teste1', 'teste1', 1),
-(4, 'Teste2', 'Testesom2', '1998-08-08', 'teste2@example.com', 'teste2', 'teste2', 0);
+(4, 'Teste2', 'Testesom2', '1998-08-08', 'teste2@example.com', 'teste2', 'teste2', 0),
+(5, 'João', 'Roberto', '2002-07-25', 'joao.lanza@fatec.sp.gov.br', 'John_Roberto', 'J0b4r5', 1);
 
 --
 -- Índices para tabelas despejadas
@@ -171,7 +171,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de tabela `noticias`
 --
 ALTER TABLE `noticias`
-  MODIFY `idNoticia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idNoticia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `roms`
@@ -183,7 +183,7 @@ ALTER TABLE `roms`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restrições para tabelas despejadas
