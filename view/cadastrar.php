@@ -44,6 +44,7 @@ unset($_SESSION['erro_cadastro']);
                 <div class="container-fluid px-3 px-md-5">
                     <ul class="nav nav-underline justify-content-center">
                         <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./todas-noticias.php">Notícias</a></li>
                         <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
                         <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
                     </ul>

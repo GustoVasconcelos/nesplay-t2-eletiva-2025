@@ -20,55 +20,50 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
 
 <body>
 
-    <header class="sticky-header border-bottom-animated-glass">
-        <div class="frosted-content gradiente p-4 shadow-sm">
-            <div class="container-fluid">
-                <a id="div-logo" href="../index.php" class="d-flex align-items-center text-decoration-none">
-                    <img class="logotipo img-fluid" src="/nesplay-t2-eletiva-2025/assets/img/logo.svg" alt="NESPlay Logo">
+<div class="background">
+
+        <header class="border-bottom-animated-glass">
+            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
+                <a href="../index.php" class="d-flex align-items-center text-decoration-none">
+                    <img class="logotipo img-fluid" src="../assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
                         <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
                     </h1>
                 </a>
-                <div class="scroll-horizontal-buttons">
-                    <div class="d-flex">
-                        <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
-                        <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar Animações</button>
-                        <?php if (!isset($_SESSION['usuario'])): ?>
-                            <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
-                            <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
-                        <?php else: ?>
-                            <a class="btn-animated btn btn-outline-secondary me-2" href="./logout.php">Sair</a>
-                        <?php endif; ?>
-                    </div>
+                <div class="d-flex">
+                    <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
+                    <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar Animações</button>
+                    <?php if (!isset($_SESSION['usuario'])): ?>
+                        <a class="btn-animated btn btn-outline-secondary me-2" href="./login.php">Login</a>
+                        <a class="btn-animated btn btn-secondary" href="./cadastrar.php">Cadastrar</a>
+                    <?php else: ?>
+                        <a class="btn-animated btn btn-outline-secondary me-2" href="./logout.php">Sair</a>
+                    <?php endif; ?>
                 </div>
-
             </div>
-        </div>
-    </header>
+        </header>
 
-    <nav class="scroll-horizontal sticky-nav border-bottom-animated-glass">
-        <div class="frosted-content gradiente p-1 shadow-sm">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./todas-noticias.php">Notícias</a></li>
-                    <?php
-                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
-                    }
-                    if (isset($_SESSION['usuario'])) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>';
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>';
-                    } ?>
-                    <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="../index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./todas-noticias.php">Notícias</a></li>
+                        <?php
+                        if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./admin/admin.php">Admin</a></li>';
+                        }
+                        if (isset($_SESSION['usuario'])) {
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./cadastrar-rom.php">Enviar ROM</a></li>';
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./acervo-jogos.php">Jogos Disponíveis</a></li>';
+                        } ?>
+                        <li class="nav-item"><a class="nav-link px-2" href="./teste-jogo.php">Testar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-
-    <div class="background">
-
+        </nav>
+        
         <main class="container my-5">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-5">

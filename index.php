@@ -3,7 +3,6 @@ session_start();
 require_once './proc/funcoesBD.php';
 $resultRoms = listarUltimosRoms(5);
 $listaNoticias = listarNoticias(3);
-$usuario = $_SESSION['usuario'] ?? 'Visitante';
 ?>
 
 <!DOCTYPE html>
@@ -20,12 +19,12 @@ $usuario = $_SESSION['usuario'] ?? 'Visitante';
 </head>
 
 <body>
+    <div class="background">
 
-    <header class="sticky-header border-bottom-animated-glass">
-        <div class="frosted-content gradiente p-4 shadow-sm">
-            <div class="container-fluid">
+        <header class="border-bottom-animated-glass">
+            <div class="container-fluid d-flex align-items-center justify-content-between frosted-content gradiente p-4 shadow-sm">
                 <a id="div-logo" href="./index.php" class="d-flex align-items-center text-decoration-none">
-                    <img class="logotipo img-fluid" src="/nesplay-t2-eletiva-2025/assets/img/logo.svg" alt="NESPlay Logo">
+                    <img class="logotipo img-fluid" src="./assets/img/logo.svg" alt="NESPlay Logo">
                     <h1 id="texto-logotipo" class="ms-2 mb-0">
                         <span>N</span><span>E</span><span>S</span><span>P</span><span>l</span><span>a</span><span>y</span>
                     </h1>
@@ -34,9 +33,6 @@ $usuario = $_SESSION['usuario'] ?? 'Visitante';
                     <div class="d-flex">
                         <button id="toggle-bordas" class="btn-animated btn btn-outline-secondary me-2">Desativar Bordas Neon</button>
                         <button id="toggle-anim" class="btn-animated btn btn-outline-secondary me-2">Desativar Animações</button>
-                        <div class="welcome-message text-end">
-                            <span class="text-white">Bem-vindo de volta, <strong><?= htmlspecialchars($usuario) ?></strong>!</span>
-                        </div>
                         <?php if (!isset($_SESSION['usuario'])): ?>
                             <a class="btn-animated btn btn-outline-secondary me-2" href="./view/login.php">Login</a>
                             <a class="btn-animated btn btn-secondary" href="./view/cadastrar.php">Cadastrar</a>
@@ -45,33 +41,29 @@ $usuario = $_SESSION['usuario'] ?? 'Visitante';
                         <?php endif; ?>
                     </div>
                 </div>
-
             </div>
-        </div>
-    </header>
+        </header>
 
-    <nav class="scroll-horizontal sticky-nav border-bottom-animated-glass">
-        <div class="frosted-content gradiente p-1 shadow-sm">
-            <div class="container-fluid px-3 px-md-5">
-                <ul class="nav nav-underline justify-content-center">
-                    <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/todas-noticias.php">Notícias</a></li>
-                    <?php
-                    if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
-                    }
-                    if (isset($_SESSION['usuario'])) {
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>';
-                        echo '<li class="nav-item"><a class="nav-link px-2" href="./view/acervo-jogos.php">Jogos Disponíveis</a></li>';
-                    } ?>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROMs</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="./view/sobre.php">Sobre</a></li>
-                </ul>
+        <nav class="scroll-horizontal sticky-nav border-bottom-animated-glass">
+            <div class="frosted-content gradiente p-1 shadow-sm">
+                <div class="container-fluid px-3 px-md-5">
+                    <ul class="nav nav-underline justify-content-center">
+                        <li class="nav-item"><a class="nav-link px-2" href="./index.php">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/todas-noticias.php">Notícias</a></li>
+                        <?php
+                        if (isset($_SESSION['usuario_adm']) && $_SESSION['usuario_adm'] == 1) {
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./view/admin/admin.php">Admin</a></li>';
+                        }
+                        if (isset($_SESSION['usuario'])) {
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./view/cadastrar-rom.php">Enviar ROM</a></li>';
+                            echo '<li class="nav-item"><a class="nav-link px-2" href="./view/acervo-jogos.php">Jogos Disponíveis</a></li>';
+                        } ?>
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/teste-jogo.php">Testar ROMs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="./view/sobre.php">Sobre</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-
-    <div class="background">
+        </nav>
 
         <main class="container px-3 px-md-5 py-5" id="hanging-icons">
             <div class="text-center mb-4">
@@ -208,9 +200,9 @@ $usuario = $_SESSION['usuario'] ?? 'Visitante';
                                             <?= htmlspecialchars($j['descricao']) ?>
                                         </p>
 
-                                        <!-- Botão -->
+                                        <!-- Botão
                                         <a href="./view/jogar-jogo.php?rom=<?= urlencode($j['nomeArquivo']) ?>"
-                                            class="btn-animated btn btn-sm btn-outline-light mt-auto w-100">Jogar</a>
+                                            class="btn-animated btn btn-sm btn-outline-light mt-auto w-100">Jogar</a> -->
                                     </div>
                                 </div>
                             </div>
