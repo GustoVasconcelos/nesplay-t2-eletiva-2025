@@ -116,27 +116,27 @@ $nomeRom = $row['nomeRom'];
                                             <div class="d-pad">
                                                 <div class="d-pad-center"></div>
 
-                                                <!-- Direções cardinais -->
-                                                <div class="d-btn up">↑</div>
-                                                <div class="d-btn down">↓</div>
-                                                <div class="d-btn left">←</div>
-                                                <div class="d-btn right">→</div>
+                                                <!-- Botões direcionais como elementos button -->
+                                                <button class="d-btn up" aria-label="Up">↑</button>
+                                                <button class="d-btn down" aria-label="Down">↓</button>
+                                                <button class="d-btn left" aria-label="Left">←</button>
+                                                <button class="d-btn right" aria-label="Right">→</button>
 
-                                                <!-- Direções diagonais -->
-                                                <div class="d-btn diagonal up-left">↖︎</div>
-                                                <div class="d-btn diagonal up-right">↗</div>
-                                                <div class="d-btn diagonal down-left">↙</div>
-                                                <div class="d-btn diagonal down-right">↘︎</div>
+                                                <!-- Botões diagonais -->
+                                                <button class="d-btn diagonal up-left" aria-label="Up-Left">↖︎</button>
+                                                <button class="d-btn diagonal up-right" aria-label="Up-Right">↗</button>
+                                                <button class="d-btn diagonal down-left" aria-label="Down-Left">↙</button>
+                                                <button class="d-btn diagonal down-right" aria-label="Down-Right">↘︎</button>
                                             </div>
 
                                             <div class="action-buttons">
-                                                <div class="action-btn btn-b">B</div>
-                                                <div class="action-btn btn-a">A</div>
+                                                <button class="action-btn btn-b" aria-label="B Button">B</button>
+                                                <button class="action-btn btn-a" aria-label="A Button">A</button>
                                             </div>
 
                                             <div class="menu-buttons">
-                                                <div class="menu-btn btn-select">SELECT</div>
-                                                <div class="menu-btn btn-start">START</div>
+                                                <button class="menu-btn btn-select" aria-label="Select">SELECT</button>
+                                                <button class="menu-btn btn-start" aria-label="Start">START</button>
                                             </div>
                                         </div>
                                     </div>

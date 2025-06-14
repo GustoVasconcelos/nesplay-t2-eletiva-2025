@@ -90,38 +90,38 @@ $roms = mysqli_query(conectarBD(), "SELECT nome, nomeArquivo FROM roms ORDER BY 
                             </div>
                             <div style="margin: auto; width: 100%;">
                                 <!-- Canvas do emulador -->
-                                    <div id="canvas-wrapper" class="d-flex align-items-center justify-content-center canvas-animated-border" style="margin: auto; width: 100%;">
-                                        <canvas id="nes-canvas" width="256" height="240"></canvas>
-                                        <div class="gamepad-section">
-                                            <div class="nes-gamepad">
-                                                <div class="d-pad">
-                                                    <div class="d-pad-center"></div>
+                                <div id="canvas-wrapper" class="d-flex align-items-center justify-content-center canvas-animated-border" style="margin: auto; width: 100%;">
+                                    <canvas id="nes-canvas" width="256" height="240"></canvas>
+                                    <div class="gamepad-section">
+                                        <div class="nes-gamepad">
+                                            <div class="d-pad">
+                                                <div class="d-pad-center"></div>
 
-                                                    <!-- Direções cardinais -->
-                                                    <div class="d-btn up">↑</div>
-                                                    <div class="d-btn down">↓</div>
-                                                    <div class="d-btn left">←</div>
-                                                    <div class="d-btn right">→</div>
+                                                <!-- Botões direcionais como elementos button -->
+                                                <button class="d-btn up" aria-label="Up">↑</button>
+                                                <button class="d-btn down" aria-label="Down">↓</button>
+                                                <button class="d-btn left" aria-label="Left">←</button>
+                                                <button class="d-btn right" aria-label="Right">→</button>
 
-                                                    <!-- Direções diagonais -->
-                                                    <div class="d-btn diagonal up-left">↖︎</div>
-                                                    <div class="d-btn diagonal up-right">↗</div>
-                                                    <div class="d-btn diagonal down-left">↙</div>
-                                                    <div class="d-btn diagonal down-right">↘︎</div>
-                                                </div>
+                                                <!-- Botões diagonais -->
+                                                <button class="d-btn diagonal up-left" aria-label="Up-Left">↖︎</button>
+                                                <button class="d-btn diagonal up-right" aria-label="Up-Right">↗</button>
+                                                <button class="d-btn diagonal down-left" aria-label="Down-Left">↙</button>
+                                                <button class="d-btn diagonal down-right" aria-label="Down-Right">↘︎</button>
+                                            </div>
 
-                                                <div class="action-buttons">
-                                                    <div class="action-btn btn-b">B</div>
-                                                    <div class="action-btn btn-a">A</div>
-                                                </div>
+                                            <div class="action-buttons">
+                                                <button class="action-btn btn-b" aria-label="B Button">B</button>
+                                                <button class="action-btn btn-a" aria-label="A Button">A</button>
+                                            </div>
 
-                                                <div class="menu-buttons">
-                                                    <div class="menu-btn btn-select">SELECT</div>
-                                                    <div class="menu-btn btn-start">START</div>
-                                                </div>
+                                            <div class="menu-buttons">
+                                                <button class="menu-btn btn-select" aria-label="Select">SELECT</button>
+                                                <button class="menu-btn btn-start" aria-label="Start">START</button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 <!-- FIM--Canvas do emulador--FIM -->
                                 <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
                                 <h4 class="mt-3 texto-gradiente text-center">Comandos no Teclado:</h4>
