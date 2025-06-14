@@ -74,44 +74,46 @@ $listaNoticias = listarNoticias(3);
                 </div>
             </div>
             <!-- CARDS FIXOS -->
-            <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 mb-5">
-                <!-- Crie sua conta -->
-                <div class="col d-flex align-items-stretch">
-                    <div class="border-animated-glass w-100">
-                        <div class="frosted-content gradiente p-4 shadow-sm h-100">
-                            <div class="text-center">
-                                <img src="assets/img/tv_nes.svg" alt="TV" class="img-fluid mb-2 mx-auto d-block" style="height:120px;object-fit:contain;">
-                                <h3 class="mb-1">Crie sua conta</h3>
-                                <p>De maneira simples, rápida e objetiva, você cria sua conta em poucos passos e já começa a jogar sem complicações.</p>
+            <section class="mb-5">
+                <!-- Container geral com borda neon e efeito frosted atrás de todos os cards -->
+                <div class="border-animated-glass">
+                    <div class="frosted-content gradiente p-4 shadow-sm">
+                        <div class="row g-4">
+                            <!-- Card 1 -->
+                            <div class="col-12 col-sm-6 col-lg-4 d-flex">
+                                <div class="w-100 d-flex flex-column p-3">
+                                    <div class="text-center flex-grow-1">
+                                        <img src="assets/img/tv_nes.svg" alt="TV" class="img-fluid mb-2 mx-auto" style="height:120px; object-fit:contain;">
+                                        <h3 class="mb-1">Crie sua conta</h3>
+                                        <p>De maneira simples, rápida e objetiva, você cria sua conta em poucos passos e já começa a jogar sem complicações.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="col-12 col-sm-6 col-lg-4 d-flex">
+                                <div class="w-100 d-flex flex-column p-3">
+                                    <div class="text-center flex-grow-1">
+                                        <img src="assets/img/cartucho_nes.svg" alt="Cartucho" class="img-fluid mb-2 mx-auto" style="height:120px; object-fit:contain;">
+                                        <h3 class="mb-1">Faça upload das suas roms</h3>
+                                        <p>Disponibilizamos um espaço no servidor para você fazer o upload de suas roms favoritas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card 3 -->
+                            <div class="col-12 col-sm-6 col-lg-4 d-flex">
+                                <div class="w-100 d-flex flex-column p-3">
+                                    <div class="text-center flex-grow-1">
+                                        <img src="assets/img/console_nes.svg" alt="Console" class="img-fluid mb-2 mx-auto" style="height:120px; object-fit:contain;">
+                                        <h3 class="mb-1">Jogue direto do navegador</h3>
+                                        <p>Sem downloads ou configurações complexas. Basta apenas escolher o jogo e se divertir.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Faça upload -->
-                <div class="col d-flex align-items-stretch">
-                    <div class="border-animated-glass w-100">
-                        <div class="frosted-content gradiente p-4 shadow-sm h-100">
-                            <div class="text-center">
-                                <img src="assets/img/cartucho_nes.svg" alt="Cartucho" class="img-fluid mb-2 mx-auto d-block" style="height:120px;object-fit:contain;">
-                                <h3 class="mb-1">Faça upload das suas roms</h3>
-                                <p>Disponibilizamos um espaço no servidor para você fazer o upload de suas roms favoritas.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Jogue direto -->
-                <div class="col d-flex align-items-stretch">
-                    <div class="border-animated-glass w-100">
-                        <div class="frosted-content gradiente p-4 shadow-sm h-100">
-                            <div class="text-center">
-                                <img src="assets/img/console_nes.svg" alt="Console" class="img-fluid mb-2 mx-auto d-block" style="height:120px;object-fit:contain;">
-                                <h3 class="mb-1">Jogue direto do navegador</h3>
-                                <p>Sem downloads ou configurações complexas. Basta apenas escolher o jogo e se divertir.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </section>
+
 
             <!-- BLOCO DE NOTÍCIAS -->
             <?php if ($listaNoticias && $listaNoticias->num_rows > 0): ?>
@@ -183,31 +185,33 @@ $listaNoticias = listarNoticias(3);
                             </div>
                         </div>
                     </div>
-                    <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
-                        <?php while ($j = mysqli_fetch_assoc($resultRoms)): ?>
-                            <div class="col d-flex">
-                                <div class="cards-animated border-animated-glass w-100">
-                                    <div class="frosted-content gradiente p-3 shadow-sm d-flex flex-column h-100 text-center">
-                                        <!-- Imagem da ROM -->
-                                        <img src="<?= !empty($j['capa']) ? htmlspecialchars($j['capa']) : './assets/img/cartucho_nes.svg' ?>"
-                                            alt="<?= htmlspecialchars($j['nomeRom']) ?>"
-                                            class="img-fluid mb-2 mx-auto"
-                                            style="height: 70px; object-fit: contain;">
+                    <section class="mb-5">
+                        <div class="border-animated-glass">
+                            <div class="frosted-content gradiente p-4 shadow-sm">
+                                <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5">
+                                    <?php while ($j = mysqli_fetch_assoc($resultRoms)): ?>
+                                        <div class="col d-flex">
+                                            <div class="w-100">
+                                                <div class="d-flex flex-column h-100 text-center p-3">
+                                                    <!-- Imagem da ROM -->
+                                                    <img src="<?= !empty($j['capa']) ? htmlspecialchars($j['capa']) : './assets/img/cartucho_nes.svg' ?>"
+                                                        alt="<?= htmlspecialchars($j['nomeRom']) ?>"
+                                                        class="img-fluid mb-2 mx-auto"
+                                                        style="height: 70px; object-fit: contain;">
 
-                                        <!-- Nome e Descrição -->
-                                        <h5 class="texto-gradiente mb-1 text-center pb-2 w-100"><?= htmlspecialchars($j['nomeRom']) ?></h5>
-                                        <p class="text-light small flex-grow-1">
-                                            <?= htmlspecialchars($j['descricao']) ?>
-                                        </p>
-
-                                        <!-- Botão
-                                        <a href="./view/jogar-jogo.php?rom=<?= urlencode($j['nomeArquivo']) ?>"
-                                            class="btn-animated btn btn-sm btn-outline-light mt-auto w-100">Jogar</a> -->
-                                    </div>
+                                                    <!-- Nome e Descrição -->
+                                                    <h5 class="texto-gradiente mb-1 text-center pb-2 w-100"><?= htmlspecialchars($j['nomeRom']) ?></h5>
+                                                    <p class="text-light small flex-grow-1">
+                                                        <?= htmlspecialchars($j['descricao']) ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endwhile; ?>
                                 </div>
                             </div>
-                        <?php endwhile; ?>
-                    </div>
+                        </div>
+                    </section>
                 </section>
             <?php endif; ?>
         </main>

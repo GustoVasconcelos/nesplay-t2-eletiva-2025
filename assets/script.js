@@ -386,6 +386,399 @@ if (fsBtn && wrapper) {
     });
 }
 
+function resizeGamepad() {
+    const gamepad = document.querySelector('.nes-gamepad');
+    if (!gamepad) return; // Sai se o elemento não existir
+    const viewportWidth = window.innerWidth;
+
+    // Define a largura baseada na viewport com limites
+    const maxWidth = 500; // Largura máxima do gamepad
+    const minWidth = 300; // Largura mínima do gamepad
+    let gamepadWidth = Math.min(viewportWidth * 0.9, maxWidth);
+    gamepadWidth = Math.max(gamepadWidth, minWidth);
+
+    gamepad.style.width = gamepadWidth + 'px';
+
+    // Mantém a proporção altura/largura
+    const aspectRatio = 180 / 330; // Proporção original
+    gamepad.style.height = (gamepadWidth * aspectRatio) + 'px';
+}
+
+function adjustCanvasAndGamepad() {
+    const wrapper = document.getElementById('canvas-wrapper');
+    const canvas = document.getElementById('nes-canvas');
+    const gamepad = document.querySelector('.gamepad-section');
+    if (!wrapper || !canvas || !gamepad) return;
+
+    const isFull = wrapper.classList.contains('isFull');
+
+    if (isFull) {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const aspect = 256 / 240;
+        const gpH = Math.min(180, vh * 0.25);
+
+        // calcula o canvas sem distorcer
+        let cH = vh - gpH;
+        let cW = cH * aspect;
+        if (cW > vw) {
+            cW = vw;
+            cH = cW / aspect;
+        }
+
+        // aplica ao canvas
+        canvas.style.width = `${cW}px`;
+        canvas.style.height = `${cH}px`;
+
+        // aplica ao gamepad: largura da viewport e altura remanescente
+        gamepad.style.width = `${vw}px`;
+        gamepad.style.height = `${vh - cH}px`;
+    } else {
+        // limpa estilos inline
+        [canvas, gamepad].forEach(el => {
+            el.style.width = '';
+            el.style.height = '';
+        });
+    }
+}
+
+window.addEventListener('load', () => {
+    // Só registra os eventos se os elementos existirem
+    if (document.querySelector('.nes-gamepad')) {
+        window.addEventListener('resize', resizeGamepad);
+        resizeGamepad(); // Executa inicialmente
+    }
+
+    if (document.getElementById('canvas-wrapper')) {
+        window.addEventListener('resize', adjustCanvasAndGamepad);
+        adjustCanvasAndGamepad(); // Executa inicialmente
+    }
+});
+
+window.addEventListener('load', adjustCanvasAndGamepad);
+window.addEventListener('resize', adjustCanvasAndGamepad);
+
+// ========================
+// SISTEMA DE CONTROLE TÁTIL
+// ========================
+
+// Variáveis globais para controle de estado
+let activeTouchId = null;
+let activeDirection = null;
+let activeButtons = {};
+let lastActiveElement = null; // armazena o último elemento ativo
+function isMobileDevice() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isSmallScreen = window.innerWidth <= 768;
+    const isCoarsePointer = matchMedia('(pointer: coarse)').matches;
+    const hasHover = matchMedia('(hover: hover)').matches;
+
+    return isTouch && isCoarsePointer && (isSmallScreen || isMobileUA) && !hasHover;
+}
+
+function toggleGamepadVisibility() {
+    const gamepadSection = document.querySelector('.gamepad-section');
+    if (!gamepadSection) return;
+
+    gamepadSection.style.display = isMobileDevice() ? 'flex' : 'none';
+}
+
+// ========================
+// CONTROLES PARA MOBILE
+// ========================
+
+let touchControlsInitialized = false;
+
+
+// Inicialização dos controles
+function initTouchControls() {
+    const dpad = document.querySelector('.d-pad');
+    const actionButtons = document.querySelector('.action-buttons');
+    const menuButtons = document.querySelector('.menu-buttons');
+    if (touchControlsInitialized) return;
+    touchControlsInitialized = true;
+
+    if (!dpad || !actionButtons || !menuButtons) return;
+
+    // Configura eventos para todos os elementos de controle
+    const controlElements = [dpad, actionButtons, menuButtons];
+    controlElements.forEach(el => {
+        el.addEventListener('pointerdown', handleTouchStart);
+        el.addEventListener('pointermove', handleTouchMove);
+        el.addEventListener('pointerup', handleTouchEnd);
+        el.addEventListener('pointerleave', handleTouchEnd);
+        el.addEventListener('pointercancel', handleTouchEnd);
+    });
+
+    // Adiciona classe para feedback tátil
+    document.head.appendChild(createTouchFeedbackStyle());
+}
+
+// Estilos para feedback visual
+function createTouchFeedbackStyle() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .d-btn.touch-active,
+        .action-btn.touch-active,
+        .menu-btn.touch-active {
+            transform: scale(0.85) !important;
+            filter: brightness(1.4) !important;
+            box-shadow: 0 1px 3px rgba(255, 255, 255, 0.5) !important;
+        }
+        
+        .d-pad,
+        .action-buttons,
+        .menu-buttons {
+            touch-action: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+    `;
+    return style;
+}
+
+// Mapeamento de controles para teclas
+const controlMappings = {
+    // Direções cardinais
+    'up': 38,
+    'down': 40,
+    'left': 37,
+    'right': 39,
+
+    // Diagonais
+    'up-left': [38, 37],
+    'up-right': [38, 39],
+    'down-left': [40, 37],
+    'down-right': [40, 39],
+
+    // Botões de ação
+    'btn-a': 65,
+    'btn-b': 83,
+    'btn-select': 9,
+    'btn-start': 13
+};
+
+// Função para encontrar o controle sob o ponteiro
+function findControlUnderPoint(x, y) {
+    const elements = document.querySelectorAll('.d-btn, .action-btn, .menu-btn');
+
+    for (const element of elements) {
+        const rect = element.getBoundingClientRect();
+        if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+            return element;
+        }
+    }
+
+    return null;
+}
+
+// Início do toque
+function handleTouchStart(event) {
+    if (activeTouchId !== null) return; // Ignora toques múltiplos
+
+    activeTouchId = event.pointerId;
+    processTouchEvent(event);
+}
+
+// Movimento do toque
+function handleTouchMove(event) {
+    if (event.pointerId !== activeTouchId) return;
+    processTouchEvent(event);
+}
+
+// Fim do toque
+function handleTouchEnd(event) {
+    if (event.pointerId !== activeTouchId) return;
+
+    // Desativa todos os controles ativos
+    for (const buttonClass in activeButtons) {
+        deactivateControl(buttonClass);
+    }
+
+    // Desativa a direção diagonal ativa, se houver
+    if (activeDirection) {
+        deactivateDirection(activeDirection);
+        activeDirection = null;
+    }
+
+    // Remove todos os efeitos visuais
+    removeAllTouchActiveClasses();
+
+    activeTouchId = null;
+    activeButtons = {};
+    lastActiveElement = null; // Limpa o último elemento ativo
+}
+
+// Remove todas as classes de feedback visual
+function removeAllTouchActiveClasses() {
+    document.querySelectorAll('.touch-active').forEach(element => {
+        element.classList.remove('touch-active');
+    });
+}
+
+// Processa o evento de toque
+function processTouchEvent(event) {
+    const control = findControlUnderPoint(event.clientX, event.clientY);
+
+    // Remove o feedback visual do elemento anterior
+    if (lastActiveElement && lastActiveElement !== control) {
+        lastActiveElement.classList.remove('touch-active');
+    }
+
+    // Atualiza o último elemento ativo
+    lastActiveElement = control;
+
+    if (!control) {
+        // Se não há controle sob o ponteiro, desativa tudo
+        for (const buttonClass in activeButtons) {
+            deactivateControl(buttonClass);
+            delete activeButtons[buttonClass];
+        }
+
+        if (activeDirection) {
+            deactivateDirection(activeDirection);
+            activeDirection = null;
+        }
+
+        return;
+    }
+
+    // Adiciona feedback visual imediatamente
+    control.classList.add('touch-active');
+
+    const controlClasses = Array.from(control.classList);
+    let controlKey = null;
+
+    // Identifica o tipo de controle
+    if (controlClasses.includes('d-btn')) {
+        // Direções cardinais ou diagonais
+        controlKey = controlClasses.find(cls =>
+            ['up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left', 'down-right'].includes(cls)
+        );
+
+        // Se for uma direção diagonal, trata como especial
+        if (controlKey && controlKey.includes('-')) {
+            if (activeDirection !== controlKey) {
+                // Desativa a direção anterior
+                if (activeDirection) {
+                    deactivateDirection(activeDirection);
+                }
+
+                // Ativa a nova direção
+                activateDirection(controlKey);
+                activeDirection = controlKey;
+            }
+            return;
+        }
+    } else {
+        // Botões de ação
+        controlKey = controlClasses.find(cls =>
+            ['btn-a', 'btn-b', 'btn-select', 'btn-start'].includes(cls)
+        );
+    }
+
+    if (!controlKey) return;
+
+    // Ativa o controle se ainda não está ativo
+    if (!activeButtons[controlKey]) {
+        activeButtons[controlKey] = true;
+        activateControl(controlKey);
+    }
+}
+
+// Ativa uma direção diagonal
+function activateDirection(direction) {
+    const keys = controlMappings[direction];
+    if (!keys) return;
+
+    keys.forEach(keyCode => {
+        simulateKeyEvent(keyCode, 'keydown');
+    });
+}
+
+// Desativa uma direção diagonal
+function deactivateDirection(direction) {
+    const keys = controlMappings[direction];
+    if (!keys) return;
+
+    keys.forEach(keyCode => {
+        simulateKeyEvent(keyCode, 'keyup');
+    });
+}
+
+// Ativa um controle individual
+function activateControl(controlKey) {
+    const keyCode = controlMappings[controlKey];
+    if (Array.isArray(keyCode)) {
+        keyCode.forEach(kc => simulateKeyEvent(kc, 'keydown'));
+    } else {
+        simulateKeyEvent(keyCode, 'keydown');
+    }
+}
+
+// Desativa um controle individual
+function deactivateControl(controlKey) {
+    const keyCode = controlMappings[controlKey];
+    if (Array.isArray(keyCode)) {
+        keyCode.forEach(kc => simulateKeyEvent(kc, 'keyup'));
+    } else {
+        simulateKeyEvent(keyCode, 'keyup');
+    }
+}
+
+// Função para simular eventos de teclado
+function simulateKeyEvent(keyCode, type) {
+    const event = new KeyboardEvent(type, {
+        keyCode: keyCode,
+        bubbles: true,
+        cancelable: true
+    });
+    document.dispatchEvent(event);
+}
+
+// ========================
+// INICIALIZAÇÃO
+// ========================
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa os controles quando o DOM estiver pronto
+    initTouchControls();
+
+    // Inicializa o emulador
+    const wrapper = document.getElementById('canvas-wrapper');
+    if (wrapper && wrapper.dataset.romPath) {
+        nes_load_url('nes-canvas', wrapper.dataset.romPath);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Mostra/oculta o gamepad
+    toggleGamepadVisibility();
+
+    // Inicializa controles apenas em dispositivos móveis
+    if (isMobileDevice()) {
+        initTouchControls();
+    }
+
+    // Inicializa o emulador
+    const wrapper = document.getElementById('canvas-wrapper');
+    if (wrapper && wrapper.dataset.romPath) {
+        nes_load_url('nes-canvas', wrapper.dataset.romPath);
+    }
+});
+
+// Atualiza ao redimensionar
+window.addEventListener('resize', () => {
+    toggleGamepadVisibility();
+
+    // Reinicializa controles se mudou para mobile
+    if (isMobileDevice() && !touchControlsInitialized) {
+        initTouchControls();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.getElementById('canvas-wrapper');
     if (wrapper && wrapper.dataset.romPath) {

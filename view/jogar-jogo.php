@@ -111,6 +111,35 @@ $nomeRom = $row['nomeRom'];
                                     data-rom-path="<?= htmlspecialchars($romPath, ENT_QUOTES) ?>"
                                     style="margin:auto; width:100%;">
                                     <canvas id="nes-canvas" width="256" height="240"></canvas>
+                                    <div class="gamepad-section">
+                                        <div class="nes-gamepad">
+                                            <div class="d-pad">
+                                                <div class="d-pad-center"></div>
+
+                                                <!-- Direções cardinais -->
+                                                <div class="d-btn up">↑</div>
+                                                <div class="d-btn down">↓</div>
+                                                <div class="d-btn left">←</div>
+                                                <div class="d-btn right">→</div>
+
+                                                <!-- Direções diagonais -->
+                                                <div class="d-btn diagonal up-left">↖︎</div>
+                                                <div class="d-btn diagonal up-right">↗</div>
+                                                <div class="d-btn diagonal down-left">↙</div>
+                                                <div class="d-btn diagonal down-right">↘︎</div>
+                                            </div>
+
+                                            <div class="action-buttons">
+                                                <div class="action-btn btn-b">B</div>
+                                                <div class="action-btn btn-a">A</div>
+                                            </div>
+
+                                            <div class="menu-buttons">
+                                                <div class="menu-btn btn-select">SELECT</div>
+                                                <div class="menu-btn btn-start">START</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- FIM--Canvas do emulador--FIM -->
                                 <button id="btn-fullscreen" class="btn btn-animated btn-outline-secondary mt-2 w-100">Tela cheia</button>
