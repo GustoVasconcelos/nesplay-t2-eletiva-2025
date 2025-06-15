@@ -97,27 +97,110 @@ document.addEventListener("DOMContentLoaded", () => {
 // FIM--Funções para alternar as animações--FIM
 
 // Função global para aplicar estado de volume/mute
-window.isMuted = false;
-window.prevVolume = 50;
+window.nesGainNode = window.nesGainNode || null;
+window.prevVolume = localStorage.getItem('volume') || 50;
+window.isMuted = localStorage.getItem('muted') === 'true' || false;
 
+// Função para aplicar o estado do volume
 window.applyVolumeState = function () {
-    const volSlider = document.getElementById('volume-slider');
-    const volDisplay = document.getElementById('volume-display');
-    const muteBtn = document.getElementById('mute-btn');
-    if (!window.nesGainNode || !volSlider || !volDisplay || !muteBtn) return;
+    // Verificação extra para contexto não inicializado
+    if (!window.nesGainNode || (window.audioCtx && window.audioCtx.state === 'closed')) {
+        console.warn('Áudio não disponível para ajuste de volume');
+        return;
+    }
 
-    if (window.isMuted) {
-        nesGainNode.gain.value = 0;
-        volSlider.value = 0;
-        volDisplay.textContent = '0%';
-        muteBtn.textContent = 'Volume: Desilenciar';
-    } else {
-        nesGainNode.gain.value = window.prevVolume / 100;
-        volSlider.value = window.prevVolume;
-        volDisplay.textContent = window.prevVolume + '%';
-        muteBtn.textContent = 'Volume: Silenciar';
+    try {
+        const volSlider = document.getElementById('volume-slider');
+        const volDisplay = document.getElementById('volume-display');
+        const muteBtn = document.getElementById('mute-btn');
+
+        if (!volSlider || !volDisplay || !muteBtn) {
+            console.warn('Elementos de volume não encontrados');
+            return;
+        }
+
+        if (window.isMuted) {
+            if (window.nesGainNode) window.nesGainNode.gain.value = 0;
+            volSlider.value = 0;
+            volDisplay.textContent = '0%';
+            muteBtn.textContent = 'Volume: Desilenciar';
+            muteBtn.classList.add('muted');
+        } else {
+            const volume = window.prevVolume;
+            if (window.nesGainNode) window.nesGainNode.gain.value = volume / 100;
+            volSlider.value = volume;
+            volDisplay.textContent = volume + '%';
+            muteBtn.textContent = 'Volume: Silenciar';
+            muteBtn.classList.remove('muted');
+        }
+
+        // Salva estado no localStorage
+        localStorage.setItem('volume', window.prevVolume);
+        localStorage.setItem('muted', window.isMuted);
+    } catch (e) {
+        console.error('Erro em applyVolumeState:', e);
     }
 };
+
+// Função para atualizar o volume quando o slider é movido
+function handleVolumeChange(event) {
+    const newVolume = parseInt(event.target.value);
+    window.prevVolume = newVolume;
+
+    // Se estava mudo e aumentou o volume, tira do mudo
+    if (window.isMuted && newVolume > 0) {
+        window.isMuted = false;
+    }
+
+    window.applyVolumeState();
+}
+
+// Função para alternar mudo
+function toggleMute() {
+    window.isMuted = !window.isMuted;
+
+    // Se está saindo do mudo, restaura o volume anterior
+    if (!window.isMuted && window.prevVolume === 0) {
+        window.prevVolume = 50;
+    }
+
+    window.applyVolumeState();
+}
+
+// Inicialização do sistema de volume
+function initVolumeControls() {
+    const volSlider = document.getElementById('volume-slider');
+    const muteBtn = document.getElementById('mute-btn');
+
+    if (volSlider && muteBtn) {
+        // Configura eventos
+        volSlider.addEventListener('input', handleVolumeChange);
+        muteBtn.addEventListener('click', toggleMute);
+
+        // Aplica estado inicial
+        window.applyVolumeState();
+    } else {
+        console.log('Controles de volume não encontrados!');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicializa controles de volume
+    initVolumeControls();
+
+    // Atualiza controles se o estado estiver disponível
+    setTimeout(() => {
+        if (window.applyVolumeState) window.applyVolumeState();
+    }, 500);
+
+    // Verifica periodicamente se o áudio foi inicializado
+    const volumeCheckInterval = setInterval(() => {
+        if (window.nesGainNode && window.applyVolumeState) {
+            window.applyVolumeState();
+            clearInterval(volumeCheckInterval);
+        }
+    }, 1000);
+});
 // FIM--Função global para aplicar estado de volume/mute--FIM
 
 window.onload = function () {
@@ -309,23 +392,99 @@ window.onload = function () {
         });
     }
 
-    function applyVolumeState() {
-        if (!window.nesGainNode) return;
+    window.audioState = {
+        gainNode: null,
+        prevVolume: localStorage.getItem('volume') || 50,
+        isMuted: localStorage.getItem('muted') === 'true' || false
+    };
 
-        if (isMuted) {
-            nesGainNode.gain.value = 0;
-            volSlider.value = 0;
-            volDisplay.textContent = '0%';
-            muteBtn.textContent = 'Volume: Desilenciar';
-        } else {
-            nesGainNode.gain.value = prevVolume / 100;
-            volSlider.value = prevVolume;
-            volDisplay.textContent = prevVolume + '%';
-            muteBtn.textContent = 'Volume: Silenciar';
+    // Função para aplicar o estado do volume
+    window.applyVolumeState = function () {
+        try {
+            const volSlider = document.getElementById('volume-slider');
+            const volDisplay = document.getElementById('volume-display');
+            const muteBtn = document.getElementById('mute-btn');
+
+            if (!volSlider || !volDisplay || !muteBtn) {
+                console.warn('Elementos de volume não encontrados');
+                return;
+            }
+
+            // Usa window.nesGainNode se disponível
+            const gainNode = window.nesGainNode || window.audioState.gainNode;
+
+            if (window.audioState.isMuted) {
+                if (gainNode) gainNode.gain.value = 0;
+                volSlider.value = 0;
+                volDisplay.textContent = '0%';
+                muteBtn.textContent = 'Volume: Desilenciar';
+                muteBtn.classList.add('muted');
+            } else {
+                const volume = window.audioState.prevVolume;
+                if (gainNode) gainNode.gain.value = volume / 100;
+                volSlider.value = volume;
+                volDisplay.textContent = volume + '%';
+                muteBtn.textContent = 'Volume: Silenciar';
+                muteBtn.classList.remove('muted');
+            }
+
+            // Salva estado no localStorage
+            localStorage.setItem('volume', window.audioState.prevVolume);
+            localStorage.setItem('muted', window.audioState.isMuted);
+        } catch (e) {
+            console.error('Erro em applyVolumeState:', e);
         }
+    };
+
+    // Configura eventos de volume
+    function setupVolumeControls() {
+        const volSlider = document.getElementById('volume-slider');
+        const muteBtn = document.getElementById('mute-btn');
+
+        if (!volSlider || !muteBtn) return;
+
+        volSlider.addEventListener('input', function (e) {
+            window.audioState.prevVolume = parseInt(e.target.value);
+
+            // Se estava mudo e aumentou o volume, tira do mudo
+            if (window.audioState.isMuted && window.audioState.prevVolume > 0) {
+                window.audioState.isMuted = false;
+            }
+
+            window.applyVolumeState();
+        });
+
+        muteBtn.addEventListener('click', function () {
+            window.audioState.isMuted = !window.audioState.isMuted;
+
+            // Se está saindo do mudo, restaura o volume anterior
+            if (!window.audioState.isMuted && window.audioState.prevVolume === 0) {
+                window.audioState.prevVolume = 50;
+            }
+
+            window.applyVolumeState();
+        });
     }
-    // FIM--Funções para gerenciar o volume e o slider do volume--FIM
+
+    // Inicialização quando o DOM estiver pronto
+    document.addEventListener('DOMContentLoaded', function () {
+        setupVolumeControls();
+
+        // Aplica estado inicial
+        window.applyVolumeState();
+
+        // Verificação periódica se o áudio foi inicializado
+        const volumeCheckInterval = setInterval(() => {
+            if (window.nesGainNode) {
+                // Atualiza o estado do gainNode
+                window.audioState.gainNode = window.nesGainNode;
+                window.applyVolumeState();
+                clearInterval(volumeCheckInterval);
+            }
+        }, 1000);
+    });
 };
+// FIM--Funções para gerenciar o volume e o slider do volume--FIM
 
 // Funções para gerenciar o emulador e o canvas
 const canvasId = 'nes-canvas';
@@ -463,6 +622,7 @@ window.addEventListener('resize', adjustCanvasAndGamepad);
 // ========================
 
 // Variáveis globais para controle de estado
+const activeTouches = new Map();
 let activeTouchId = null;
 let activeDirection = null;
 let activeButtons = {};
@@ -576,39 +736,132 @@ function findControlUnderPoint(x, y) {
 
 // Início do toque
 function handleTouchStart(event) {
-    if (activeTouchId !== null) return; // Ignora toques múltiplos
+    const pointerId = event.pointerId;
+    const control = findControlUnderPoint(event.clientX, event.clientY);
 
-    activeTouchId = event.pointerId;
-    processTouchEvent(event);
+    if (!control) return;
+
+    // Configura o novo toque
+    const touchInfo = {
+        element: control,
+        controlKey: null,
+        isDirection: false
+    };
+
+    activeTouches.set(pointerId, touchInfo);
+    processTouchForPointer(pointerId, event.clientX, event.clientY);
 }
 
 // Movimento do toque
 function handleTouchMove(event) {
-    if (event.pointerId !== activeTouchId) return;
-    processTouchEvent(event);
+    const pointerId = event.pointerId;
+
+    if (!activeTouches.has(pointerId)) return;
+
+    processTouchForPointer(pointerId, event.clientX, event.clientY);
 }
 
 // Fim do toque
 function handleTouchEnd(event) {
-    if (event.pointerId !== activeTouchId) return;
+    const pointerId = event.pointerId;
 
-    // Desativa todos os controles ativos
-    for (const buttonClass in activeButtons) {
-        deactivateControl(buttonClass);
+    if (!activeTouches.has(pointerId)) return;
+
+    const touchInfo = activeTouches.get(pointerId);
+
+    // Remove feedback visual
+    if (touchInfo.element) {
+        touchInfo.element.classList.remove('touch-active');
     }
 
-    // Desativa a direção diagonal ativa, se houver
-    if (activeDirection) {
-        deactivateDirection(activeDirection);
-        activeDirection = null;
+    // Desativa o controle
+    if (touchInfo.controlKey) {
+        if (touchInfo.isDirection) {
+            deactivateDirection(touchInfo.controlKey);
+        } else {
+            deactivateControl(touchInfo.controlKey);
+        }
     }
 
-    // Remove todos os efeitos visuais
-    removeAllTouchActiveClasses();
+    // Remove o toque do mapa
+    activeTouches.delete(pointerId);
+}
 
-    activeTouchId = null;
-    activeButtons = {};
-    lastActiveElement = null; // Limpa o último elemento ativo
+// Processa o toque para um ponteiro específico
+function processTouchForPointer(pointerId, x, y) {
+    const touchInfo = activeTouches.get(pointerId);
+    if (!touchInfo) return;
+
+    const control = findControlUnderPoint(x, y);
+    let controlKey = null;
+    let isDirection = false;
+
+    // Atualiza o elemento se mudou para um novo controle
+    if (control && control !== touchInfo.element) {
+        // Remove feedback do elemento anterior
+        if (touchInfo.element) {
+            touchInfo.element.classList.remove('touch-active');
+        }
+
+        // Atualiza para o novo elemento
+        touchInfo.element = control;
+        control.classList.add('touch-active');
+    }
+
+    if (!control) {
+        // Se não está sobre nenhum controle, desativa a ação anterior
+        if (touchInfo.controlKey) {
+            if (touchInfo.isDirection) {
+                deactivateDirection(touchInfo.controlKey);
+            } else {
+                deactivateControl(touchInfo.controlKey);
+            }
+            touchInfo.controlKey = null;
+        }
+        return;
+    }
+
+    const controlClasses = Array.from(control.classList);
+
+    // Identifica o tipo de controle
+    if (controlClasses.includes('d-btn')) {
+        controlKey = controlClasses.find(cls =>
+            ['up', 'down', 'left', 'right', 'up-left', 'up-right', 'down-left', 'down-right'].includes(cls)
+        );
+
+        if (controlKey) {
+            isDirection = controlKey.includes('-');
+        }
+    } else {
+        controlKey = controlClasses.find(cls =>
+            ['btn-a', 'btn-b', 'btn-select', 'btn-start'].includes(cls)
+        );
+    }
+
+    if (!controlKey) return;
+
+    // Se o controle mudou, atualiza
+    if (touchInfo.controlKey !== controlKey) {
+        // Desativa o controle anterior
+        if (touchInfo.controlKey) {
+            if (touchInfo.isDirection) {
+                deactivateDirection(touchInfo.controlKey);
+            } else {
+                deactivateControl(touchInfo.controlKey);
+            }
+        }
+
+        // Ativa o novo controle
+        if (isDirection) {
+            activateDirection(controlKey);
+        } else {
+            activateControl(controlKey);
+        }
+
+        // Atualiza as informações do toque
+        touchInfo.controlKey = controlKey;
+        touchInfo.isDirection = isDirection;
+    }
 }
 
 // Remove todas as classes de feedback visual

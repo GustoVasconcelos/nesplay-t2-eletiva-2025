@@ -12,8 +12,10 @@ var audio_write_cursor = 0, audio_read_cursor = 0;
 var lastFrameTime = 0;
 var frameInterval = 1000 / 60; // 60 FPS
 var framesAccumulator = 0;
-var audioCtx, scriptProcessor;
 var isRunning = false;
+var audioCtx = null;
+var scriptProcessor = null;
+var isAudioInitialized = false;
 
 var nes = new jsnes.NES({
 	onFrame: function (framebuffer_24) {
@@ -54,12 +56,13 @@ function audio_remain() {
 }
 
 function audio_callback(event) {
-	if (!isRunning) return;
+	if (!isRunning || !isAudioInitialized) return;
 
 	var dst = event.outputBuffer;
 	var len = dst.length;
 	var remain = audio_remain();
 
+	// Preenche silêncio se não houver dados suficientes
 	if (remain < len) {
 		var silence = new Float32Array(len);
 		dst.getChannelData(0).set(silence);
@@ -105,6 +108,8 @@ function keyboard(callback, event) {
 	}
 }
 
+let audioContextPromise = null;
+
 async function nes_init(canvas_id) {
 	// Canvas e framebuffer
 	var canvas = document.getElementById(canvas_id);
@@ -114,43 +119,89 @@ async function nes_init(canvas_id) {
 	canvas_ctx.fillStyle = "black";
 	canvas_ctx.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	// Aloca o framebuffer
 	var buffer = new ArrayBuffer(image.data.length);
 	framebuffer_u8 = new Uint8ClampedArray(buffer);
 	framebuffer_u32 = new Uint32Array(buffer);
 
-	if (!audioCtx) {
-		try {
-			audioCtx = new (window.AudioContext || window.webkitAudioContext)({
-				sampleRate: 44100
-			});
-			await audioCtx.audioWorklet.addModule('../assets/nes-audio-worklet.js');
 
-			scriptProcessor = new AudioWorkletNode(audioCtx, 'nes-audio-processor', {
-				outputChannelCount: [2]
-			});
-			nes.opts.onAudioSample = (l, r) => {
-				if (!isRunning) return;
-				scriptProcessor.port.postMessage({ type: 'samples', left: l, right: r });
-			};
-
-			window.nesGainNode = audioCtx.createGain();
-			scriptProcessor.connect(window.nesGainNode);
-			window.nesGainNode.connect(audioCtx.destination);
-
-			console.log('Áudio inicializado com AudioWorklet + GainNode');
-		} catch (e) {
-			console.error("Erro ao configurar áudio:", e);
+	try {
+		// Fecha o contexto anterior de forma segura
+		if (audioCtx && audioCtx.state !== 'closed') {
+			await audioCtx.close();
+			console.log('Contexto anterior fechado');
 		}
 
-		document.addEventListener('pointerdown', () => {
-			if (audioCtx.state === 'suspended') {
-				audioCtx.resume().then(() => {
-					console.log('Áudio desbloqueado');
-					isRunning = true;
-				});
+		// ===== CORREÇÃO 1: SEMPRE recria o GainNode =====
+		window.nesGainNode = null; // Descarta o antigo
+
+		// Cria novo contexto usando uma interação do usuário
+		if (!audioContextPromise) {
+			audioContextPromise = new Promise(resolve => {
+				const handleUserInteraction = () => {
+					document.removeEventListener('pointerdown', handleUserInteraction);
+					document.removeEventListener('keydown', handleUserInteraction);
+					resolve(new (window.AudioContext || window.webkitAudioContext)({
+						sampleRate: 44100
+					}));
+				};
+
+				document.addEventListener('pointerdown', handleUserInteraction, { once: true });
+				document.addEventListener('keydown', handleUserInteraction, { once: true });
+			});
+		}
+
+		audioCtx = await audioContextPromise;
+		audioContextPromise = null;
+
+		// ===== CORREÇÃO 2: SEMPRE cria um NOVO GainNode =====
+		window.nesGainNode = audioCtx.createGain();
+		window.nesGainNode.connect(audioCtx.destination);
+
+		// Atualiza o estado global
+		if (window.audioState) {
+			window.audioState.gainNode = window.nesGainNode;
+		}
+
+		// Configura o ScriptProcessor
+		if (scriptProcessor) {
+			scriptProcessor.disconnect();
+			scriptProcessor.onaudioprocess = null;
+		}
+
+		scriptProcessor = audioCtx.createScriptProcessor(1024, 0, 2);
+		scriptProcessor.onaudioprocess = audio_callback;
+		scriptProcessor.connect(window.nesGainNode);
+
+		console.log('Áudio reinicializado com sucesso');
+		isAudioInitialized = true;
+
+		if (window.nesGainNode) {
+			window.nesGainNode.gain.value = window.prevVolume / 100;
+
+			// Atualiza controles de UI
+			if (window.applyVolumeState) {
+				window.applyVolumeState();
 			}
-		}, { once: true });
+		}
+	} catch (e) {
+		console.error("Erro no áudio:", e);
+		isAudioInitialized = false;
 	}
+
+	// ===== CORREÇÃO 3: Configura volume APÓS criar o GainNode =====
+
+	// Evento para desbloquear áudio
+	const resumeAudio = () => {
+		if (audioCtx && audioCtx.state === 'suspended') {
+			audioCtx.resume().then(() => {
+				console.log('Áudio desbloqueado');
+			});
+		}
+	};
+
+	document.addEventListener('pointerdown', resumeAudio, { once: true });
+	document.addEventListener('keydown', resumeAudio, { once: true });
 }
 
 function nes_boot(rom_data) {
@@ -164,14 +215,33 @@ function nes_boot(rom_data) {
 	}
 }
 
-function stopEmulator() {
+function resetEmulator() {
 	isRunning = false;
 
-	audio_read_cursor = audio_write_cursor = 0;
+	// Reset do buffer de áudio
+	if (audio_samples_L) audio_samples_L.fill(0);
+	if (audio_samples_R) audio_samples_R.fill(0);
+	audio_write_cursor = 0;
+	audio_read_cursor = 0;
+
+	// Fecha o contexto de áudio
+	if (audioCtx && typeof audioCtx.close === 'function') {
+		audioCtx.close().then(() => {
+			console.log('AudioContext fechado');
+			audioCtx = null;
+		}).catch(e => {
+			console.warn('Erro ao fechar AudioContext:', e);
+		});
+	}
+
+	// Limpa variáveis relacionadas
+	scriptProcessor = null;
+	isAudioInitialized = false;
+	window.nesGainNode = null; // Importante manter!
 }
 
 async function nes_load_url(canvas_id, path) {
-	stopEmulator();
+	resetEmulator();
 	await nes_init(canvas_id);
 
 	var req = new XMLHttpRequest();
